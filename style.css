@@ -1,0 +1,1199 @@
+/* ==========================================
+   ABUBAKAR // DIGITAL UNIVERSE
+   STEP 1 — BASE DESIGN SYSTEM
+   ========================================== */
+
+
+/* ==========================================
+   RESET
+   ========================================== */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+
+    background: #050505;
+    color: #f5f5f5;
+
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    overflow-x: hidden;
+
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* ==========================================
+   ROOT
+   ========================================== */
+
+#app {
+    position: relative;
+    min-height: 100vh;
+}
+
+
+/* ==========================================
+   EXPERIENCE
+   ========================================== */
+
+.experience {
+    position: relative;
+    width: 100%;
+}
+
+
+/* ==========================================
+   GENERIC SECTION
+   ========================================== */
+
+.section {
+    position: relative;
+
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+.section-container {
+    position: relative;
+
+    width: min(1200px, calc(100% - 80px));
+
+    margin: 0 auto;
+}
+
+
+/* ==========================================
+   HERO
+   ========================================== */
+
+.hero {
+    min-height: 100svh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    isolation: isolate;
+
+    overflow: hidden;
+}
+
+
+/*
+    Future Three.js canvas.
+
+    Step 1:
+    Only visual foundation.
+
+    Step 2:
+    The actual 3D environment will be
+    initialized here.
+*/
+
+.hero-canvas {
+    position: absolute;
+    inset: 0;
+
+    z-index: -1;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    pointer-events: none;
+}
+
+.hero-canvas canvas {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+}
+
+
+/*
+    Subtle atmospheric layer.
+*/
+
+.hero::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    z-index: -1;
+
+    background:
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(255, 255, 255, 0.055),
+            transparent 35%
+        ),
+        linear-gradient(
+            180deg,
+            #050505 0%,
+            #070707 55%,
+            #050505 100%
+        );
+
+    pointer-events: none;
+}
+
+
+/* ==========================================
+   HERO CONTENT
+   ========================================== */
+
+.hero-content {
+    width: min(1000px, calc(100% - 40px));
+
+    text-align: center;
+
+    margin: 0 auto;
+
+    position: relative;
+    z-index: 2;
+}
+
+
+.eyebrow {
+    margin-bottom: 24px;
+
+    font-size: 0.72rem;
+    font-weight: 600;
+
+    letter-spacing: 0.28em;
+
+    color: rgba(255, 255, 255, 0.55);
+}
+
+
+.hero h1 {
+    font-size: clamp(
+        4rem,
+        13vw,
+        10rem
+    );
+
+    line-height: 0.85;
+
+    font-weight: 800;
+
+    letter-spacing: -0.07em;
+
+    color: #ffffff;
+}
+
+
+.hero-role {
+    margin-top: 38px;
+
+    font-size: clamp(
+        1rem,
+        2vw,
+        1.35rem
+    );
+
+    line-height: 1.6;
+
+    letter-spacing: 0.06em;
+
+    color: rgba(255, 255, 255, 0.65);
+}
+
+
+/* ==========================================
+   BUTTONS
+   ========================================== */
+
+.hero-actions,
+.contact-actions {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 14px;
+
+    margin-top: 42px;
+}
+
+
+.button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 50px;
+
+    padding: 0 24px;
+
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+    border-radius: 999px;
+
+    font-size: 0.78rem;
+    font-weight: 600;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+
+    transition:
+        transform 220ms ease,
+        background 220ms ease,
+        border-color 220ms ease;
+}
+
+
+.button:hover {
+    transform: translateY(-2px);
+
+    border-color:
+        rgba(255, 255, 255, 0.45);
+}
+
+
+.button:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 4px;
+}
+
+
+.button-primary {
+    background: #ffffff;
+    color: #050505;
+}
+
+
+.button-primary:hover {
+    background: #e9e9e9;
+}
+
+
+.button-secondary {
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    color: #ffffff;
+}
+
+
+/* ==========================================
+   SCROLL INDICATOR
+   ========================================== */
+
+.hero-scroll {
+    position: absolute;
+
+    left: 50%;
+    bottom: 34px;
+
+    transform: translateX(-50%);
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 12px;
+
+    color: rgba(255, 255, 255, 0.35);
+
+    font-size: 0.62rem;
+
+    letter-spacing: 0.2em;
+
+    white-space: nowrap;
+}
+
+
+.scroll-line {
+    display: block;
+
+    width: 1px;
+    height: 42px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.5),
+            transparent
+        );
+}
+
+
+/* ==========================================
+   PLACEHOLDER SECTIONS
+   ========================================== */
+
+.placeholder-section {
+    min-height: 80vh;
+
+    border-top:
+        1px solid rgba(255, 255, 255, 0.06);
+}
+
+
+.placeholder-section:nth-child(even) {
+    background:
+        rgba(255, 255, 255, 0.012);
+}
+
+
+.section-number {
+    margin-bottom: 20px;
+
+    font-size: 0.7rem;
+
+    letter-spacing: 0.2em;
+
+    color: rgba(255, 255, 255, 0.35);
+}
+
+
+.placeholder-section h2,
+.contact-section h2 {
+    max-width: 900px;
+
+    font-size: clamp(
+        3rem,
+        8vw,
+        7rem
+    );
+
+    line-height: 0.92;
+
+    letter-spacing: -0.055em;
+
+    font-weight: 750;
+}
+
+
+.section-intro {
+    max-width: 550px;
+
+    margin-top: 28px;
+
+    font-size: 1rem;
+
+    line-height: 1.7;
+
+    color:
+        rgba(255, 255, 255, 0.5);
+}
+
+
+/* ==========================================
+   CONTACT
+   ========================================== */
+
+.contact-section {
+    min-height: 100vh;
+
+    border-top:
+        1px solid rgba(255, 255, 255, 0.06);
+}
+
+
+.contact-cta {
+    margin-top: 28px;
+
+    font-size: clamp(
+        2rem,
+        5vw,
+        4rem
+    );
+
+    font-weight: 700;
+
+    letter-spacing: -0.04em;
+}
+
+
+/* ==========================================
+   BOOT FOUNDATION
+   ========================================== */
+
+.boot-screen {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #050505;
+}
+
+
+.boot-content {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    font-family:
+        "SFMono-Regular",
+        Consolas,
+        "Liberation Mono",
+        monospace;
+
+    font-size: 0.75rem;
+
+    letter-spacing: 0.12em;
+}
+
+
+.boot-label {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+
+.boot-status {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 768px) {
+
+    .section-container {
+        width:
+            min(
+                100% - 40px,
+                1200px
+            );
+    }
+
+
+    .hero-content {
+        width:
+            calc(100% - 32px);
+    }
+
+
+    .hero h1 {
+        font-size:
+            clamp(
+                3.5rem,
+                18vw,
+                7rem
+            );
+    }
+
+
+    .hero-role {
+        font-size: 0.9rem;
+
+        letter-spacing: 0.04em;
+    }
+
+
+    .hero-actions,
+    .contact-actions {
+        flex-direction: column;
+
+        width: 100%;
+    }
+
+
+    .button {
+        width: min(
+            100%,
+            280px
+        );
+    }
+
+
+    .hero-scroll {
+        bottom: 22px;
+    }
+}
+
+
+/* ==========================================
+   REDUCED MOTION
+   ========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ==========================================
+   STEP 4 — SCROLL EXPERIENCE
+   ========================================== */
+
+.hero {
+    position: relative;
+
+    min-height: 100svh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    isolation: isolate;
+
+    overflow: hidden;
+}
+
+
+/*
+ * Hero content will respond to scroll.
+ */
+
+.hero-content {
+    will-change:
+        transform,
+        opacity;
+
+    transform:
+        translate3d(0, 0, 0);
+}
+
+
+/*
+ * 3D canvas stays locked inside
+ * the hero while the page scrolls.
+ */
+
+.hero-canvas {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+    will-change:
+        transform,
+        opacity;
+}
+
+
+/*
+ * About section starts slightly
+ * deeper in the experience.
+ */
+
+#about {
+    position: relative;
+
+    opacity: 0.35;
+
+    transform:
+        translate3d(0, 40px, 0);
+
+    transition:
+        opacity 500ms ease,
+        transform 700ms cubic-bezier(
+            0.16,
+            1,
+            0.3,
+            1
+        );
+}
+
+
+/*
+ * Activated by JavaScript when
+ * About enters the viewport.
+ */
+
+#about.is-visible {
+    opacity: 1;
+
+    transform:
+        translate3d(0, 0, 0);
+}
+
+
+/*
+ * Keep animation smooth.
+ */
+
+.hero,
+.hero-content,
+.hero-canvas,
+#about {
+    backface-visibility: hidden;
+}
+
+
+/* ==========================================
+   MOBILE
+   ========================================== */
+
+@media (max-width: 768px) {
+
+    .hero-content {
+        will-change:
+            opacity,
+            transform;
+    }
+
+
+    #about {
+        transform:
+            translate3d(0, 24px, 0);
+    }
+}
+
+
+/* ==========================================
+   REDUCED MOTION
+   ========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .hero-content,
+    .hero-canvas,
+    #about {
+        transform: none !important;
+
+        opacity: 1 !important;
+
+        transition: none !important;
+    }
+}
+
+/* ==========================================
+   STEP 5 — ABOUT
+   ========================================== */
+
+.about-section {
+
+    position: relative;
+
+    min-height: 100vh;
+
+    padding:
+        160px 6vw
+        180px;
+
+    background:
+        #050505;
+
+    overflow: hidden;
+}
+
+
+.about-container {
+
+    width: min(
+        1200px,
+        100%
+    );
+
+    margin: 0 auto;
+}
+
+
+/* ==========================================
+   EYEBROW
+   ========================================== */
+
+.section-eyebrow {
+
+    margin-bottom: 50px;
+
+    font-family:
+        monospace;
+
+    font-size: 11px;
+
+    letter-spacing:
+        0.18em;
+
+    opacity: 0.45;
+}
+
+
+/* ==========================================
+   INTRO
+   ========================================== */
+
+.about-intro {
+
+    max-width:
+        900px;
+
+    margin-bottom:
+        150px;
+}
+
+
+.about-intro h2 {
+
+    margin: 0;
+
+    font-size:
+        clamp(
+            48px,
+            8vw,
+            110px
+        );
+
+    line-height:
+        0.9;
+
+    letter-spacing:
+        -0.055em;
+
+    font-weight:
+        700;
+}
+
+
+.about-intro h2 span {
+
+    display: block;
+
+    opacity:
+        0.35;
+}
+
+
+.about-lead {
+
+    max-width:
+        650px;
+
+    margin-top:
+        45px;
+
+    font-size:
+        clamp(
+            18px,
+            2vw,
+            26px
+        );
+
+    line-height:
+        1.55;
+
+    opacity:
+        0.58;
+}
+
+
+/* ==========================================
+   ENGINEERING FLOW
+   ========================================== */
+
+.engineering-flow {
+
+    position: relative;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        30px;
+
+    padding-left:
+        70px;
+}
+
+
+/* Vertical line */
+
+.flow-line {
+
+    position: absolute;
+
+    left:
+        18px;
+
+    top:
+        20px;
+
+    bottom:
+        20px;
+
+    width:
+        1px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.16
+        );
+}
+
+
+/* ==========================================
+   FLOW CARD
+   ========================================== */
+
+.flow-card {
+
+    position: relative;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        90px 1fr;
+
+    gap:
+        30px;
+
+    padding:
+        45px;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.08
+        );
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.025
+        );
+
+    opacity:
+        0;
+
+    transform:
+        translate3d(
+            0,
+            60px,
+            0
+        );
+
+    transition:
+        opacity 700ms ease,
+        transform 900ms
+        cubic-bezier(
+            0.16,
+            1,
+            0.3,
+            1
+        );
+
+    will-change:
+        transform,
+        opacity;
+}
+
+
+/* Activated card */
+
+.flow-card.is-visible {
+
+    opacity:
+        1;
+
+    transform:
+        translate3d(
+            0,
+            0,
+            0
+        );
+}
+
+
+/* ==========================================
+   CARD NUMBER
+   ========================================== */
+
+.flow-number {
+
+    font-family:
+        monospace;
+
+    font-size:
+        13px;
+
+    opacity:
+        0.35;
+}
+
+
+/* ==========================================
+   CARD LABEL
+   ========================================== */
+
+.flow-label {
+
+    display:
+        block;
+
+    margin-bottom:
+        14px;
+
+    font-family:
+        monospace;
+
+    font-size:
+        10px;
+
+    letter-spacing:
+        0.18em;
+
+    opacity:
+        0.4;
+}
+
+
+/* ==========================================
+   CARD TITLE
+   ========================================== */
+
+.flow-card h3 {
+
+    margin:
+        0 0 18px;
+
+    font-size:
+        clamp(
+            24px,
+            3vw,
+            38px
+        );
+
+    letter-spacing:
+        -0.035em;
+}
+
+
+/* ==========================================
+   CARD TEXT
+   ========================================== */
+
+.flow-card p {
+
+    max-width:
+        620px;
+
+    margin:
+        0;
+
+    font-size:
+        16px;
+
+    line-height:
+        1.7;
+
+    opacity:
+        0.5;
+}
+
+
+/* ==========================================
+   STATEMENT
+   ========================================== */
+
+.about-statement {
+
+    margin-top:
+        160px;
+
+    padding-top:
+        35px;
+
+    border-top:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.1
+        );
+}
+
+
+.about-statement span {
+
+    font-family:
+        monospace;
+
+    font-size:
+        10px;
+
+    letter-spacing:
+        0.2em;
+
+    opacity:
+        0.35;
+}
+
+
+.about-statement p {
+
+    margin-top:
+        15px;
+
+    font-size:
+        clamp(
+            24px,
+            4vw,
+            48px
+        );
+
+    letter-spacing:
+        -0.04em;
+
+    opacity:
+        0.75;
+}
+
+
+/* ==========================================
+   MOBILE
+   ========================================== */
+
+@media (max-width: 768px) {
+
+    .about-section {
+
+        padding:
+            110px 22px
+            120px;
+    }
+
+
+    .about-intro {
+
+        margin-bottom:
+            90px;
+    }
+
+
+    .engineering-flow {
+
+        padding-left:
+            35px;
+    }
+
+
+    .flow-line {
+
+        left:
+            8px;
+    }
+
+
+    .flow-card {
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            15px;
+
+        padding:
+            28px;
+    }
+
+
+    .flow-number {
+
+        font-size:
+            11px;
+    }
+
+
+    .about-statement {
+
+        margin-top:
+            100px;
+    }
+}
+
+
+/* ==========================================
+   REDUCED MOTION
+   ========================================== */
+
+@media (
+    prefers-reduced-motion: reduce
+) {
+
+    .flow-card {
+
+        opacity:
+            1;
+
+        transform:
+            none;
+
+        transition:
+            none;
+    }
+}
