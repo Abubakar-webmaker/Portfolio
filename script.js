@@ -1,13 +1,10 @@
 /*
  * ==========================================
  * ABUBAKAR // DIGITAL UNIVERSE
- * STEP 4 — SCROLL / CAMERA SYSTEM
  * ==========================================
  */
 
 "use strict";
-
-import * as THREE from "three";
 
 
 /*
@@ -20,27 +17,17 @@ document.addEventListener(
     "DOMContentLoaded",
     () => {
 
-        const container =
-            document.getElementById(
-                "hero-canvas"
-            );
-
-
-        if (!container) {
-
-            console.error(
-                "Hero canvas container was not found."
-            );
-
-            return;
-        }
-
-
-        initHeroScene(container);
-
         initAboutReveal();
 
         initEngineeringFlow();
+
+        initSkillsReveal();
+
+        initProjectLab();
+
+        initDeveloperMode();
+
+        initContactSection();
 
     }
 );
@@ -342,8 +329,14 @@ function initHeroScene(container) {
      * ======================================
      */
 
+    const isMobile =
+        window.innerWidth <= 768;
+
+
     const particleCount =
-        900;
+        isMobile
+            ? 300
+            : 900;
 
 
     const particlePositions =
@@ -607,6 +600,19 @@ function initHeroScene(container) {
      * ======================================
      */
 
+    let pageVisible =
+        !document.hidden;
+
+
+    document.addEventListener(
+        "visibilitychange",
+        () => {
+            pageVisible =
+                !document.hidden;
+        }
+    );
+
+
     let animationFrameId = null;
 
     let previousTime = 0;
@@ -618,6 +624,11 @@ function initHeroScene(container) {
             requestAnimationFrame(
                 animate
             );
+
+
+        if (!pageVisible) {
+            return;
+        }
 
 
         const delta =
@@ -1026,11 +1037,11 @@ function initHeroScene(container) {
     function handleResize() {
 
         const width =
-            container.clientWidth;
+            window.innerWidth;
 
 
         const height =
-            container.clientHeight;
+            window.innerHeight;
 
 
         if (
@@ -1042,8 +1053,7 @@ function initHeroScene(container) {
 
 
         camera.aspect =
-            width /
-            height;
+            width / height;
 
 
         camera.updateProjectionMatrix();
@@ -1059,7 +1069,7 @@ function initHeroScene(container) {
         renderer.setPixelRatio(
             Math.min(
                 window.devicePixelRatio,
-                2
+                1.5
             )
         );
 
@@ -1312,5 +1322,655 @@ function initEngineeringFlow() {
             );
 
         }
+    );
+}
+
+/*
+ * ==========================================
+ * STEP 6 — SKILLS REVEAL
+ * ==========================================
+ */
+
+function initSkillsReveal() {
+
+    const nodes =
+        document.querySelectorAll(
+            ".skill-node"
+        );
+
+
+    if (!nodes.length) {
+        return;
+    }
+
+
+    const prefersReducedMotion =
+        window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches;
+
+
+    /*
+     * Reduced motion:
+     * show everything immediately.
+     */
+
+    if (
+        prefersReducedMotion
+    ) {
+
+        nodes.forEach(
+            (node) => {
+
+                node.classList.add(
+                    "is-visible"
+                );
+
+            }
+        );
+
+        return;
+    }
+
+
+    /*
+     * Intersection Observer
+     */
+
+    const observer =
+        new IntersectionObserver(
+            (entries) => {
+
+                entries.forEach(
+                    (entry) => {
+
+                        if (
+                            !entry.isIntersecting
+                        ) {
+                            return;
+                        }
+
+
+                        const node =
+                            entry.target;
+
+
+                        const index =
+                            Array.from(
+                                nodes
+                            ).indexOf(
+                                node
+                            );
+
+
+                        /*
+                         * Small stagger.
+                         */
+
+                        setTimeout(
+                            () => {
+
+                                node.classList.add(
+                                    "is-visible"
+                                );
+
+                            },
+                            index * 120
+                        );
+
+
+                        observer.unobserve(
+                            node
+                        );
+
+                    }
+                );
+
+            },
+            {
+                threshold:
+                    0.15
+            }
+        );
+
+
+    nodes.forEach(
+        (node) => {
+
+            observer.observe(
+                node
+            );
+
+        }
+    );
+}
+
+/*
+ * ==========================================
+ * STEP 7 — PROJECT LAB REVEAL
+ * ==========================================
+ */
+
+function initProjectLab() {
+
+    const projects =
+        document.querySelectorAll(
+            ".project-card"
+        );
+
+
+    if (!projects.length) {
+        return;
+    }
+
+
+    const prefersReducedMotion =
+        window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches;
+
+
+    if (
+        prefersReducedMotion
+    ) {
+
+        projects.forEach(
+            (project) => {
+
+                project.classList.add(
+                    "is-visible"
+                );
+
+            }
+        );
+
+        return;
+    }
+
+
+    const observer =
+        new IntersectionObserver(
+            (entries) => {
+
+                entries.forEach(
+                    (entry) => {
+
+                        if (
+                            !entry.isIntersecting
+                        ) {
+                            return;
+                        }
+
+
+                        const project =
+                            entry.target;
+
+
+                        const index =
+                            Array.from(
+                                projects
+                            ).indexOf(
+                                project
+                            );
+
+
+                        setTimeout(
+                            () => {
+
+                                project.classList.add(
+                                    "is-visible"
+                                );
+
+                            },
+                            index * 150
+                        );
+
+
+                        observer.unobserve(
+                            project
+                        );
+
+                    }
+                );
+
+            },
+            {
+                threshold:
+                    0.12
+            }
+        );
+
+
+    projects.forEach(
+        (project) => {
+
+            observer.observe(
+                project
+            );
+
+        }
+    );
+}
+
+/*
+ * ==========================================
+ * STEP 8 — DEVELOPER TERMINAL
+ * ==========================================
+ */
+
+function initDeveloperMode() {
+
+    const terminal =
+        document.querySelector(
+            ".dev-terminal"
+        );
+
+    const output =
+        document.getElementById(
+            "terminal-output"
+        );
+
+    const form =
+        document.getElementById(
+            "terminal-form"
+        );
+
+    const input =
+        document.getElementById(
+            "terminal-input"
+        );
+
+
+    if (
+        !terminal ||
+        !output ||
+        !form ||
+        !input
+    ) {
+        return;
+    }
+
+
+    /*
+     * Reveal terminal
+     */
+
+    const observer =
+        new IntersectionObserver(
+            (entries) => {
+
+                entries.forEach(
+                    (entry) => {
+
+                        if (
+                            entry.isIntersecting
+                        ) {
+
+                            terminal.classList.add(
+                                "is-visible"
+                            );
+
+                            observer.unobserve(
+                                terminal
+                            );
+
+                        }
+
+                    }
+                );
+
+            },
+            {
+                threshold:
+                    0.15
+            }
+        );
+
+
+    observer.observe(
+        terminal
+    );
+
+
+    /*
+     * Terminal commands
+     */
+
+    const commands = {
+
+        help: [
+            "Available commands:",
+            "",
+            "whoami      — developer profile",
+            "stack       — technical stack",
+            "projects    — selected projects",
+            "contact     — contact information",
+            "clear       — clear terminal",
+            "help        — show commands"
+        ],
+
+
+        whoami: [
+            "Abubakar",
+            "Fullstack Developer",
+            "Frontend + Backend + AI",
+            "Building products and developer tools."
+        ],
+
+
+        stack: [
+            "Frontend:",
+            "HTML / CSS / JavaScript / React",
+            "",
+            "Backend:",
+            "Node.js / REST APIs / Authentication",
+            "",
+            "Tools:",
+            "Git / GitHub / VS Code / npm"
+        ],
+
+
+        projects: [
+            "Selected projects:",
+            "",
+            "01 — Postman Collection AI Agent",
+            "02 — AI Chat Platform",
+            "03 — AI Project Management",
+            "04 — AI Resume Builder",
+            "",
+            "More → GitHub"
+        ],
+
+
+        contact: [
+            "Open to:",
+            "",
+            "Remote opportunities",
+            "Freelance projects",
+            "Fullstack development",
+            "AI integrations"
+        ]
+
+    };
+
+
+    /*
+     * Print command
+     */
+
+    function printCommand(
+        command
+    ) {
+
+        const line =
+            document.createElement(
+                "div"
+            );
+
+
+        line.className =
+            "terminal-line";
+
+
+        line.innerHTML =
+            `
+                <span class="terminal-prompt">
+                    $
+                </span>
+
+                <span>
+                    ${escapeHTML(command)}
+                </span>
+            `;
+
+
+        output.appendChild(
+            line
+        );
+
+    }
+
+
+    /*
+     * Print response
+     */
+
+    function printResponse(
+        lines
+    ) {
+
+        lines.forEach(
+            (line) => {
+
+                const response =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                response.className =
+                    "terminal-response";
+
+
+                response.textContent =
+                    line;
+
+
+                output.appendChild(
+                    response
+                );
+
+            }
+        );
+
+
+        output.scrollTop =
+            output.scrollHeight;
+    }
+
+
+    /*
+     * Execute command
+     */
+
+    function executeCommand(
+        rawCommand
+    ) {
+
+        const command =
+            rawCommand
+                .trim()
+                .toLowerCase();
+
+
+        if (!command) {
+            return;
+        }
+
+
+        printCommand(
+            command
+        );
+
+
+        if (
+            command === "clear"
+        ) {
+
+            output.innerHTML =
+                "";
+
+            return;
+        }
+
+
+        if (
+            commands[command]
+        ) {
+
+            printResponse(
+                commands[command]
+            );
+
+            return;
+        }
+
+
+        printResponse([
+            `command not found: ${command}`,
+            'Type "help" to see available commands.'
+        ]);
+
+    }
+
+
+    /*
+     * Form submit
+     */
+
+    form.addEventListener(
+        "submit",
+        (event) => {
+
+            event.preventDefault();
+
+
+            executeCommand(
+                input.value
+            );
+
+
+            input.value =
+                "";
+
+        }
+    );
+
+
+    /*
+     * Quick command buttons
+     */
+
+    const buttons =
+        document.querySelectorAll(
+            "[data-command]"
+        );
+
+
+    buttons.forEach(
+        (button) => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    executeCommand(
+                        button.dataset.command
+                    );
+
+
+                    input.focus();
+
+                }
+            );
+
+        }
+    );
+
+
+    /*
+     * Escape HTML
+     */
+
+    function escapeHTML(
+        value
+    ) {
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+
+        div.textContent =
+            value;
+
+
+        return div.innerHTML;
+    }
+}
+
+
+/*
+ * ==========================================
+ * STEP 9 — CONTACT REVEAL
+ * ==========================================
+ */
+
+function initContactSection() {
+
+    const contact =
+        document.querySelector(
+            ".contact-command-center"
+        );
+
+
+    if (!contact) {
+        return;
+    }
+
+
+    const prefersReducedMotion =
+        window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches;
+
+
+    if (
+        prefersReducedMotion
+    ) {
+
+        contact.classList.add(
+            "is-visible"
+        );
+
+        return;
+    }
+
+
+    const observer =
+        new IntersectionObserver(
+            (entries) => {
+
+                entries.forEach(
+                    (entry) => {
+
+                        if (
+                            entry.isIntersecting
+                        ) {
+
+                            contact.classList.add(
+                                "is-visible"
+                            );
+
+                            observer.unobserve(
+                                contact
+                            );
+
+                        }
+
+                    }
+                );
+
+            },
+            {
+                threshold:
+                    0.15
+            }
+        );
+
+
+    observer.observe(
+        contact
     );
 }
