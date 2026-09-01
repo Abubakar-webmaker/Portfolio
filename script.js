@@ -171,14 +171,8 @@ navButtons.forEach((button, index) => {
   });
 });
 
-// Case-study CTA.
-document.querySelector("#openCase")?.addEventListener("click", () => {
-  const detailIndex = panels.findIndex(panel => panel.id === "detail");
-  if (detailIndex !== -1) goToPage(detailIndex, 1);
-});
-
 // Back to top.
-document.querySelector(".footer-row span:last-child")?.addEventListener("click", () => {
+document.querySelector(".back-top")?.addEventListener("click", () => {
   goToPage(0, -1);
 });
 

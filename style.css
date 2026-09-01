@@ -76,7 +76,8 @@ body.page-mode #smooth-content{width:100%;height:100%;overflow:hidden}
 /* ── TYPOGRAPHY ── */
 .display{font-size:clamp(36px,4.8vw,78px);line-height:.92;letter-spacing:-.05em;font-weight:800}
 .display span{display:inline-block;color:var(--orange)}
-.section-label{font:11px/1.3 var(--mono);letter-spacing:.06em;opacity:.7}
+.section-label{font:11px/1.3 var(--mono);letter-spacing:.06em;opacity:.7;display:flex;align-items:center;gap:6px}
+.section-icon{width:13px;height:13px;stroke:currentColor;flex-shrink:0;opacity:.8}
 .mini{opacity:.6;margin-bottom:16px}
 
 /* ── MEDIA ── */
@@ -140,40 +141,88 @@ body.page-mode #smooth-content{width:100%;height:100%;overflow:hidden}
 .about-copy p{font:13px/1.55 var(--mono);opacity:.85}
 .skills-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px}
 .skills-row span{font:10px var(--mono);border:1px solid rgba(255,255,255,.35);padding:5px 11px;border-radius:20px;opacity:.9}
+.hero-sub{font:clamp(13px,1.2vw,16px)/1.4 var(--mono);opacity:.8;letter-spacing:.01em}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:4px}
 .pill-btn{
   display:inline-block;background:var(--cream);color:#172b2c;
   padding:12px 20px;border-radius:8px;font:11px var(--mono);
   margin-top:8px;width:fit-content;
 }
+.pill-btn.outline{
+  background:transparent;border:1px solid rgba(255,255,255,.6);color:#fff;
+}
 
 /* ══════════════════════════════
-   03 WORK
+   03 SKILLS
 ══════════════════════════════ */
-.work-grid{
+.panel-skills{background:linear-gradient(115deg,#1a4a50 0%,#062f35 60%)}
+.skills-grid{display:flex;flex-direction:column;gap:28px;border-top:1px solid var(--line);padding-top:24px;flex:1;min-height:0;justify-content:center}
+.skill-group{display:flex;flex-direction:column;gap:12px}
+.skill-group-label{font:11px/1 var(--mono);letter-spacing:.08em;opacity:.5}
+.skill-tags{display:flex;flex-wrap:wrap;gap:8px}
+.skill-tags span{font:11px var(--mono);border:1px solid rgba(255,255,255,.3);padding:7px 14px;border-radius:20px;opacity:.9;transition:border-color .2s,opacity .2s}
+.skill-tags span:hover{border-color:var(--orange);opacity:1}
+
+/* ══════════════════════════════
+   04 WORK
+══════════════════════════════ */
+.panel-work{background:linear-gradient(105deg,#b57d5d 0%,#37483e 47%,#062f35 100%)}
+.projects-grid{
   display:grid;
-  grid-template-columns:min(340px,40%) 1fr;
-  gap:40px;
-  align-items:start;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
   border-top:1px solid var(--line);
   padding-top:20px;
   flex:1;
   min-height:0;
+  overflow:hidden;
 }
-.work-media{height:min(460px,56vh);border-radius:20px;overflow:hidden}
-.work-list{display:flex;flex-direction:column;gap:4px;padding-top:8px}
-.work-list .display{font-size:clamp(28px,3.2vw,52px);margin-bottom:12px}
-.project-link{
-  display:flex;align-items:center;gap:12px;
-  font-size:clamp(14px,1.4vw,20px);font-weight:600;
-  padding:10px 0;border-bottom:1px solid rgba(255,255,255,.1);
-  transition:padding-left .25s;
+.project-card{
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:14px;
+  padding:18px 20px;
+  background:rgba(255,255,255,.04);
+  display:flex;flex-direction:column;gap:10px;
+  transition:border-color .2s,background .2s;
 }
-.project-link:hover{padding-left:10px}
-.project-link.active{color:var(--red)}
-.project-link span{font:10px var(--mono);opacity:.5;width:24px;flex-shrink:0}
+.project-card:hover{border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.07)}
+.pc-header{display:flex;flex-direction:column;gap:8px}
+.pc-header h3{font-size:clamp(13px,1.1vw,16px);font-weight:700;line-height:1.2}
+.pc-tags{display:flex;flex-wrap:wrap;gap:5px}
+.pc-tags span{font:9px var(--mono);border:1px solid rgba(255,255,255,.25);padding:3px 8px;border-radius:20px;opacity:.8}
+.project-card p{font:11px/1.6 var(--mono);opacity:.7;flex:1}
+.pc-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto}
+.pc-links a{font:10px var(--mono);opacity:.7;border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:2px;transition:opacity .2s}
+.pc-links a:hover{opacity:1}
 
 /* ══════════════════════════════
-   04 CASE STUDY
+   05 EXPERIENCE
+══════════════════════════════ */
+.panel-experience{background:linear-gradient(115deg,#2a4a3e 0%,#062f35 65%)}
+.exp-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:50px;
+  border-top:1px solid var(--line);padding-top:24px;
+  flex:1;min-height:0;align-content:start;
+}
+.exp-col{display:flex;flex-direction:column;gap:16px}
+.exp-col-label{font:10px/1 var(--mono);letter-spacing:.08em;opacity:.45;text-transform:uppercase}
+.exp-card{
+  border:1px solid rgba(255,255,255,.15);border-radius:14px;
+  padding:20px 22px;background:rgba(255,255,255,.04);
+  display:flex;flex-direction:column;gap:6px;
+}
+.exp-role{font-size:clamp(14px,1.2vw,17px);font-weight:700;line-height:1.2}
+.exp-company{font:12px var(--mono);color:var(--orange);opacity:.9}
+.exp-meta{font:11px var(--mono);opacity:.5;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.exp-badge{
+  background:rgba(255,158,104,.2);color:var(--orange);
+  border:1px solid rgba(255,158,104,.4);border-radius:20px;
+  padding:2px 8px;font:9px var(--mono);letter-spacing:.04em;
+}
+.exp-detail{font:12px/1.6 var(--mono);opacity:.7;margin-top:4px}
+
+/* ══════════════════════════════
+   06 CASE STUDY
 ══════════════════════════════ */
 .case-grid{
   display:grid;
@@ -216,24 +265,35 @@ body.page-mode #smooth-content{width:100%;height:100%;overflow:hidden}
 .code-lines{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font:11px var(--mono);opacity:.8}
 
 /* ══════════════════════════════
-   06 CONTACT
+   07 CONTACT
 ══════════════════════════════ */
 .contact-inner{gap:14px}
-.contact-inner .display{font-size:clamp(42px,7vw,110px);margin:8px 0}
-.contact-copy{font:14px/1.6 var(--mono);max-width:500px;opacity:.85}
-.contact-link{
-  font:18px/1 var(--mono);display:inline-flex;align-items:center;gap:12px;
-  border-bottom:1px solid rgba(255,255,255,.5);padding-bottom:8px;
-  width:fit-content;
+.contact-inner .display{font-size:clamp(38px,6vw,96px);margin:4px 0}
+.contact-copy{font:14px/1.6 var(--mono);max-width:500px;opacity:.75}
+.contact-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
+  border:1px solid rgba(255,255,255,.15);border-radius:14px;
+  overflow:hidden;width:min(640px,100%);
 }
-.contact-socials{display:flex;gap:24px;margin-top:6px}
-.contact-socials a{font:12px var(--mono);border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:3px;opacity:.8}
+.contact-item{
+  display:flex;flex-direction:column;gap:4px;
+  padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.1);
+  border-right:1px solid rgba(255,255,255,.1);
+  transition:background .2s;
+}
+.contact-item:nth-child(even){border-right:none}
+.contact-item:nth-last-child(-n+2){border-bottom:none}
+.contact-item:not(.no-link):hover{background:rgba(255,255,255,.06)}
+.contact-item-label{font:9px/1 var(--mono);letter-spacing:.08em;opacity:.4;text-transform:uppercase}
+.contact-item-val{font:12px/1.4 var(--mono);opacity:.85}
+.contact-item.no-link .contact-item-val{opacity:.6}
+.contact-inner .pill-btn{margin-top:4px}
 .footer-row{
   display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
   font:10px var(--mono);border-top:1px solid rgba(255,255,255,.2);
   padding-top:14px;opacity:.5;margin-top:auto;
 }
-.footer-row span:last-child{cursor:pointer}
+.back-top{cursor:pointer}
 
 /* ── SWEEP TRANSITION ── */
 .sweep{
@@ -274,10 +334,12 @@ body.page-mode #smooth-content{width:100%;height:100%;overflow:hidden}
   .about-copy p{font-size:12px}
 
   /* work */
-  .work-grid{grid-template-columns:1fr;gap:16px}
-  .work-media{height:min(180px,24vh)}
-  .work-list .display{font-size:clamp(26px,7vw,40px)}
-  .project-link{font-size:14px}
+  .projects-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .project-card{padding:14px 16px}
+  .pc-header h3{font-size:13px}
+
+  /* experience */
+  .exp-grid{grid-template-columns:1fr;gap:24px}
 
   /* case */
   .case-grid{grid-template-columns:1fr;gap:16px}
@@ -293,7 +355,10 @@ body.page-mode #smooth-content{width:100%;height:100%;overflow:hidden}
 
   /* contact */
   .contact-inner .display{font-size:clamp(32px,9vw,60px)}
-  .contact-link{font-size:14px}
+  .contact-grid{grid-template-columns:1fr}
+  .contact-item:nth-child(even){border-right:none}
+  .contact-item:nth-last-child(-n+2){border-bottom:1px solid rgba(255,255,255,.1)}
+  .contact-item:last-child{border-bottom:none}
   .footer-row{font-size:9px}
 }
 

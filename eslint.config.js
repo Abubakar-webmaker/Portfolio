@@ -19,7 +19,9 @@ export default [
                 requestAnimationFrame: "readonly",
                 cancelAnimationFrame: "readonly",
                 IntersectionObserver: "readonly",
-                ResizeObserver: "readonly"
+                ResizeObserver: "readonly",
+                gsap: "readonly",
+                ScrollTrigger: "readonly"
             }
         }
     }
