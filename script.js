@@ -27,6 +27,13 @@ function setActive(index) {
   navButtons.forEach((button, i) => {
     button.classList.toggle("active", i === index);
   });
+  // sync header nav
+  const headerBtns = document.querySelectorAll(".header-nav button");
+  headerBtns.forEach(btn => {
+    const targetId = btn.dataset.target;
+    const targetIndex = panels.findIndex(p => p.id === targetId);
+    btn.classList.toggle("active", targetIndex === index);
+  });
 }
 
 function showInitialPage() {
@@ -164,10 +171,13 @@ window.addEventListener("touchend", (event) => {
   else previousPage();
 }, { passive: true });
 
-// Side navigation: direct page jump with same transition.
-navButtons.forEach((button, index) => {
+// Side + header navigation.
+const allNavButtons = gsap.utils.toArray(".side-nav button, .header-nav button");
+allNavButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    if (index !== current) goToPage(index, index > current ? 1 : -1);
+    const target = button.dataset.target;
+    const index = panels.findIndex(p => p.id === target);
+    if (index !== -1 && index !== current) goToPage(index, index > current ? 1 : -1);
   });
 });
 

@@ -7,7 +7,7 @@
   <title>Abu Bakar — Full Stack Developer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
@@ -17,19 +17,27 @@
   <header class="site-header">
     <a class="brand" href="#home" aria-label="Home">
       <span class="brand-mark">A</span>
-      <span class="brand-copy">ABU BAKAR — FULL STACK DEVELOPER<br>MERN · TYPESCRIPT · AI INTEGRATIONS</span>
+      <span class="brand-copy">M. ABUBAKAR — FULL STACK DEVELOPER<br>MERN · AI INTEGRATIONS · REACT NATIVE</span>
     </a>
-    <div class="header-line"></div>
+    <nav class="header-nav">
+      <button data-target="home">Home</button>
+      <button data-target="about">About</button>
+      <button data-target="skills">Skills</button>
+      <button data-target="work">Work</button>
+      <button data-target="experience">Experience</button>
+      <button data-target="contact">Contact</button>
+    </nav>
+    <a class="header-cta" href="mailto:m.abubakar.codes@gmail.com">Let's Talk <span>→</span></a>
     <button class="menu-btn" type="button" aria-label="Open navigation"><span></span><span></span></button>
   </header>
 
   <nav class="side-nav" aria-label="Section navigation">
-    <button data-target="home" class="active">01</button>
-    <button data-target="about">02</button>
-    <button data-target="skills">03</button>
-    <button data-target="work">04</button>
-    <button data-target="experience">05</button>
-    <button data-target="contact">06</button>
+    <button data-target="home" class="active"><span class="nav-tooltip">Home</span>01</button>
+    <button data-target="about"><span class="nav-tooltip">About</span>02</button>
+    <button data-target="skills"><span class="nav-tooltip">Skills</span>03</button>
+    <button data-target="work"><span class="nav-tooltip">Work</span>04</button>
+    <button data-target="experience"><span class="nav-tooltip">Experience</span>05</button>
+    <button data-target="contact"><span class="nav-tooltip">Contact</span>06</button>
   </nav>
 
   <main id="smooth-wrapper">
@@ -38,7 +46,7 @@
       <!-- 01 HOME -->
       <section class="panel panel-home" id="home" data-theme="home">
         <div class="panel-inner">
-          <div class="eyebrow reveal"><i data-lucide="code-2" class="section-icon"></i> FULL STACK DEVELOPER — MERN · AI INTEGRATIONS · REACT NATIVE</div>
+          <div class="eyebrow reveal"><i data-lucide="circle-dot" class="section-icon"></i> AVAILABLE FOR SELECTED PROJECTS &nbsp;&middot;&nbsp; 2026</div>
           <div class="home-grid">
             <div class="home-copy">
               <h1 class="display reveal">M. Abubakar</h1>
@@ -59,19 +67,58 @@
       <!-- 02 ABOUT -->
       <section class="panel panel-about" id="about" data-theme="about">
         <div class="panel-inner">
-          <div class="section-label reveal"><i data-lucide="user" class="section-icon"></i> WHO I AM</div>
+          <div class="section-label reveal"><i data-lucide="user" class="section-icon"></i> 02 — ABOUT</div>
           <div class="about-grid">
-            <div class="about-copy">
-              <h2 class="display small reveal">About Me</h2>
-              <p class="reveal">I'm a Full Stack Developer based in Karachi, Pakistan, specializing in MERN stack applications and LLM-powered features.</p>
-              <p class="reveal">I've shipped real products independently — including an AI Chat Platform, an enterprise Project Management Tool, and a Postman Collection AI Agent published to both PyPI and the VS Code Marketplace.</p>
-              <p class="reveal">Currently interning at Revolix Technologies, an AI software company, where I work on real client projects. Certified through Jawan Pakistan in Full Stack MERN Development and Web &amp; Mobile Frontend Development.</p>
-              <p class="reveal">I'm available for freelance projects and remote work opportunities.</p>
-              <div class="skills-row reveal">
-                <span>React</span><span>Node.js</span><span>TypeScript</span><span>MongoDB</span><span>Express</span><span>Next.js</span><span>Socket.io</span><span>Groq AI</span>
+
+            <div class="about-left">
+              <h2 class="display small reveal">Full Stack<br>Developer.</h2>
+              <p class="about-bio reveal">I build scalable web applications, AI-powered products, and mobile experiences for startups and businesses. I work across the entire product lifecycle — from frontend interfaces and APIs to databases, AI integrations, and deployment.</p>
+              <p class="about-location reveal">Based in Karachi · Available remotely worldwide.</p>
+              <div class="about-btns reveal">
+                <a class="pill-btn" href="#work">View My Work →</a>
+                <a class="pill-btn outline" href="mailto:m.abubakar.codes@gmail.com">Let's Talk →</a>
               </div>
-              <a class="pill-btn reveal" href="#work">VIEW MY WORK</a>
             </div>
+
+            <div class="about-right">
+              <div class="about-stats reveal">
+                <div class="stat-card">
+                  <span class="stat-num">1+</span>
+                  <span class="stat-label">Year Experience</span>
+                </div>
+                <div class="stat-card">
+                  <span class="stat-num">6+</span>
+                  <span class="stat-label">Products Shipped</span>
+                </div>
+                <div class="stat-card">
+                  <span class="stat-num">2</span>
+                  <span class="stat-label">Marketplaces Published</span>
+                </div>
+              </div>
+
+              <div class="about-block reveal">
+                <div class="about-block-label">Experience</div>
+                <div class="about-block-val">Full Stack Developer Intern — <span>Revolix Technologies</span></div>
+              </div>
+
+              <div class="about-block reveal">
+                <div class="about-block-label">Selected Projects</div>
+                <a class="about-project-link" href="#work">AI Chat Platform ↗</a>
+                <a class="about-project-link" href="#work">AI Project Manager ↗</a>
+                <a class="about-project-link" href="#work">Postman Collection AI Agent ↗</a>
+              </div>
+
+              <div class="about-block reveal">
+                <div class="about-block-label">Published To</div>
+                <div class="about-block-val"><span>PyPI</span> &nbsp;·&nbsp; <span>VS Code Marketplace</span></div>
+              </div>
+
+              <div class="about-avail reveal">
+                <i data-lucide="circle-dot" class="avail-dot"></i>
+                Available for Freelance &amp; Remote Projects
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
@@ -79,21 +126,54 @@
       <!-- 03 SKILLS -->
       <section class="panel panel-skills" id="skills" data-theme="skills">
         <div class="panel-inner">
-          <div class="section-label reveal"><i data-lucide="wrench" class="section-icon"></i> TECH STACK</div>
-          <h2 class="display small reveal">Tech Stack</h2>
+          <div class="section-label reveal"><i data-lucide="wrench" class="section-icon"></i> 03 — SKILLS</div>
+          <h2 class="display small reveal">What I Work With</h2>
           <div class="skills-grid">
+
             <div class="skill-group reveal">
-              <div class="skill-group-label">── Frontend ──</div>
-              <div class="skill-tags"><span>React.js</span><span>Next.js</span><span>TypeScript</span><span>React Native</span><span>Tailwind CSS</span><span>JavaScript</span></div>
+              <div class="skill-group-label"><i data-lucide="monitor" class="sg-icon"></i> Frontend</div>
+              <div class="skill-tags">
+                <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg">React.js</span>
+                <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg">Next.js</span>
+                <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg">TypeScript</span>
+                <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg">React Native</span>
+                <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg">Tailwind CSS</span>
+                <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg">JavaScript</span>
+              </div>
             </div>
+
             <div class="skill-group reveal">
-              <div class="skill-group-label">── Backend ──</div>
-              <div class="skill-tags"><span>Node.js</span><span>Express.js</span><span>MongoDB</span><span>Socket.io</span><span>REST APIs</span></div>
+              <div class="skill-group-label"><i data-lucide="server" class="sg-icon"></i> Backend</div>
+              <div class="skill-tags">
+                <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg">Node.js</span>
+                <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg">Express.js</span>
+                <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg">MongoDB</span>
+                <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/socketio/socketio-original.svg">Socket.io</span>
+                <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg">FastAPI</span>
+                <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg">REST APIs</span>
+              </div>
             </div>
+
             <div class="skill-group reveal">
-              <div class="skill-group-label">── AI &amp; Tools ──</div>
-              <div class="skill-tags"><span>Groq API</span><span>LangGraph</span><span>Python</span><span>Git</span><span>Vercel</span><span>JWT Auth</span></div>
+              <div class="skill-group-label"><i data-lucide="cpu" class="sg-icon"></i> AI &amp; Python</div>
+              <div class="skill-tags">
+                <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg">Python</span>
+                <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg">FastAPI</span>
+                <span><i data-lucide="zap" class="tag-icon"></i>Groq API</span>
+                <span><i data-lucide="git-branch" class="tag-icon"></i>LangGraph</span>
+              </div>
             </div>
+
+            <div class="skill-group reveal">
+              <div class="skill-group-label"><i data-lucide="wrench" class="sg-icon"></i> Tools</div>
+              <div class="skill-tags">
+                <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg">Git</span>
+                <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg">GitHub</span>
+                <span><i data-lucide="triangle" class="tag-icon"></i>Vercel</span>
+                <span><i data-lucide="shield" class="tag-icon"></i>JWT Auth</span>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
