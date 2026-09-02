@@ -1,3 +1,4 @@
+/* global gsap, ScrollTrigger, lucide */
 gsap.registerPlugin(ScrollTrigger);
 
 const panels = gsap.utils.toArray(".panel");
@@ -9,6 +10,9 @@ let current = 0;
 let isTransitioning = false;
 let touchStartY = 0;
 let touchStartX = 0;
+
+// Track skill ball RAF ids so we can cancel when panel is hidden
+const rafIds = [];
 
 document.body.classList.add("page-mode");
 
@@ -66,6 +70,8 @@ function goToPage(target, direction = target > current ? 1 : -1) {
   isTransitioning = true;
   const outgoing = panels[current];
   const incoming = panels[target];
+  // Pause skill balls when leaving skills panel
+  if (outgoing.id === 'skills') rafIds.forEach(id => cancelAnimationFrame(id));
   sweep1.classList.remove("run");
   sweep2.classList.remove("run");
   void sweep1.offsetWidth;
@@ -126,7 +132,37 @@ allNavButtons.forEach((button) => {
   });
 });
 
+// data-target on pill buttons (hero, about, etc.)
+document.querySelectorAll('[data-target]').forEach(btn => {
+  if (btn.closest('.side-nav') || btn.closest('.header-nav')) return;
+  btn.addEventListener('click', () => {
+    const index = panels.findIndex(p => p.id === btn.dataset.target);
+    if (index !== -1) goToPage(index, index > current ? 1 : -1);
+  });
+});
+
 document.querySelector(".back-top")?.addEventListener("click", () => goToPage(0, -1));
+
+// ── CONTACT FORM ──
+document.getElementById('contactForm')?.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const name    = document.getElementById('cfName').value.trim();
+  const email   = document.getElementById('cfEmail').value.trim();
+  const message = document.getElementById('cfMessage').value.trim();
+  if (!name || !email || !message) return;
+  const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
+  const body    = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+  window.location.href = `mailto:m.abubakar.codes@gmail.com?subject=${subject}&body=${body}`;
+  // Show success, disable button, reset fields after delay
+  document.getElementById('cfSuccess').classList.add('show');
+  this.querySelector('.cf-submit').disabled = true;
+  setTimeout(() => {
+    this.reset();
+    document.getElementById('cfSuccess').classList.remove('show');
+    this.querySelector('.cf-submit').disabled = false;
+    lucide.createIcons();
+  }, 4000);
+});
 
 // ── WORK CARD EFFECTS ──
 
@@ -246,22 +282,25 @@ document.querySelectorAll(".skill-group").forEach(card => {
     let vx = Math.cos(angle) * speed;
     let vy = Math.sin(angle) * speed;
 
+    let rafId;
     (function animate() {
       const cw = wrap.offsetWidth  - size;
       const ch = wrap.offsetHeight - size;
-      if (cw <= 0 || ch <= 0) { requestAnimationFrame(animate); return; }
+      if (cw <= 0 || ch <= 0) { rafId = requestAnimationFrame(animate); rafIds.push(rafId); return; }
       x += vx; y += vy;
       if (x <= 0)  { x = 0;  vx =  Math.abs(vx); }
       if (x >= cw) { x = cw; vx = -Math.abs(vx); }
       if (y <= 0)  { y = 0;  vy =  Math.abs(vy); }
       if (y >= ch) { y = ch; vy = -Math.abs(vy); }
       ball.style.transform = `translate(${x}px,${y}px)`;
-      requestAnimationFrame(animate);
+      rafId = requestAnimationFrame(animate);
     })();
+    rafIds.push(rafId);
   });
 });
 
 window.addEventListener("load", () => {
+  lucide.createIcons();
   gsap.fromTo(".site-header",
     { y: -30, autoAlpha: 0 },
     { y: 0, autoAlpha: 1, duration: 1, ease: "power3.out" }

@@ -3,13 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Abu Bakar — Full Stack Developer portfolio. MERN stack, AI integrations, TypeScript.">
-  <title>Abu Bakar — Full Stack Developer</title>
+  <meta name="description" content="M. Abubakar — Full Stack Developer. MERN stack, AI integrations, React Native. Available for freelance, remote & full-time work.">
+  <meta name="theme-color" content="#062f35">
+
+  <!-- Open Graph / Social sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="M. Abubakar — Full Stack Developer">
+  <meta property="og:description" content="Full Stack Developer specializing in MERN, AI integrations & React Native. Based in Karachi, open to remote work worldwide.">
+  <meta property="og:image" content="assets/images/abubakar.png">
+  <meta property="og:url" content="https://abubakar.dev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="M. Abubakar — Full Stack Developer">
+  <meta name="twitter:description" content="Full Stack Developer — MERN · AI · React Native. Open to all work.">
+  <meta name="twitter:image" content="assets/images/abubakar.png">
+
+  <title>M. Abubakar — Full Stack Developer</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="icon" type="image/png" href="assets/favicon.png" sizes="32x32">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <!-- Lucide icons — self-hosted, no CDN dependency -->
+  <script src="assets/js/lucide.min.js"></script>
 </head>
 <body>
   <div class="noise"></div>
@@ -53,7 +69,7 @@
               <p class="hero-sub reveal">Full Stack Developer — MERN · AI Integrations · React Native</p>
               <p class="intro reveal">I build production-ready web apps and AI-powered features that actually work.<br>Currently at <span>Revolix Technologies, Karachi.</span></p>
               <div class="hero-btns reveal">
-                <a class="pill-btn" href="#work">View My Work</a>
+                <button class="pill-btn" data-target="work">View My Work</button>
                 <a class="pill-btn outline" href="mailto:m.abubakar.codes@gmail.com">Hire Me</a>
               </div>
             </div>
@@ -75,7 +91,7 @@
               <p class="about-bio reveal">I build scalable web applications, AI-powered products, and mobile experiences for startups and businesses. I work across the entire product lifecycle — from frontend interfaces and APIs to databases, AI integrations, and deployment.</p>
               <p class="about-location reveal">Based in Karachi · Available remotely worldwide.</p>
               <div class="about-btns reveal">
-                <a class="pill-btn" href="#work">View My Work →</a>
+                <button class="pill-btn" data-target="work">View My Work →</button>
                 <a class="pill-btn outline" href="mailto:m.abubakar.codes@gmail.com">Let's Talk →</a>
               </div>
             </div>
@@ -103,9 +119,9 @@
 
               <div class="about-block reveal">
                 <div class="about-block-label">Selected Projects</div>
-                <a class="about-project-link" href="#work">AI Chat Platform ↗</a>
-                <a class="about-project-link" href="#work">AI Project Manager ↗</a>
-                <a class="about-project-link" href="#work">Postman Collection AI Agent ↗</a>
+                <button class="about-project-link" data-target="work">AI Chat Platform ↗</button>
+                <button class="about-project-link" data-target="work">AI Project Manager ↗</button>
+                <button class="about-project-link" data-target="work">Postman Collection AI Agent ↗</button>
               </div>
 
               <div class="about-block reveal">
@@ -206,7 +222,7 @@
               </div>
               <p>A Claude-style chat app with real-time streaming, multi-provider AI support (Groq, OpenAI, Gemini), JWT auth, and full conversation history. Built end-to-end.</p>
               <div class="pc-links">
-                <a href="#" target="_blank" rel="noopener noreferrer">Live Demo ↗</a>
+                <a href="https://github.com/Abubakar-webmaker" target="_blank" rel="noopener noreferrer">Live Demo ↗</a>
                 <a href="https://github.com/Abubakar-webmaker" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
               </div>
             </div>
@@ -229,7 +245,7 @@
               </div>
               <p>Multi-template resume generator powered by Groq AI. Includes a multi-step form, real-time preview, and one-click PDF download.</p>
               <div class="pc-links">
-                <a href="#" target="_blank" rel="noopener noreferrer">Live Demo ↗</a>
+                <a href="https://github.com/Abubakar-webmaker" target="_blank" rel="noopener noreferrer">Live Demo ↗</a>
                 <a href="https://github.com/Abubakar-webmaker" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
               </div>
             </div>
@@ -252,7 +268,7 @@
               </div>
               <p>Full-stack content management system with admin controls, content CRUD, and a clean dashboard interface.</p>
               <div class="pc-links">
-                <a href="#" target="_blank" rel="noopener noreferrer">Live Demo ↗</a>
+                <a href="https://github.com/Abubakar-webmaker" target="_blank" rel="noopener noreferrer">Live Demo ↗</a>
                 <a href="https://github.com/Abubakar-webmaker" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
               </div>
             </div>
@@ -297,32 +313,78 @@
       </section>
 
 
-      <!-- 07 CONTACT -->
+      <!-- 06 CONTACT -->
       <section class="panel panel-contact" id="contact" data-theme="contact">
         <div class="panel-inner contact-inner">
           <div class="section-label reveal"><i data-lucide="mail" class="section-icon"></i> GET IN TOUCH</div>
-          <h2 class="display reveal">Let's Work<br>Together</h2>
-          <p class="contact-copy reveal">Available for freelance projects, remote work, and full-time opportunities.</p>
-          <div class="contact-grid reveal">
-            <a class="contact-item" href="mailto:m.abubakar.codes@gmail.com">
-              <span class="contact-item-label">Email</span>
-              <span class="contact-item-val">m.abubakar.codes@gmail.com ↗</span>
-            </a>
-            <a class="contact-item" href="https://www.linkedin.com/in/abubakar-fullstack-dev/" target="_blank" rel="noopener noreferrer">
-              <span class="contact-item-label">LinkedIn</span>
-              <span class="contact-item-val">linkedin.com/in/abubakar-fullstack-dev ↗</span>
-            </a>
-            <a class="contact-item" href="https://github.com/Abubakar-webmaker" target="_blank" rel="noopener noreferrer">
-              <span class="contact-item-label">GitHub</span>
-              <span class="contact-item-val">github.com/Abubakar-webmaker ↗</span>
-            </a>
-            <div class="contact-item no-link">
-              <span class="contact-item-label">Location</span>
-              <span class="contact-item-val">Karachi, Pakistan — Open to Remote Work</span>
-            </div>
+
+          <div class="contact-top reveal">
+            <h2 class="display">Let's Work<br>Together</h2>
+            <div class="avail-badge"><span class="avail-dot-green"></span> Currently Available — Open to All Work</div>
           </div>
-          <a class="pill-btn reveal" href="mailto:m.abubakar.codes@gmail.com">Send Me a Message</a>
-          <div class="footer-row reveal"><span>© 2026 M. ABUBAKAR</span><span>FULL STACK / AI / REACT NATIVE</span><span class="back-top">BACK TO TOP ↑</span></div>
+
+          <p class="contact-copy reveal">Available for freelance projects, remote work, and full-time opportunities. Usually responds within 24 hours.</p>
+
+          <div class="contact-body reveal">
+
+            <!-- LEFT: Info cards -->
+            <div class="contact-cards">
+              <a class="contact-item" href="mailto:m.abubakar.codes@gmail.com">
+                <div class="contact-item-inner">
+                  <span class="contact-item-label">Email</span>
+                  <span class="contact-item-val">m.abubakar.codes@gmail.com</span>
+                </div>
+                <span class="contact-arrow">↗</span>
+              </a>
+              <a class="contact-item" href="https://www.linkedin.com/in/abubakar-fullstack-dev/" target="_blank" rel="noopener noreferrer">
+                <div class="contact-item-inner">
+                  <span class="contact-item-label">LinkedIn</span>
+                  <span class="contact-item-val">abubakar-fullstack-dev</span>
+                </div>
+                <span class="contact-arrow">↗</span>
+              </a>
+              <a class="contact-item" href="https://github.com/Abubakar-webmaker" target="_blank" rel="noopener noreferrer">
+                <div class="contact-item-inner">
+                  <span class="contact-item-label">GitHub</span>
+                  <span class="contact-item-val">Abubakar-webmaker</span>
+                </div>
+                <span class="contact-arrow">↗</span>
+              </a>
+              <div class="contact-item no-link location-card">
+                <div class="contact-item-inner">
+                  <span class="contact-item-label">Location</span>
+                  <span class="contact-item-val"><i data-lucide="map-pin" class="contact-loc-icon"></i> Karachi, Pakistan</span>
+                  <span class="contact-item-sub">Open to Remote Work Worldwide</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT: Contact form -->
+            <form class="contact-form" id="contactForm" novalidate>
+              <div class="cf-row">
+                <input class="cf-input" type="text" id="cfName" placeholder="Your Name" required autocomplete="name">
+                <input class="cf-input" type="email" id="cfEmail" placeholder="Your Email" required autocomplete="email">
+              </div>
+              <textarea class="cf-input cf-textarea" id="cfMessage" placeholder="Your Message" required rows="4"></textarea>
+              <button class="cf-submit pill-btn" type="submit">Send Message <span class="cf-arrow">→</span></button>
+              <div class="cf-success" id="cfSuccess">
+                <i data-lucide="check-circle" class="cf-check-icon"></i>
+                Message sent! I'll get back to you within 24 hours.
+              </div>
+            </form>
+
+          </div>
+
+          <div class="footer-row reveal">
+            <span>© 2026 M. ABUBAKAR</span>
+            <span>FULL STACK / AI / REACT NATIVE</span>
+            <div class="footer-socials">
+              <a href="https://github.com/Abubakar-webmaker" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i data-lucide="github"></i></a>
+              <a href="https://www.linkedin.com/in/abubakar-fullstack-dev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+              <a href="mailto:m.abubakar.codes@gmail.com" aria-label="Email"><i data-lucide="mail"></i></a>
+            </div>
+            <span class="back-top">BACK TO TOP ↑</span>
+          </div>
         </div>
       </section>
 
@@ -332,10 +394,9 @@
   <div class="sweep sweep-1" aria-hidden="true"></div>
   <div class="sweep sweep-2" aria-hidden="true"></div>
 
-  <script>lucide.createIcons();</script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.8/dist/lenis.min.js"></script>
+  <script src="assets/js/gsap.min.js"></script>
+  <script src="assets/js/ScrollTrigger.min.js"></script>
+  <script src="assets/js/lenis.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
