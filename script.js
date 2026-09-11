@@ -71,7 +71,7 @@ function goToPage(target, direction = target > current ? 1 : -1) {
   const outgoing = panels[current];
   const incoming = panels[target];
   // Pause skill balls when leaving skills panel
-  if (outgoing.id === 'skills') rafIds.forEach(id => cancelAnimationFrame(id));
+  if (outgoing.id === 'skills') { rafIds.forEach(id => cancelAnimationFrame(id)); rafIds.length = 0; }
   sweep1.classList.remove("run");
   sweep2.classList.remove("run");
   void sweep1.offsetWidth;
