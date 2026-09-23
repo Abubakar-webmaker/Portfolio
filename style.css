@@ -341,35 +341,74 @@ body.page-mode #smooth-content{width:100%;height:100%;overflow:hidden}
    03 SKILLS
 ══════════════════════════════ */
 .skills-grid{
-  display:grid;grid-template-columns:1fr 1fr;gap:16px;
-  border-top:1px solid var(--line);padding-top:16px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:1fr 1fr;
+  gap:12px;
+  border-top:1px solid var(--line);padding-top:14px;
   flex:1;min-height:0;
 }
 .skill-group{
   border:1px solid rgba(255,255,255,.1);border-radius:14px;
-  padding:20px 22px;background:rgba(255,255,255,.03);
-  display:flex;flex-direction:column;gap:12px;
+  padding:14px 16px 0;background:rgba(255,255,255,.03);
+  display:flex;flex-direction:column;
   position:relative;overflow:hidden;
+  min-height:0;
 }
 .skill-group-label{
   font-family:var(--font-mono);
-  font-size:11px;
+  font-size:10.5px;
   letter-spacing:.08em;
-  opacity:.6;
+  color:rgba(255,255,255,.55);
   line-height:1;
   display:flex;align-items:center;gap:7px;
   text-transform:uppercase;
+  position:relative;
+  z-index:2;
+  flex-shrink:0;
+  padding-bottom:8px;
+  border-bottom:1px solid rgba(255,255,255,.07);
 }
-.sg-icon{width:12px;height:12px;stroke:currentColor;opacity:.7;flex-shrink:0}
+.sg-icon{width:11px;height:11px;stroke:currentColor;opacity:.7;flex-shrink:0}
+
+/* Ball field — sits below label, padded away from card edges */
 .skill-bubble-wrap{
-  position:absolute;inset:0;
+  position:absolute;
+  top:38px;
+  left:6px;right:6px;bottom:6px;
   pointer-events:none;
+  overflow:hidden;
 }
 .skill-bubble-ball{
   position:absolute;
-  width:72px;height:72px;
+  width:56px;height:56px;
   border-radius:50%;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  outline:1px solid rgba(255,255,255,.1);
+  outline-offset:-1px;
+  will-change:transform;
+}
+.skill-bubble-ball img{
+  width:24px;height:24px;
+  object-fit:contain;
+  display:block;
+  flex-shrink:0;
+  pointer-events:none;
+  user-select:none;
+}
+.skill-bubble-ball span{
+  font-family:var(--font-mono);
+  font-size:6.5px;
+  letter-spacing:.02em;
+  text-align:center;
+  line-height:1.15;
+  padding:0 3px;
+  word-break:break-word;
+  pointer-events:none;
+  user-select:none;
+  max-width:54px;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 .skill-group .skill-tags{visibility:hidden;height:0;overflow:hidden;margin:0;padding:0}
 .skill-tags span{
@@ -395,101 +434,232 @@ body.page-mode #smooth-content{width:100%;height:100%;overflow:hidden}
 ══════════════════════════════ */
 .projects-grid{
   display:grid;
+  /* 3 equal columns */
   grid-template-columns:repeat(3,1fr);
-  grid-template-rows:repeat(2,1fr);
-  gap:12px;
+  grid-template-rows:1fr 1fr;
+  gap:10px;
   border-top:1px solid var(--line);
-  padding-top:16px;
-  flex:1;min-height:0;overflow:hidden;
+  padding-top:14px;
+  flex:1;min-height:0;
 }
 
-/* 1. Stagger entry */
-.project-card{
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:14px;padding:14px 16px;
-  background:rgba(255,255,255,.04);
-  display:flex;flex-direction:column;gap:8px;
-  transform-style:preserve-3d;
-  transition:box-shadow .35s ease, border-color .35s ease;
-  opacity:0;transform:translateY(40px);
-  will-change:transform,opacity;
-  min-height:0;
+/* Featured card spans first 2 columns */
+.project-card--featured{
+  grid-column:span 2;
 }
+
+/* ── Base card ── */
+.project-card{
+  position:relative;
+  border-radius:16px;
+  padding:20px 22px 18px;
+  background:rgba(255,255,255,.04);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  display:flex;flex-direction:column;gap:10px;
+  overflow:hidden;
+  /* accent color from JS via CSS var */
+  --accent:rgba(255,158,104,1);
+  /* entry state */
+  opacity:0;transform:translateY(36px);
+  will-change:transform,opacity;
+  transition:
+    transform .3s cubic-bezier(.22,1,.36,1),
+    box-shadow .3s ease,
+    border-color .3s ease;
+  /* border: left accent line at rest, subtle top on hover */
+  border:1px solid rgba(255,255,255,.1);
+  border-left:2px solid transparent;
+}
+
+/* Visible state after stagger */
 .project-card.card-visible{
   animation:cardIn .55s cubic-bezier(.22,1,.36,1) forwards;
 }
 @keyframes cardIn{
-  to{opacity:1;transform:translateY(0) rotateX(0) rotateY(0)}
+  to{opacity:1;transform:translateY(0)}
 }
 
-/* 4. Border glow on hover */
+/* ── Animated accent top-border sweep ── */
+.project-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:-100%;
+  width:100%;height:2px;
+  background:linear-gradient(90deg, transparent, var(--accent), transparent);
+  transition:left .55s cubic-bezier(.22,1,.36,1);
+  border-radius:2px 2px 0 0;
+}
+
+/* ── Subtle inner ambient glow ── */
+.project-card::after{
+  content:'';
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 50% 110%, var(--accent), transparent 70%);
+  opacity:0;
+  transition:opacity .4s ease;
+  pointer-events:none;
+}
+
+/* ── Hover state ── */
 .project-card:hover{
-  border-color:rgba(255,158,104,.55);
-  box-shadow:0 0 0 1px rgba(255,158,104,.2), 0 8px 32px rgba(255,158,104,.12);
+  transform:translateY(-4px);
+  border-color:rgba(255,255,255,.18);
+  border-left-color:var(--accent);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.06),
+    0 12px 40px rgba(0,0,0,.35),
+    0 0 0 1px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.project-card:hover::before{ left:100%; }
+.project-card:hover::after{ opacity:.06; }
+
+/* ── Faded project number watermark ── */
+.pc-num{
+  position:absolute;
+  top:10px;right:16px;
+  font-family:var(--font-mono);
+  font-size:3.5rem;
+  font-weight:700;
+  line-height:1;
+  letter-spacing:-.04em;
+  color:rgba(255,255,255,.05);
+  pointer-events:none;
+  user-select:none;
+  transition:color .3s ease;
+}
+.project-card:hover .pc-num{
+  color:color-mix(in srgb, var(--accent) 14%, transparent);
 }
 
-.pc-header{display:flex;flex-direction:column;gap:5px}
+/* ── Featured badge ── */
+.pc-featured-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  font-family:var(--font-mono);
+  font-size:.68rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--accent);
+  opacity:.85;
+  margin-bottom:2px;
+}
+.pc-featured-badge::before{
+  content:'';
+  width:5px;height:5px;
+  border-radius:50%;
+  background:var(--accent);
+  animation:pulse-dot 2s ease infinite;
+}
+@keyframes pulse-dot{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.4;transform:scale(.7)}
+}
+
+/* ── Header ── */
+.pc-header{display:flex;flex-direction:column;gap:7px;position:relative;z-index:1}
 .pc-header h3{
   font-family:var(--font-display);
   font-size:1rem;
-  font-weight:600;
-  line-height:1.2;
-  letter-spacing:-0.01em;
+  font-weight:700;
+  line-height:1.25;
+  letter-spacing:-.02em;
+  transition:color .25s ease;
 }
-.pc-tags{display:flex;flex-wrap:wrap;gap:4px}
+.project-card--featured .pc-header h3{
+  font-size:1.15rem;
+}
+.project-card:hover .pc-header h3{
+  color:color-mix(in srgb, var(--accent) 60%, white);
+}
 
-/* 3. Tag shimmer */
+/* ── Tags ── */
+.pc-tags{display:flex;flex-wrap:wrap;gap:4px}
 .pc-tags span{
   font-family:var(--font-mono);
-  font-size:.72rem;
-  letter-spacing:.03em;
+  font-size:.68rem;
+  letter-spacing:.04em;
   line-height:1.4;
-  border:1px solid rgba(255,255,255,.25);
-  padding:2px 7px;border-radius:20px;opacity:.8;
+  border:1px solid rgba(255,255,255,.15);
+  padding:2px 8px;border-radius:20px;
+  opacity:.75;
   position:relative;overflow:hidden;
+  transition:border-color .25s, opacity .25s, color .25s;
+  backdrop-filter:blur(4px);
 }
+/* Shimmer sweep on hover */
 .pc-tags span::after{
   content:'';
-  position:absolute;top:0;left:-100%;width:60%;height:100%;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);
+  position:absolute;top:0;left:-100%;
+  width:60%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);
   transition:none;
+}
+.project-card:hover .pc-tags span{
+  border-color:color-mix(in srgb, var(--accent) 40%, rgba(255,255,255,.15));
+  opacity:.95;
 }
 .project-card:hover .pc-tags span::after{
   left:160%;
-  transition:left .55s ease;
+  transition:left .5s ease .1s;
 }
 
+/* ── Description ── */
 .project-card p{
   font-family:var(--font-body-fam);
   font-size:.8rem;
-  line-height:1.5;
-  opacity:.7;flex:1;
+  line-height:1.6;
+  opacity:.65;
+  flex:1;
   overflow:hidden;
   display:-webkit-box;
-  -webkit-line-clamp:2;
+  -webkit-line-clamp:3;
   -webkit-box-orient:vertical;
+  position:relative;z-index:1;
+  transition:opacity .25s ease;
 }
-.pc-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto}
+.project-card--featured p{
+  -webkit-line-clamp:2;
+}
+.project-card:hover p{ opacity:.85; }
 
-/* 5. Link underline slide */
+/* ── Links ── */
+.pc-links{
+  display:flex;flex-wrap:wrap;gap:12px;
+  margin-top:auto;
+  position:relative;z-index:1;
+}
 .pc-links a{
   font-family:var(--font-mono);
-  font-size:var(--font-tag);
-  letter-spacing:.03em;
-  opacity:.7;
+  font-size:.72rem;
+  letter-spacing:.04em;
+  opacity:.6;
+  display:inline-flex;align-items:center;gap:3px;
   position:relative;
   padding-bottom:2px;
   transition:opacity .2s;
 }
+/* Underline slide */
 .pc-links a::after{
   content:'';
   position:absolute;bottom:0;left:0;
   width:0;height:1px;
-  background:var(--orange);
+  background:var(--accent);
   transition:width .25s ease;
 }
-.pc-links a:hover{opacity:1}
-.pc-links a:hover::after{width:100%}
+.pc-links a:hover{ opacity:1; }
+.pc-links a:hover::after{ width:100%; }
+
+/* Arrow diagonal shoot on hover */
+.pc-arrow{
+  display:inline-block;
+  font-style:normal;
+  transition:transform .25s cubic-bezier(.22,1,.36,1);
+}
+.pc-links a:hover .pc-arrow{
+  transform:translate(3px,-3px);
+}
 
 /* ══════════════════════════════
    05 EXPERIENCE
@@ -790,17 +960,21 @@ body.page-mode #smooth-content{width:100%;height:100%;overflow:hidden}
   .about-stats{grid-template-columns:repeat(3,1fr)}
 
   /* 03 skills */
-  .skills-grid{grid-template-columns:1fr;gap:10px}
-  .skill-group{padding:14px 16px;min-height:160px}
-  .skill-bubble-ball{width:60px;height:60px}
-  .skill-bubble-ball img{width:28px;height:28px}
+  .skills-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;gap:10px}
+  .skill-group{padding:12px 14px 0;min-height:140px}
+  .skill-bubble-wrap{top:36px;left:4px;right:4px;bottom:4px}
+  .skill-bubble-ball{width:50px;height:50px}
+  .skill-bubble-ball img{width:20px;height:20px}
+  .skill-bubble-ball span{font-size:6px}
   .tool-chip{padding:6px 10px;font-size:10px}
 
   /* 04 work */
-  .projects-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .projects-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;gap:10px}
+  .project-card--featured{grid-column:span 2}
   .project-card{padding:14px 16px;opacity:1;transform:none}
-  .project-card.card-visible{animation:none}
+  .project-card.card-visible{animation:none;opacity:1;transform:none}
   .pc-header h3{font-size:1rem}
+  .pc-num{font-size:2.5rem}
 
   /* 05 experience */
   .exp-grid{grid-template-columns:1fr;gap:16px}
@@ -837,20 +1011,23 @@ body.page-mode #smooth-content{width:100%;height:100%;overflow:hidden}
   .about-btns{flex-direction:column;gap:8px}
 
   /* 03 skills */
-  .skills-grid{grid-template-columns:1fr;gap:8px}
-  .skill-group{min-height:140px;padding:12px 14px}
-  .skill-bubble-ball{width:54px;height:54px}
-  .skill-bubble-ball img{width:24px;height:24px}
-  .skill-bubble-ball span{font-size:6px}
+  .skills-grid{grid-template-columns:1fr;grid-template-rows:auto;gap:8px}
+  .skill-group{min-height:130px;padding:12px 14px 0}
+  .skill-bubble-wrap{top:34px;left:4px;right:4px;bottom:4px}
+  .skill-bubble-ball{width:46px;height:46px}
+  .skill-bubble-ball img{width:19px;height:19px}
+  .skill-bubble-ball span{font-size:5.5px}
   .tools-chips{gap:6px}
   .tool-chip{padding:5px 8px;font-size:9px;gap:5px}
   .tool-chip img{width:13px;height:13px}
 
   /* 04 work */
-  .projects-grid{grid-template-columns:1fr;gap:8px}
+  .projects-grid{grid-template-columns:1fr;grid-template-rows:auto;gap:8px}
+  .project-card--featured{grid-column:span 1}
   .project-card{padding:12px 14px}
   .pc-header h3{font-size:.95rem}
   .project-card p{font-size:.78rem}
+  .pc-num{font-size:2rem}
 
   /* 05 experience */
   .exp-grid{gap:12px}
@@ -876,8 +1053,10 @@ body.page-mode #smooth-content{width:100%;height:100%;overflow:hidden}
   .stat-card{padding:8px 6px}
   .stat-num{font-size:1.1rem}
   .skill-group{min-height:120px}
-  .skill-bubble-ball{width:48px;height:48px}
-  .skill-bubble-ball img{width:20px;height:20px}
+  .skill-bubble-wrap{top:32px;left:3px;right:3px;bottom:3px}
+  .skill-bubble-ball{width:42px;height:42px}
+  .skill-bubble-ball img{width:17px;height:17px}
+  .skill-bubble-ball span{font-size:5px}
   .tool-chip{font-size:8px;padding:4px 7px}
 }
 
