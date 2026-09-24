@@ -45,8 +45,20 @@
       <button data-target="contact">Contact</button>
     </nav>
     <a class="header-cta" href="mailto:m.abubakar.codes@gmail.com">Let's Talk <span>→</span></a>
-    <button class="menu-btn" type="button" aria-label="Open navigation"><span></span><span></span></button>
+    <button class="menu-btn" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button>
   </header>
+
+  <!-- Mobile nav drawer -->
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" hidden>
+    <button class="mobile-nav-close" aria-label="Close navigation">✕</button>
+    <button data-target="home"       class="mobile-nav-link">Home</button>
+    <button data-target="about"      class="mobile-nav-link">About</button>
+    <button data-target="skills"     class="mobile-nav-link">Skills</button>
+    <button data-target="work"       class="mobile-nav-link">Work</button>
+    <button data-target="experience" class="mobile-nav-link">Experience</button>
+    <button data-target="contact"    class="mobile-nav-link">Contact</button>
+    <a class="mobile-nav-cta" href="mailto:m.abubakar.codes@gmail.com">Let's Talk →</a>
+  </nav>
 
   <nav class="side-nav" aria-label="Section navigation">
     <button data-target="home" class="active"><span class="nav-tooltip">Home</span>01</button>
@@ -72,7 +84,7 @@
               <div class="hero-btns reveal">
                 <button class="pill-btn" data-target="work">View My Work</button>
                 <a class="pill-btn outline" href="mailto:m.abubakar.codes@gmail.com">Hire Me</a>
-                <a class="pill-btn outline" href="assets/resume.pdf" download aria-label="Download Resume PDF">Resume ↓</a>
+                <a class="pill-btn outline" href="assets/Abu_Bakar_CV.pdf" download="Abu_Bakar_CV.pdf" aria-label="Download Resume PDF">Resume ↓</a>
               </div>
             </div>
             <div class="hero-media media reveal-media">
@@ -95,7 +107,7 @@
               <div class="about-btns reveal">
                 <button class="pill-btn" data-target="work">View My Work →</button>
                 <a class="pill-btn outline" href="mailto:m.abubakar.codes@gmail.com">Let's Talk →</a>
-                <a class="pill-btn outline" href="assets/resume.pdf" download aria-label="Download Resume PDF">Resume ↓</a>
+                <a class="pill-btn outline" href="assets/Abu_Bakar_CV.pdf" download="Abu_Bakar_CV.pdf" aria-label="Download Resume PDF">Resume ↓</a>
               </div>
             </div>
 
@@ -220,219 +232,368 @@
 
       <!-- 04 WORK -->
       <section class="panel panel-work" id="work" data-theme="work">
-        <div class="panel-inner">
-          <div class="section-label reveal"><i data-lucide="rocket" class="section-icon"></i> PROJECTS FROM THE FIELD</div>
-          <h2 class="display small reveal">Projects</h2>
-          <div class="projects-grid">
 
-            <!-- ── FEATURED card (spans 2 cols) — AI PROJECT MANAGER ── -->
-            <div class="project-card project-card--featured reveal" data-accent="#a78bfa">
-              <span class="pc-num" style="opacity:0;pointer-events:none;">01</span>
-              <div class="pc-featured-badge">Featured</div>
-              <div class="pc-header">
-                <h3>AI Project Manager</h3>
-                <div class="pc-tags"><span>MERN</span><span>Groq API</span><span>DnD Kit</span><span>MongoDB</span></div>
-              </div>
-              <p>Enterprise-grade project management tool with Kanban board, 16 AI-powered features, client portal, analytics, gamification, and role-based access control across 12 MongoDB models. 67+ features fully deployed.</p>
-              <div class="pc-links">
-                <a href="https://github.com/Abubakar-webmaker/ai-project-manager" target="_blank" rel="noopener noreferrer"><span>GitHub</span> <i class="pc-arrow">↗</i></a>
-              </div>
-            </div>
-
-            <!-- ── GRID cards ── -->
-            <!-- #02 Postman Collection AI Agent -->
-            <div class="project-card reveal" data-accent="#ff9e68">
-              <span class="pc-num">02</span>
-              <div class="pc-header">
-                <h3>Postman Collection AI Agent</h3>
-                <div class="pc-tags"><span>FastAPI</span><span>LangGraph</span><span>Groq API</span><span>Python</span></div>
-              </div>
-              <p>Analyzes backend source code and auto-generates complete Postman Collections. Published to PyPI and VS Code Marketplace, eliminating hours of manual API documentation work.</p>
-              <div class="pc-links">
-                <a href="https://github.com/Abubakar-webmaker/postman-collection-ai-agent" target="_blank" rel="noopener noreferrer"><span>GitHub</span> <i class="pc-arrow">↗</i></a>
-                <a href="https://pypi.org/project/postman-collection-ai-agent/" target="_blank" rel="noopener noreferrer"><span>PyPI</span> <i class="pc-arrow">↗</i></a>
-                <a href="https://marketplace.visualstudio.com/items?itemName=Abubakar-webmaker.postman-ai-agent" target="_blank" rel="noopener noreferrer"><span>VS Code</span> <i class="pc-arrow">↗</i></a>
-              </div>
-            </div>
-
-            <!-- #03 AI Chat Platform -->
-            <div class="project-card reveal" data-accent="#38bdf8">
-              <span class="pc-num">03</span>
-              <div class="pc-header">
-                <h3>AI Chat Platform</h3>
-                <div class="pc-tags"><span>React</span><span>Node.js</span><span>Socket.io</span><span>Groq · OpenAI · Gemini</span></div>
-              </div>
-              <p>Claude-style real-time chat application with multi-provider AI, streaming responses, JWT authentication, and persistent conversation history.</p>
-              <div class="pc-links">
-                <a href="https://github.com/Abubakar-webmaker/ai-chat-platform" target="_blank" rel="noopener noreferrer"><span>GitHub</span> <i class="pc-arrow">↗</i></a>
-              </div>
-            </div>
-
-            <!-- #04 CollabNotes (NEW) -->
-            <div class="project-card reveal" data-accent="#06b6d4">
-              <span class="pc-num">04</span>
-              <div class="pc-header">
-                <h3>CollabNotes</h3>
-                <div class="pc-tags"><span>MERN</span><span>Real-time Collaboration</span><span>Socket.io</span></div>
-              </div>
-              <p>Real-time collaborative note-taking platform with live updates, multi-user editing, auto-sync, and persistent storage across all devices.</p>
-              <div class="pc-links">
-                <a href="https://github.com/Abubakar-webmaker/collabNotes" target="_blank" rel="noopener noreferrer"><span>GitHub</span> <i class="pc-arrow">↗</i></a>
-              </div>
-            </div>
-
-            <!-- #05 AI Resume Builder -->
-            <div class="project-card reveal" data-accent="#34d399">
-              <span class="pc-num">05</span>
-              <div class="pc-header">
-                <h3>AI Resume Builder</h3>
-                <div class="pc-tags"><span>React</span><span>Groq API</span><span>PDF Export</span></div>
-              </div>
-              <p>Intelligent resume generator with multiple templates, AI-powered content suggestions, real-time preview, and one-click PDF export.</p>
-              <div class="pc-links">
-                <a href="https://github.com/Abubakar-webmaker/ai-resume-builder" target="_blank" rel="noopener noreferrer"><span>GitHub</span> <i class="pc-arrow">↗</i></a>
-              </div>
-            </div>
-
-            <!-- #06 Freelancer Invoice Generator -->
-            <div class="project-card reveal" data-accent="#fb923c">
-              <span class="pc-num">06</span>
-              <div class="pc-header">
-                <h3>Freelancer Invoice Generator</h3>
-                <div class="pc-tags"><span>MERN</span><span>TypeScript</span><span>JWT</span></div>
-              </div>
-              <p>Full-stack invoice management tool for freelancers with glassmorphism UI, JWT authentication, multi-currency support, and real-time status updates.</p>
-              <div class="pc-links">
-                <a href="https://github.com/Abubakar-webmaker/freelancer-invoice-generator" target="_blank" rel="noopener noreferrer"><span>GitHub</span> <i class="pc-arrow">↗</i></a>
-              </div>
-            </div>
-
-            <!-- #07 CMS Dashboard (Secondary) -->
-            <div class="project-card reveal" data-accent="#f472b6">
-              <span class="pc-num">07</span>
-              <div class="pc-header">
-                <h3>CMS Dashboard</h3>
-                <div class="pc-tags"><span>MERN</span><span>Full Stack</span></div>
-              </div>
-              <p>Content management system with admin controls, full CRUD operations for content, and an intuitive dashboard interface.</p>
-              <div class="pc-links">
-                <a href="https://github.com/Abubakar-webmaker/cms-dashboard" target="_blank" rel="noopener noreferrer"><span>GitHub</span> <i class="pc-arrow">↗</i></a>
-              </div>
-            </div>
-
-          </div>
+        <!-- Static header — always visible, outside the scroll strip -->
+        <div class="cw-header reveal">
+          <div class="section-label"><i data-lucide="rocket" class="section-icon"></i> PROJECTS FROM THE FIELD</div>
+          <h2 class="display small">Projects</h2>
+          <p class="cw-hint"><span class="cw-hint-drag">drag</span> <span class="cw-hint-sep">·</span> <span class="cw-hint-scroll">scroll</span> to explore</p>
         </div>
+
+        <!-- Cinematic card strip -->
+        <div class="cw-track-outer" aria-label="Project cards">
+          <div class="cw-track" id="cwTrack">
+
+            <!-- 01 — AI Project Manager -->
+            <article class="cw-card" data-accent="#a78bfa" data-index="0">
+              <div class="cw-card-bg" aria-hidden="true"></div>
+              <div class="cw-card-noise" aria-hidden="true"></div>
+              <div class="cw-card-inner">
+                <div class="cw-meta">
+                  <span class="cw-num">01</span>
+                  <span class="cw-badge">Featured</span>
+                </div>
+                <h3 class="cw-title">AI Project<br>Manager</h3>
+                <div class="cw-stack">
+                  <span>MERN</span><span>Groq API</span><span>DnD Kit</span><span>MongoDB</span><span>JWT</span>
+                </div>
+                <p class="cw-desc">Enterprise-grade project management tool with Kanban board, 16 AI-powered features, client portal, analytics, gamification, and role-based access control across 12 MongoDB models. 67+ features fully deployed.</p>
+                <div class="cw-links">
+                  <a href="https://github.com/Abubakar-webmaker/ai-project-manager" target="_blank" rel="noopener noreferrer" class="cw-link">
+                    <span>GitHub</span><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                </div>
+              </div>
+              <div class="cw-glow" aria-hidden="true"></div>
+            </article>
+
+            <!-- 02 — Postman Collection AI Agent -->
+            <article class="cw-card" data-accent="#ff9e68" data-index="1">
+              <div class="cw-card-bg" aria-hidden="true"></div>
+              <div class="cw-card-noise" aria-hidden="true"></div>
+              <div class="cw-card-inner">
+                <div class="cw-meta">
+                  <span class="cw-num">02</span>
+                </div>
+                <h3 class="cw-title">Postman AI<br>Agent</h3>
+                <div class="cw-stack">
+                  <span>FastAPI</span><span>LangGraph</span><span>Groq API</span><span>Python</span>
+                </div>
+                <p class="cw-desc">Analyzes backend source code and auto-generates complete Postman Collections. Published to PyPI and VS Code Marketplace, eliminating hours of manual API documentation work.</p>
+                <div class="cw-links">
+                  <a href="https://github.com/Abubakar-webmaker/postman-collection-ai-agent" target="_blank" rel="noopener noreferrer" class="cw-link"><span>GitHub</span><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                  <a href="https://pypi.org/project/postman-collection-ai-agent/" target="_blank" rel="noopener noreferrer" class="cw-link"><span>PyPI</span><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                  <a href="https://marketplace.visualstudio.com/items?itemName=Abubakar-webmaker.postman-ai-agent" target="_blank" rel="noopener noreferrer" class="cw-link"><span>VS Code</span><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                </div>
+              </div>
+              <div class="cw-glow" aria-hidden="true"></div>
+            </article>
+
+            <!-- 03 — AI Chat Platform -->
+            <article class="cw-card" data-accent="#38bdf8" data-index="2">
+              <div class="cw-card-bg" aria-hidden="true"></div>
+              <div class="cw-card-noise" aria-hidden="true"></div>
+              <div class="cw-card-inner">
+                <div class="cw-meta">
+                  <span class="cw-num">03</span>
+                </div>
+                <h3 class="cw-title">AI Chat<br>Platform</h3>
+                <div class="cw-stack">
+                  <span>React</span><span>Node.js</span><span>Socket.io</span><span>Groq</span><span>OpenAI</span><span>Gemini</span>
+                </div>
+                <p class="cw-desc">Claude-style real-time chat application with multi-provider AI, streaming responses, JWT authentication, and persistent conversation history. Supports seamless model switching mid-conversation.</p>
+                <div class="cw-links">
+                  <a href="https://github.com/Abubakar-webmaker/ai-chat-platform" target="_blank" rel="noopener noreferrer" class="cw-link"><span>GitHub</span><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                </div>
+              </div>
+              <div class="cw-glow" aria-hidden="true"></div>
+            </article>
+
+            <!-- 04 — CollabNotes -->
+            <article class="cw-card" data-accent="#06b6d4" data-index="3">
+              <div class="cw-card-bg" aria-hidden="true"></div>
+              <div class="cw-card-noise" aria-hidden="true"></div>
+              <div class="cw-card-inner">
+                <div class="cw-meta">
+                  <span class="cw-num">04</span>
+                </div>
+                <h3 class="cw-title">Collab<br>Notes</h3>
+                <div class="cw-stack">
+                  <span>MERN</span><span>Socket.io</span><span>Real-time</span><span>MongoDB</span>
+                </div>
+                <p class="cw-desc">Real-time collaborative note-taking platform with live multi-user editing, conflict-free auto-sync, and persistent storage — built for distributed teams working across all devices.</p>
+                <div class="cw-links">
+                  <a href="https://github.com/Abubakar-webmaker/collabNotes" target="_blank" rel="noopener noreferrer" class="cw-link"><span>GitHub</span><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                </div>
+              </div>
+              <div class="cw-glow" aria-hidden="true"></div>
+            </article>
+
+            <!-- 05 — AI Resume Builder -->
+            <article class="cw-card" data-accent="#34d399" data-index="4">
+              <div class="cw-card-bg" aria-hidden="true"></div>
+              <div class="cw-card-noise" aria-hidden="true"></div>
+              <div class="cw-card-inner">
+                <div class="cw-meta">
+                  <span class="cw-num">05</span>
+                </div>
+                <h3 class="cw-title">AI Resume<br>Builder</h3>
+                <div class="cw-stack">
+                  <span>React</span><span>Groq API</span><span>PDF Export</span><span>TypeScript</span>
+                </div>
+                <p class="cw-desc">Intelligent resume generator with multiple ATS-optimised templates, AI-powered content suggestions per role, real-time live preview, and one-click PDF export.</p>
+                <div class="cw-links">
+                  <a href="https://github.com/Abubakar-webmaker/ai-resume-builder" target="_blank" rel="noopener noreferrer" class="cw-link"><span>GitHub</span><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                </div>
+              </div>
+              <div class="cw-glow" aria-hidden="true"></div>
+            </article>
+
+            <!-- 06 — Freelancer Invoice Generator -->
+            <article class="cw-card" data-accent="#fb923c" data-index="5">
+              <div class="cw-card-bg" aria-hidden="true"></div>
+              <div class="cw-card-noise" aria-hidden="true"></div>
+              <div class="cw-card-inner">
+                <div class="cw-meta">
+                  <span class="cw-num">06</span>
+                </div>
+                <h3 class="cw-title">Freelancer<br>Invoices</h3>
+                <div class="cw-stack">
+                  <span>MERN</span><span>TypeScript</span><span>JWT</span><span>Multi-currency</span>
+                </div>
+                <p class="cw-desc">Full-stack invoice management tool for freelancers with glassmorphism UI, JWT authentication, multi-currency support, PDF generation, and real-time payment status tracking.</p>
+                <div class="cw-links">
+                  <a href="https://github.com/Abubakar-webmaker/freelancer-invoice-generator" target="_blank" rel="noopener noreferrer" class="cw-link"><span>GitHub</span><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                </div>
+              </div>
+              <div class="cw-glow" aria-hidden="true"></div>
+            </article>
+
+            <!-- 07 — CMS Dashboard -->
+            <article class="cw-card" data-accent="#f472b6" data-index="6">
+              <div class="cw-card-bg" aria-hidden="true"></div>
+              <div class="cw-card-noise" aria-hidden="true"></div>
+              <div class="cw-card-inner">
+                <div class="cw-meta">
+                  <span class="cw-num">07</span>
+                </div>
+                <h3 class="cw-title">CMS<br>Dashboard</h3>
+                <div class="cw-stack">
+                  <span>MERN</span><span>Express</span><span>MongoDB</span><span>RBAC</span>
+                </div>
+                <p class="cw-desc">Content management system with admin controls, full CRUD operations for content entities, role-based access control, and an intuitive editorial dashboard interface.</p>
+                <div class="cw-links">
+                  <a href="https://github.com/Abubakar-webmaker/cms-dashboard" target="_blank" rel="noopener noreferrer" class="cw-link"><span>GitHub</span><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                </div>
+              </div>
+              <div class="cw-glow" aria-hidden="true"></div>
+            </article>
+
+          </div><!-- /cw-track -->
+        </div><!-- /cw-track-outer -->
+
+        <!-- Dot pagination -->
+        <div class="cw-dots" id="cwDots" aria-label="Card pagination"></div>
+
       </section>
 
       <!-- 05 EXPERIENCE -->
       <section class="panel panel-experience" id="experience" data-theme="experience">
-        <div class="panel-inner">
-          <div class="section-label reveal"><i data-lucide="briefcase" class="section-icon"></i> EXPERIENCE &amp; CERTIFICATIONS</div>
-          <h2 class="display small reveal">Experience</h2>
-          <div class="exp-grid">
 
-            <div class="exp-col">
-              <div class="exp-col-label reveal" data-num="01">Current</div>
-              <div class="exp-card reveal">
-                <div class="exp-role">Full Stack Developer Intern</div>
-                <div class="exp-company">Revolix Technologies</div>
-                <div class="exp-meta">Karachi, Pakistan &nbsp;&middot;&nbsp; On-site &nbsp;&middot;&nbsp; <span class="exp-badge">Current</span></div>
-                <p class="exp-detail">Building real client projects at an AI software company.</p>
-              </div>
-            </div>
+        <!-- Floating ambient orbs -->
+        <div class="exp-orb exp-orb-1" aria-hidden="true"></div>
+        <div class="exp-orb exp-orb-2" aria-hidden="true"></div>
 
-            <div class="exp-col">
-              <div class="exp-col-label reveal" data-num="02">Certifications</div>
-              <div class="exp-card reveal">
-                <div class="exp-role">Full Stack MERN Application Development</div>
-                <div class="exp-company">Jawan Pakistan</div>
-                <div class="exp-meta">Dec 2025 – May 2026</div>
-              </div>
-              <div class="exp-card reveal">
-                <div class="exp-role">Web &amp; Mobile Frontend Development</div>
-                <div class="exp-company">Jawan Pakistan</div>
-                <div class="exp-meta">Jul 2024 – Nov 2024</div>
-              </div>
-            </div>
+        <div class="panel-inner exp-inner">
 
+          <div class="exp-top reveal">
+            <div class="section-label"><i data-lucide="briefcase" class="section-icon"></i> 05 — EXPERIENCE &amp; CERTIFICATIONS</div>
+            <h2 class="display small">Where I've<br>Built Things.</h2>
           </div>
+
+          <!-- Cinematic timeline -->
+          <div class="exp-timeline" id="expTimeline">
+
+            <!-- Item 01 — Current job -->
+            <div class="exp-item exp-item--featured reveal" data-index="0">
+              <div class="exp-item-line" aria-hidden="true"><span class="exp-item-dot"></span></div>
+              <div class="exp-item-card">
+                <div class="exp-item-noise" aria-hidden="true"></div>
+                <div class="exp-item-bg"   aria-hidden="true"></div>
+                <div class="exp-item-content">
+                  <div class="exp-item-header">
+                    <span class="exp-item-num">01</span>
+                    <span class="exp-status-badge"><span class="exp-status-dot"></span>Current</span>
+                  </div>
+                  <h3 class="exp-item-role">Full Stack<br>Developer Intern</h3>
+                  <div class="exp-item-org">Revolix Technologies</div>
+                  <div class="exp-item-meta">
+                    <span><i data-lucide="map-pin" class="exp-meta-icon"></i>Karachi, Pakistan</span>
+                    <span><i data-lucide="building-2" class="exp-meta-icon"></i>On-site · AI Software Co.</span>
+                  </div>
+                  <p class="exp-item-desc">Building production-grade client products at a fast-moving AI software company. Shipping real features across full-stack MERN applications.</p>
+                </div>
+                <div class="exp-item-glow" aria-hidden="true"></div>
+              </div>
+            </div>
+
+            <!-- Item 02 — Cert 1 -->
+            <div class="exp-item reveal" data-index="1">
+              <div class="exp-item-line" aria-hidden="true"><span class="exp-item-dot"></span></div>
+              <div class="exp-item-card">
+                <div class="exp-item-noise" aria-hidden="true"></div>
+                <div class="exp-item-bg"   aria-hidden="true"></div>
+                <div class="exp-item-content">
+                  <div class="exp-item-header">
+                    <span class="exp-item-num">02</span>
+                    <span class="exp-cert-badge">Certified</span>
+                  </div>
+                  <h3 class="exp-item-role">Full Stack MERN<br>Application Development</h3>
+                  <div class="exp-item-org">Jawan Pakistan</div>
+                  <div class="exp-item-meta">
+                    <span><i data-lucide="calendar" class="exp-meta-icon"></i>Dec 2025 – May 2026</span>
+                  </div>
+                </div>
+                <div class="exp-item-glow" aria-hidden="true"></div>
+              </div>
+            </div>
+
+            <!-- Item 03 — Cert 2 -->
+            <div class="exp-item reveal" data-index="2">
+              <div class="exp-item-line" aria-hidden="true"><span class="exp-item-dot"></span></div>
+              <div class="exp-item-card">
+                <div class="exp-item-noise" aria-hidden="true"></div>
+                <div class="exp-item-bg"   aria-hidden="true"></div>
+                <div class="exp-item-content">
+                  <div class="exp-item-header">
+                    <span class="exp-item-num">03</span>
+                    <span class="exp-cert-badge">Certified</span>
+                  </div>
+                  <h3 class="exp-item-role">Web &amp; Mobile<br>Frontend Development</h3>
+                  <div class="exp-item-org">Jawan Pakistan</div>
+                  <div class="exp-item-meta">
+                    <span><i data-lucide="calendar" class="exp-meta-icon"></i>Jul 2024 – Nov 2024</span>
+                  </div>
+                </div>
+                <div class="exp-item-glow" aria-hidden="true"></div>
+              </div>
+            </div>
+
+            <!-- Stats strip -->
+            <div class="exp-stats reveal">
+              <div class="exp-stat">
+                <span class="exp-stat-num" data-target="1.5">0</span><span class="exp-stat-suffix">+ yrs</span>
+                <span class="exp-stat-label">Experience</span>
+              </div>
+              <div class="exp-stat">
+                <span class="exp-stat-num" data-target="2">0</span><span class="exp-stat-suffix"></span>
+                <span class="exp-stat-label">Published Packages</span>
+              </div>
+            </div>
+
+          </div><!-- /exp-timeline -->
         </div>
       </section>
 
-
       <!-- 06 CONTACT -->
       <section class="panel panel-contact" id="contact" data-theme="contact">
+
+        <!-- Floating ambient orbs -->
+        <div class="ct-orb ct-orb-1" aria-hidden="true"></div>
+        <div class="ct-orb ct-orb-2" aria-hidden="true"></div>
+        <div class="ct-orb ct-orb-3" aria-hidden="true"></div>
+
         <div class="panel-inner contact-inner">
-          <div class="section-label reveal"><i data-lucide="mail" class="section-icon"></i> GET IN TOUCH</div>
 
-          <div class="contact-top reveal">
-            <h2 class="display">Let's Work<br>Together</h2>
-            <div class="avail-badge"><span class="avail-dot-green"></span> Currently Available — Open to All Work</div>
-          </div>
+          <!-- LEFT column -->
+          <div class="ct-left">
+            <div class="section-label reveal"><i data-lucide="mail" class="section-icon"></i> 06 — GET IN TOUCH</div>
 
-          <p class="contact-copy reveal">Available for freelance projects, remote work, and full-time opportunities. Usually responds within 24 hours.</p>
+            <h2 class="display ct-heading reveal">Let's Build<br><span>Something</span><br>Together.</h2>
 
-          <div class="contact-body reveal">
-
-            <!-- LEFT: Info cards -->
-            <div class="contact-cards">
-              <a class="contact-item" href="mailto:m.abubakar.codes@gmail.com">
-                <div class="contact-item-inner">
-                  <span class="contact-item-label">Email</span>
-                  <span class="contact-item-val">m.abubakar.codes@gmail.com</span>
-                </div>
-                <span class="contact-arrow">↗</span>
-              </a>
-              <a class="contact-item" href="https://www.linkedin.com/in/abubakar-fullstack-dev/" target="_blank" rel="noopener noreferrer">
-                <div class="contact-item-inner">
-                  <span class="contact-item-label">LinkedIn</span>
-                  <span class="contact-item-val">abubakar-fullstack-dev</span>
-                </div>
-                <span class="contact-arrow">↗</span>
-              </a>
-              <a class="contact-item" href="https://github.com/Abubakar-webmaker" target="_blank" rel="noopener noreferrer">
-                <div class="contact-item-inner">
-                  <span class="contact-item-label">GitHub</span>
-                  <span class="contact-item-val">Abubakar-webmaker</span>
-                </div>
-                <span class="contact-arrow">↗</span>
-              </a>
-              <div class="contact-item no-link location-card">
-                <div class="contact-item-inner">
-                  <span class="contact-item-label">Location</span>
-                  <span class="contact-item-val"><i data-lucide="map-pin" class="contact-loc-icon"></i> Karachi, Pakistan</span>
-                  <span class="contact-item-sub">Open to Remote Work Worldwide</span>
-                </div>
-              </div>
+            <div class="avail-badge reveal">
+              <span class="avail-dot-green"></span> Open to All Work — Respond within 24h
             </div>
 
-            <!-- RIGHT: Contact form -->
-            <form class="contact-form" id="contactForm" novalidate>
-              <div class="cf-row">
-                <input class="cf-input" type="text" id="cfName" placeholder="Your Name" required autocomplete="name">
-                <input class="cf-input" type="email" id="cfEmail" placeholder="Your Email" required autocomplete="email">
-              </div>
-              <textarea class="cf-input cf-textarea" id="cfMessage" placeholder="Your Message" required rows="4"></textarea>
-              <button class="cf-submit pill-btn" type="submit">Send Message <span class="cf-arrow">→</span></button>
-              <div class="cf-success" id="cfSuccess">
-                <i data-lucide="check-circle" class="cf-check-icon"></i>
-                Message sent! I'll get back to you within 24 hours.
-              </div>
-            </form>
+            <p class="contact-copy reveal">Freelance, remote, or full-time. If you have an idea worth building — let's talk.</p>
 
-          </div>
-
-          <div class="footer-row reveal">
-            <span>© 2026 M. ABUBAKAR</span>
-            <span>FULL STACK / AI / REACT NATIVE</span>
-            <div class="footer-socials">
-              <a href="https://github.com/Abubakar-webmaker" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i data-lucide="github"></i></a>
-              <a href="https://www.linkedin.com/in/abubakar-fullstack-dev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
-              <a href="mailto:m.abubakar.codes@gmail.com" aria-label="Email"><i data-lucide="mail"></i></a>
+            <!-- Social / contact orbs -->
+            <div class="ct-links reveal">
+              <a class="ct-link-item" href="mailto:m.abubakar.codes@gmail.com" aria-label="Email">
+                <div class="ct-link-icon"><i data-lucide="mail"></i></div>
+                <div class="ct-link-text">
+                  <span class="ct-link-label">Email</span>
+                  <span class="ct-link-val">m.abubakar.codes@gmail.com</span>
+                </div>
+                <span class="ct-link-arrow">↗</span>
+              </a>
+              <a class="ct-link-item" href="https://www.linkedin.com/in/abubakar-fullstack-dev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <div class="ct-link-icon"><i data-lucide="linkedin"></i></div>
+                <div class="ct-link-text">
+                  <span class="ct-link-label">LinkedIn</span>
+                  <span class="ct-link-val">abubakar-fullstack-dev</span>
+                </div>
+                <span class="ct-link-arrow">↗</span>
+              </a>
+              <a class="ct-link-item" href="https://github.com/Abubakar-webmaker" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <div class="ct-link-icon"><i data-lucide="github"></i></div>
+                <div class="ct-link-text">
+                  <span class="ct-link-label">GitHub</span>
+                  <span class="ct-link-val">Abubakar-webmaker</span>
+                </div>
+                <span class="ct-link-arrow">↗</span>
+              </a>
             </div>
-            <span class="back-top">BACK TO TOP ↑</span>
           </div>
+
+          <!-- RIGHT column — form -->
+          <div class="ct-right reveal">
+            <div class="ct-form-wrap">
+              <div class="ct-form-noise" aria-hidden="true"></div>
+              <div class="ct-form-label">Send a Message</div>
+              <form class="contact-form" id="contactForm" novalidate>
+                <div class="cf-row">
+                  <div class="cf-field">
+                    <label class="cf-label" for="cfName">Name</label>
+                    <input class="cf-input" type="text" id="cfName" placeholder="Your name" required autocomplete="name">
+                  </div>
+                  <div class="cf-field">
+                    <label class="cf-label" for="cfEmail">Email</label>
+                    <input class="cf-input" type="email" id="cfEmail" placeholder="your@email.com" required autocomplete="email">
+                  </div>
+                </div>
+                <div class="cf-field">
+                  <label class="cf-label" for="cfMessage">Message</label>
+                  <textarea class="cf-input cf-textarea" id="cfMessage" placeholder="Tell me about your project..." required rows="4"></textarea>
+                </div>
+                <button class="cf-submit" type="submit">
+                  <span class="cf-submit-text">Send Message</span>
+                  <span class="cf-submit-arrow">
+                    <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                </button>
+                <div class="cf-success" id="cfSuccess">
+                  <i data-lucide="check-circle" class="cf-check-icon"></i>
+                  Message sent! I'll get back to you within 24 hours.
+                </div>
+              </form>
+            </div>
+          </div>
+
         </div>
+
+        <!-- Footer -->
+        <div class="footer-row reveal">
+          <span>© 2026 M. ABUBAKAR</span>
+          <span>FULL STACK · AI · REACT NATIVE</span>
+          <div class="footer-socials">
+            <a href="https://github.com/Abubakar-webmaker" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i data-lucide="github"></i></a>
+            <a href="https://www.linkedin.com/in/abubakar-fullstack-dev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+            <a href="mailto:m.abubakar.codes@gmail.com" aria-label="Email"><i data-lucide="mail"></i></a>
+          </div>
+          <span class="back-top">↑ TOP</span>
+        </div>
+
       </section>
 
     </div>
@@ -444,5 +605,6 @@
   <script src="assets/js/gsap.min.js"></script>
   <script src="assets/js/ScrollTrigger.min.js"></script>
   <script src="script.js"></script>
+
 </body>
 </html>

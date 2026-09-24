@@ -87,7 +87,15 @@ function goToPage(target, direction = target > current ? 1 : -1) {
     sweep1.classList.remove("run");
     sweep2.classList.remove("run");
     animatePageContent(incoming, direction);
-    if (incoming.id === 'work') setTimeout(triggerWorkStagger, 300);
+    if (incoming.id === 'work') {
+      setTimeout(() => {
+        if (window._cwEntrance) window._cwEntrance();
+        window.addEventListener('keydown', window._handleWorkKey);
+      }, 200);
+    }
+    if (outgoing.id === 'work') {
+      window.removeEventListener('keydown', window._handleWorkKey);
+    }
     if (incoming.id === 'experience') setTimeout(triggerExpTimeline, 400);
     if (incoming.id === 'skills') setTimeout(triggerSkillBalls, 100);
     isTransitioning = false;
@@ -97,10 +105,29 @@ function goToPage(target, direction = target > current ? 1 : -1) {
 function nextPage() { if (!isTransitioning) goToPage(current + 1, 1); }
 function previousPage() { if (!isTransitioning) goToPage(current - 1, -1); }
 
+// ── UNIFIED WHEEL HANDLER ─────────────────────────────────────────────────
+// One listener handles both page navigation AND work-card scrolling.
+// Priority: work cards get all scroll while mid-strip; page nav only at edges.
+let _wheelLock = false;
+
 window.addEventListener("wheel", (event) => {
   event.preventDefault();
+  if (_wheelLock) return;
+  if (Math.abs(event.deltaY) < 14) return;
+
+  const onWork = panels[current]?.id === 'work';
+
+  if (onWork && window._cwHandleWheel) {
+    // Delegate to card carousel — it returns true if it consumed the scroll,
+    // false if we're at an edge and should switch page instead
+    const consumed = window._cwHandleWheel(event.deltaY > 0 ? 1 : -1);
+    if (consumed) return;
+  }
+
+  // Either not on work panel, or at an edge — do page navigation
   if (isTransitioning) return;
-  if (Math.abs(event.deltaY) < 12) return;
+  _wheelLock = true;
+  setTimeout(() => { _wheelLock = false; }, 700);
   if (event.deltaY > 0) nextPage(); else previousPage();
 }, { passive: false });
 
@@ -151,80 +178,464 @@ document.getElementById('contactForm')?.addEventListener('submit', function(e) {
   const email   = document.getElementById('cfEmail').value.trim();
   const message = document.getElementById('cfMessage').value.trim();
   if (!name || !email || !message) return;
-  const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
-  const body    = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
-  window.location.href = `mailto:m.abubakar.codes@gmail.com?subject=${subject}&body=${body}`;
-  // Show success, disable button, reset fields after delay
-  document.getElementById('cfSuccess').classList.add('show');
-  this.querySelector('.cf-submit').disabled = true;
+
+  const subject  = encodeURIComponent(`Portfolio Contact from ${name}`);
+  const body     = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+  const mailtoHref = `mailto:m.abubakar.codes@gmail.com?subject=${subject}&body=${body}`;
+
+  // Use a temporary <a> so browsers that block window.location mailto still work
+  const a = document.createElement('a');
+  a.href = mailtoHref;
+  a.style.display = 'none';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+  // Show success feedback
+  const successEl = document.getElementById('cfSuccess');
+  const submitBtn = this.querySelector('.cf-submit');
+  successEl.classList.add('show');
+  submitBtn.disabled = true;
   setTimeout(() => {
     this.reset();
-    document.getElementById('cfSuccess').classList.remove('show');
-    this.querySelector('.cf-submit').disabled = false;
+    successEl.classList.remove('show');
+    submitBtn.disabled = false;
     lucide.createIcons();
   }, 4000);
 });
 
-// ── WORK CARD EFFECTS ──
+// ── CINEMATIC WORK CARDS ──────────────────────────────────────────────────
 
-// 1. Stagger entry
-function triggerWorkStagger() {
-  document.querySelectorAll(".project-card").forEach((card, i) => {
-    card.classList.remove("card-visible");
-    void card.offsetWidth;
-    card.style.animationDelay = `${i * 80}ms`;
-    card.classList.add("card-visible");
-  });
-}
+(function initCinematicWork() {
+  const track    = document.getElementById('cwTrack');
+  const dotsWrap = document.getElementById('cwDots');
+  if (!track || !dotsWrap) return;
 
-// 2. Wire accent colour + 3D tilt + mouse spotlight
-document.querySelectorAll(".project-card").forEach(card => {
-  // Set CSS --accent from data attribute
-  const accent = card.dataset.accent;
-  if (accent) card.style.setProperty('--accent', accent);
+  const cards = Array.from(track.querySelectorAll('.cw-card'));
+  const CARD_COUNT = cards.length;
 
-  // 3D magnetic tilt
-  card.addEventListener("mousemove", e => {
-    const r = card.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width  - 0.5;
-    const y = (e.clientY - r.top)  / r.height - 0.5;
-    card.style.transform = `translateY(-4px) perspective(700px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg)`;
+  // ── Wire per-card CSS --accent variable ──────────────────────────────
+  cards.forEach(card => {
+    const accent = card.dataset.accent;
+    if (accent) card.style.setProperty('--accent', accent);
   });
-  card.addEventListener("mouseleave", () => {
-    card.style.transform = "";
+
+  // ── Build dot pagination ──────────────────────────────────────────────
+  const dots = cards.map((card, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'cw-dot';
+    dot.setAttribute('aria-label', `Go to project ${i + 1}`);
+    dotsWrap.appendChild(dot);
+    dot.addEventListener('click', () => goToCard(i, true));
+    return dot;
   });
-});
+
+  // ── State ─────────────────────────────────────────────────────────────
+  let activeIndex   = 0;
+  let currentOffset = 0;   // px offset applied to track
+  let isAnimating   = false;
+
+  // ── Measure helpers ───────────────────────────────────────────────────
+  function cardWidth()  { return cards[0] ? cards[0].offsetWidth  : 300; }
+  function gapWidth()   {
+    // read computed gap from the flex track
+    const gap = parseFloat(getComputedStyle(track).gap) || 20;
+    return gap;
+  }
+  function trackWidth() { return track.parentElement ? track.parentElement.offsetWidth : window.innerWidth; }
+
+  // Centre-offset so the active card sits in the middle of the viewport
+  function targetOffset(index) {
+    const cw = cardWidth() + gapWidth();
+    const containerCentre = trackWidth() / 2;
+    const cardCentre      = index * cw + cardWidth() / 2;
+    return containerCentre - cardCentre;
+  }
+
+  // ── 3D transforms for each card based on distance from active ─────────
+  function applyCardTransforms(offset, animate) {
+    const cw = cardWidth() + gapWidth();
+
+    cards.forEach((card, i) => {
+      const cardCentreX  = i * cw + cardWidth() / 2 + offset;
+      const viewCentreX  = trackWidth() / 2;
+      const dist         = cardCentreX - viewCentreX;          // px from centre
+      const normDist     = dist / (trackWidth() * 0.55);       // –1 … 1 roughly
+
+      // Clamp
+      const nd = Math.max(-1.4, Math.min(1.4, normDist));
+
+      const rotY   =  nd * 18;        // ±18° rotation around Y
+      const rotX   = -Math.abs(nd) * 3; // subtle tilt inward
+      const scale  =  1 - Math.abs(nd) * 0.12;
+      const tz     = -Math.abs(nd) * 60; // push far cards back
+      const op     =  1 - Math.abs(nd) * 0.45;
+
+      const isActive = i === activeIndex;
+      if (isActive) card.classList.add('cw-active');
+      else          card.classList.remove('cw-active');
+
+      const transform = `perspective(1400px) rotateY(${rotY}deg) rotateX(${rotX}deg) translateZ(${tz}px) scale(${scale})`;
+
+      if (animate) {
+        gsap.to(card, {
+          transform,
+          opacity: Math.max(0.25, op),
+          duration: 0.65,
+          ease: 'power3.out',
+          overwrite: true,
+        });
+      } else {
+        gsap.set(card, { transform, opacity: Math.max(0.25, op) });
+      }
+    });
+  }
+
+  // ── Move track + update dots ──────────────────────────────────────────
+  let goToCard = function(index, animated = true) {
+    activeIndex = Math.max(0, Math.min(CARD_COUNT - 1, index));
+    currentOffset = targetOffset(activeIndex);
+
+    if (animated) {
+      gsap.to(track, {
+        x: currentOffset,
+        duration: 0.72,
+        ease: 'power3.inOut',
+        onUpdate: () => applyCardTransforms(gsap.getProperty(track, 'x'), false),
+      });
+    } else {
+      gsap.set(track, { x: currentOffset });
+      applyCardTransforms(currentOffset, false);
+    }
+
+    // update dots
+    const accent = cards[activeIndex]?.dataset.accent || '#fff';
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === activeIndex);
+      if (i === activeIndex) dot.style.setProperty('--cw-dot-accent', accent);
+    });
+    dotsWrap.style.setProperty('--cw-dot-accent', accent);
+  }
+
+  // ── Entrance animation (called when work panel becomes visible) ────────
+  function cwEntrance() {
+    // Reset to card 0 without animation first
+    activeIndex   = 0;
+    currentOffset = targetOffset(0);
+
+    // Set all cards to initial state
+    cards.forEach((card, i) => {
+      gsap.set(card, {
+        x: 0,
+        opacity: 0,
+        transform: `perspective(1400px) rotateY(${i === 0 ? 0 : 22}deg) rotateX(-4deg) scale(.88) translateZ(-80px)`,
+      });
+    });
+    gsap.set(track, { x: currentOffset });
+
+    // Stagger reveal each card
+    cards.forEach((card, i) => {
+      gsap.to(card, {
+        opacity: i === 0 ? 1 : 0.45,
+        duration: 0.6,
+        delay: i * 0.09 + 0.15,
+        ease: 'power3.out',
+        onComplete: () => {
+          if (i === CARD_COUNT - 1) {
+            // Once all cards are in, apply proper 3D layout
+            applyCardTransforms(currentOffset, true);
+            goToCard(0, true);
+          }
+        }
+      });
+    });
+  }
+
+  // ── Wheel handler — returns true if consumed, false if at edge ──────────
+  let wheelCooldown = false;
+  function cwHandleWheel(dir) {
+    // dir: +1 = scroll down/forward, -1 = scroll up/backward
+    const atStart = activeIndex === 0;
+    const atEnd   = activeIndex === CARD_COUNT - 1;
+
+    if (dir > 0 && !atEnd) {
+      // Still have cards ahead — consume and advance
+      if (!wheelCooldown) {
+        wheelCooldown = true;
+        setTimeout(() => { wheelCooldown = false; }, 520);
+        goToCard(activeIndex + 1);
+      }
+      return true; // consumed
+    }
+    if (dir < 0 && !atStart) {
+      // Still have cards behind — consume and go back
+      if (!wheelCooldown) {
+        wheelCooldown = true;
+        setTimeout(() => { wheelCooldown = false; }, 520);
+        goToCard(activeIndex - 1);
+      }
+      return true; // consumed
+    }
+    // At an edge — tell the page handler to navigate
+    return false;
+  }
+
+  function handleWorkKey(e) {
+    if (e.key === 'ArrowRight') { e.preventDefault(); goToCard(activeIndex + 1); }
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); goToCard(activeIndex - 1); }
+  }
+
+  // ── Drag to scroll ────────────────────────────────────────────────────
+  let dragStart      = null;
+  let dragBaseOffset = 0;
+  let isDragging     = false;
+
+  track.addEventListener('mousedown', e => {
+    // Don't steal clicks on links
+    if (e.target.closest('a')) return;
+    dragStart      = e.clientX;
+    dragBaseOffset = currentOffset;
+    isDragging     = false;
+    track.classList.add('is-dragging');
+  });
+
+  window.addEventListener('mousemove', e => {
+    if (dragStart === null) return;
+    const delta = e.clientX - dragStart;
+    if (Math.abs(delta) > 6) isDragging = true;
+    if (!isDragging) return;
+    currentOffset = dragBaseOffset + delta;
+    gsap.set(track, { x: currentOffset });
+    applyCardTransforms(currentOffset, false);
+  });
+
+  window.addEventListener('mouseup', e => {
+    if (dragStart === null) return;
+    track.classList.remove('is-dragging');
+    const delta = e.clientX - dragStart;
+    dragStart    = null;
+
+    if (!isDragging) return; // was a click, not a drag
+
+    // Snap to nearest card
+    const cw = cardWidth() + gapWidth();
+    const viewCentre = trackWidth() / 2;
+    // Find card whose centre is closest to viewport centre
+    let best = 0, bestDist = Infinity;
+    cards.forEach((_, i) => {
+      const cx   = i * cw + cardWidth() / 2 + currentOffset;
+      const dist = Math.abs(cx - viewCentre);
+      if (dist < bestDist) { bestDist = dist; best = i; }
+    });
+    goToCard(best, true);
+  });
+
+  // ── Touch support ──────────────────────────────────────────────────────
+  let touchStartX   = 0;
+  let touchBaseOff  = 0;
+  let isTouchDrag   = false;
+
+  track.addEventListener('touchstart', e => {
+    touchStartX  = e.touches[0].clientX;
+    touchBaseOff = currentOffset;
+    isTouchDrag  = false;
+  }, { passive: true });
+
+  track.addEventListener('touchmove', e => {
+    const delta = e.touches[0].clientX - touchStartX;
+    if (Math.abs(delta) > 8) isTouchDrag = true;
+    if (!isTouchDrag) return;
+    currentOffset = touchBaseOff + delta;
+    gsap.set(track, { x: currentOffset });
+    applyCardTransforms(currentOffset, false);
+  }, { passive: true });
+
+  track.addEventListener('touchend', e => {
+    if (!isTouchDrag) return;
+    const cw = cardWidth() + gapWidth();
+    const viewCentre = trackWidth() / 2;
+    let best = 0, bestDist = Infinity;
+    cards.forEach((_, i) => {
+      const cx   = i * cw + cardWidth() / 2 + currentOffset;
+      const dist = Math.abs(cx - viewCentre);
+      if (dist < bestDist) { bestDist = dist; best = i; }
+    });
+    goToCard(best, true);
+  }, { passive: true });
+
+  // ── Keyboard arrows when work panel is active ─────────────────────────
+  function handleWorkKey(e) {
+    if (e.key === 'ArrowRight') { e.preventDefault(); goToCard(activeIndex + 1); }
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); goToCard(activeIndex - 1); }
+  }
+
+  // ── Mouse tilt on hover — clean absolute override, no additive drift ──
+  // Store the base transform string per card so we can layer tilt on top cleanly
+  const cardBaseTransform = new WeakMap();
+
+  function setCardBaseTransform(card, transformStr) {
+    cardBaseTransform.set(card, transformStr);
+  }
+
+  // Patch applyCardTransforms to also cache the base transform
+  const _origApply = applyCardTransforms;
+  // We need to intercept after gsap sets the transform — use a thin wrapper
+  function applyCardTransformsAndCache(offset, animate) {
+    const cw = cardWidth() + gapWidth();
+    cards.forEach((card, i) => {
+      const cardCentreX = i * cw + cardWidth() / 2 + offset;
+      const viewCentreX = trackWidth() / 2;
+      const dist        = cardCentreX - viewCentreX;
+      const nd          = Math.max(-1.4, Math.min(1.4, dist / (trackWidth() * 0.55)));
+      const rotY  =  nd * 18;
+      const rotX  = -Math.abs(nd) * 3;
+      const scale =  1 - Math.abs(nd) * 0.12;
+      const tz    = -Math.abs(nd) * 60;
+      const tfStr = `perspective(1400px) rotateY(${rotY}deg) rotateX(${rotX}deg) translateZ(${tz}px) scale(${scale})`;
+      setCardBaseTransform(card, tfStr);
+    });
+    _origApply(offset, animate);
+  }
+
+  cards.forEach(card => {
+    card.addEventListener('mousemove', e => {
+      if (isDragging) return;
+      const r  = card.getBoundingClientRect();
+      const mx = (e.clientX - r.left) / r.width  - 0.5; // –0.5 … 0.5
+      const my = (e.clientY - r.top)  / r.height - 0.5;
+      card.style.setProperty('--mx', (mx * 100).toFixed(1) + '%');
+      card.style.setProperty('--my', (my * 100).toFixed(1) + '%');
+
+      // Parse base rotY/rotX from stored string, add micro-tilt
+      const base = cardBaseTransform.get(card) || '';
+      const rY = parseFloat((base.match(/rotateY\(([-\d.]+)deg\)/) || [0,0])[1]);
+      const rX = parseFloat((base.match(/rotateX\(([-\d.]+)deg\)/) || [0,0])[1]);
+      const sc = parseFloat((base.match(/scale\(([-\d.]+)\)/)       || [0,1])[1]);
+      const tz = parseFloat((base.match(/translateZ\(([-\d.]+)px\)/)|| [0,0])[1]);
+
+      const tiltedTransform = `perspective(1400px) rotateY(${(rY + mx * 6).toFixed(2)}deg) rotateX(${(rX + -my * 6).toFixed(2)}deg) translateZ(${tz}px) scale(${sc})`;
+      gsap.to(card, {
+        transform: tiltedTransform,
+        duration: 0.3,
+        ease: 'power2.out',
+        overwrite: true,
+      });
+    });
+
+    card.addEventListener('mouseleave', () => {
+      // Return exactly to base 3D position — no drift
+      applyCardTransformsAndCache(currentOffset, true);
+    });
+  });
+
+  // Replace bare reference with the caching version going forward
+  // (goToCard and cwEntrance still call applyCardTransforms directly,
+  //  so wrap those calls too by monkey-patching the closure reference)
+  // Simplest: just call applyCardTransformsAndCache where needed below
+  // We already call applyCardTransforms in goToCard onUpdate — patch it:
+  function goToCardPatched(index, animated = true) {
+    activeIndex = Math.max(0, Math.min(CARD_COUNT - 1, index));
+    currentOffset = targetOffset(activeIndex);
+    // Update edge flag for the page wheel handler
+    window._workAtEdge = (activeIndex === 0 || activeIndex === CARD_COUNT - 1);
+
+    if (animated) {
+      gsap.to(track, {
+        x: currentOffset,
+        duration: 0.72,
+        ease: 'power3.inOut',
+        onUpdate: () => applyCardTransformsAndCache(gsap.getProperty(track, 'x'), false),
+        onComplete: () => applyCardTransformsAndCache(currentOffset, false),
+      });
+    } else {
+      gsap.set(track, { x: currentOffset });
+      applyCardTransformsAndCache(currentOffset, false);
+    }
+
+    const accent = cards[activeIndex]?.dataset.accent || '#fff';
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === activeIndex);
+      if (i === activeIndex) dot.style.setProperty('--cw-dot-accent', accent);
+    });
+    dotsWrap.style.setProperty('--cw-dot-accent', accent);
+  }
+
+  // Override the original goToCard with the patched version
+  goToCard = goToCardPatched;
+
+  // ── Recalculate on resize ──────────────────────────────────────────────
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      currentOffset = targetOffset(activeIndex);
+      gsap.set(track, { x: currentOffset });
+      applyCardTransforms(currentOffset, false);
+    }, 120);
+  });
+
+  // ── Expose to page-level handlers ───────────────────────────────────────
+  window._cwEntrance      = cwEntrance;
+  window._cwHandleWheel   = cwHandleWheel;
+  window._handleWorkKey   = handleWorkKey;
+})();
 
 // ── EXPERIENCE EFFECTS ──
 
 // Mouse-follow glow on experience panel
 const expPanel = document.getElementById('experience');
-expPanel.addEventListener('mousemove', e => {
-  const r = expPanel.getBoundingClientRect();
-  const x = ((e.clientX - r.left) / r.width  * 100).toFixed(1);
-  const y = ((e.clientY - r.top)  / r.height * 100).toFixed(1);
-  expPanel.style.setProperty('--mx', x + '%');
-  expPanel.style.setProperty('--my', y + '%');
-});
+if (expPanel) {
+  expPanel.addEventListener('mousemove', e => {
+    const r = expPanel.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width  * 100).toFixed(1);
+    const y = ((e.clientY - r.top)  / r.height * 100).toFixed(1);
+    expPanel.style.setProperty('--mx', x + '%');
+    expPanel.style.setProperty('--my', y + '%');
+  });
+}
 
-// Card 3D tilt + inner light follow
-document.querySelectorAll('.exp-card').forEach(card => {
+// 3D tilt on new exp-item-cards
+document.querySelectorAll('.exp-item-card').forEach(card => {
   card.addEventListener('mousemove', e => {
     const r = card.getBoundingClientRect();
     const x = (e.clientX - r.left) / r.width;
     const y = (e.clientY - r.top)  / r.height;
-    card.style.transform = `perspective(700px) rotateY(${(x-.5)*8}deg) rotateX(${-(y-.5)*8}deg) translateY(-3px)`;
-    card.style.setProperty('--cx', (x*100).toFixed(1)+'%');
-    card.style.setProperty('--cy', (y*100).toFixed(1)+'%');
+    card.style.transform = `perspective(800px) rotateY(${(x-.5)*6}deg) rotateX(${-(y-.5)*6}deg) translateY(-3px)`;
   });
   card.addEventListener('mouseleave', () => {
-    card.style.transform = 'perspective(700px) rotateY(0) rotateX(0) translateY(0)';
+    card.style.transform = '';
   });
 });
 
-// Timeline line draw on section enter
+// Animated stat counter
+function animateStats() {
+  document.querySelectorAll('.exp-stat-num[data-target]').forEach(el => {
+    const target = parseFloat(el.dataset.target);
+    const isDecimal = target % 1 !== 0;
+    const duration = 900;
+    const start = performance.now();
+    function tick(now) {
+      const t = Math.min((now - start) / duration, 1);
+      // ease out cubic
+      const ease = 1 - Math.pow(1 - t, 3);
+      const val = target * ease;
+      el.textContent = isDecimal ? val.toFixed(1) : Math.round(val);
+      if (t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  });
+}
+
+// Timeline entry animation (called when Experience panel becomes visible)
 function triggerExpTimeline() {
-  document.querySelector('.exp-grid')?.classList.add('tl-active');
+  animateStats();
+  // Stagger exp-items with a slight scale + fade entrance
+  document.querySelectorAll('.exp-item').forEach((item, i) => {
+    gsap.fromTo(item,
+      { opacity: 0, y: 30, scale: .96 },
+      { opacity: 1, y: 0, scale: 1, duration: .7, delay: i * .12 + .1, ease: 'power3.out' }
+    );
+  });
 }
 
 // ── SKILL BALLS ──
@@ -408,6 +819,61 @@ function ball_size() {
   const el = document.querySelector('.skill-bubble-ball');
   return el ? el.offsetWidth : 56;
 }
+
+// ── MOBILE NAV (#3 fix) ───────────────────────────────────────────────────
+(function initMobileNav() {
+  const menuBtn  = document.querySelector('.menu-btn');
+  const nav      = document.getElementById('mobile-nav');
+  if (!menuBtn || !nav) return;
+
+  // Create scrim overlay
+  const scrim = document.createElement('div');
+  scrim.className = 'mobile-nav-scrim';
+  document.body.appendChild(scrim);
+
+  function openNav() {
+    nav.removeAttribute('hidden');
+    nav.classList.add('is-open');
+    scrim.classList.add('active');
+    menuBtn.setAttribute('aria-expanded', 'true');
+    menuBtn.setAttribute('aria-label', 'Close navigation');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeNav() {
+    nav.classList.remove('is-open');
+    scrim.classList.remove('active');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    menuBtn.setAttribute('aria-label', 'Open navigation');
+    document.body.style.overflow = '';
+    // Wait for transition before hiding
+    setTimeout(() => {
+      if (!nav.classList.contains('is-open')) nav.setAttribute('hidden', '');
+    }, 420);
+  }
+
+  menuBtn.addEventListener('click', () => {
+    const isOpen = nav.classList.contains('is-open');
+    isOpen ? closeNav() : openNav();
+  });
+
+  document.querySelector('.mobile-nav-close')?.addEventListener('click', closeNav);
+  scrim.addEventListener('click', closeNav);
+
+  // Wire mobile nav links
+  nav.querySelectorAll('.mobile-nav-link').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const index = panels.findIndex(p => p.id === btn.dataset.target);
+      closeNav();
+      if (index !== -1) setTimeout(() => goToPage(index, index > current ? 1 : -1), 160);
+    });
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && nav.classList.contains('is-open')) closeNav();
+  });
+})();
 
 window.addEventListener("load", () => {
   lucide.createIcons();
