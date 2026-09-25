@@ -1,4 +1,4 @@
-/* global gsap, ScrollTrigger, lucide */
+/* global gsap, ScrollTrigger, lucide, emailjs, performance, getComputedStyle */
 gsap.registerPlugin(ScrollTrigger);
 
 const panels = gsap.utils.toArray(".panel");
@@ -172,37 +172,147 @@ document.querySelectorAll('[data-target]').forEach(btn => {
 document.querySelector(".back-top")?.addEventListener("click", () => goToPage(0, -1));
 
 // ── CONTACT FORM ──
-document.getElementById('contactForm')?.addEventListener('submit', function(e) {
-  e.preventDefault();
-  const name    = document.getElementById('cfName').value.trim();
-  const email   = document.getElementById('cfEmail').value.trim();
-  const message = document.getElementById('cfMessage').value.trim();
-  if (!name || !email || !message) return;
+// ── EMAILJS CONFIG ────────────────────────────────────────────────────────
+(function () {
+  var _ejPublicKey  = 'iDvNtOOM-W2L7qaXr';
+  var _ejServiceId  = 'service_889w2h9';
+  var _ejTemplateId = 'template_tvbslyc';
 
-  const subject  = encodeURIComponent(`Portfolio Contact from ${name}`);
-  const body     = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
-  const mailtoHref = `mailto:m.abubakar.codes@gmail.com?subject=${subject}&body=${body}`;
+  // ── Helpers ───────────────────────────────────────────────────────────
+  function isValidEmail(val) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+  }
 
-  // Use a temporary <a> so browsers that block window.location mailto still work
-  const a = document.createElement('a');
-  a.href = mailtoHref;
-  a.style.display = 'none';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+  function setFieldError(inputEl, show) {
+    if (show) {
+      inputEl.style.borderColor = 'rgba(255,75,66,.55)';
+      inputEl.style.boxShadow   = '0 0 0 3px rgba(255,75,66,.08)';
+    } else {
+      inputEl.style.borderColor = '';
+      inputEl.style.boxShadow   = '';
+    }
+  }
 
-  // Show success feedback
-  const successEl = document.getElementById('cfSuccess');
-  const submitBtn = this.querySelector('.cf-submit');
-  successEl.classList.add('show');
-  submitBtn.disabled = true;
-  setTimeout(() => {
-    this.reset();
+  function showFeedback(successEl, errorEl, errorTextEl, type, msg) {
     successEl.classList.remove('show');
-    submitBtn.disabled = false;
+    errorEl.classList.remove('show');
+    if (type === 'success') {
+      successEl.classList.add('show');
+    } else {
+      if (msg) errorTextEl.textContent = msg;
+      errorEl.classList.add('show');
+    }
     lucide.createIcons();
-  }, 4000);
-});
+  }
+
+  function hideFeedback(successEl, errorEl) {
+    successEl.classList.remove('show');
+    errorEl.classList.remove('show');
+  }
+
+  function setSending(submitBtn, sending) {
+    var textEl  = submitBtn.querySelector('.cf-submit-text');
+    var arrowEl = submitBtn.querySelector('.cf-submit-arrow');
+    submitBtn.disabled = sending;
+    if (sending) {
+      textEl.textContent    = 'Sending…';
+      arrowEl.style.opacity = '0';
+    } else {
+      textEl.textContent    = 'Send Message';
+      arrowEl.style.opacity = '';
+    }
+  }
+
+  function initEmailJS() {
+    if (typeof emailjs === 'undefined') return false;
+    emailjs.init({ publicKey: _ejPublicKey });
+    return true;
+  }
+
+  // ── Form handler ──────────────────────────────────────────────────────
+  var form = document.getElementById('contactForm');
+  if (!form) return;
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    var nameEl    = document.getElementById('cfName');
+    var emailEl   = document.getElementById('cfEmail');
+    var subjectEl = document.getElementById('cfSubject');
+    var messageEl = document.getElementById('cfMessage');
+    var submitBtn = form.querySelector('.cf-submit');
+    var successEl = document.getElementById('cfSuccess');
+    var errorEl   = document.getElementById('cfError');
+    var errorText = document.getElementById('cfErrorText');
+
+    var name    = nameEl.value.trim();
+    var email   = emailEl.value.trim();
+    var subject = subjectEl.value.trim();
+    var message = messageEl.value.trim();
+
+    // ── Validation ──────────────────────────────────────────────────────
+    setFieldError(nameEl,    !name);
+    setFieldError(emailEl,   !email || !isValidEmail(email));
+    setFieldError(subjectEl, !subject);
+    setFieldError(messageEl, !message);
+
+    if (!name || !email || !subject || !message) {
+      showFeedback(successEl, errorEl, errorText, 'error', 'Please fill in all fields.');
+      return;
+    }
+    if (!isValidEmail(email)) {
+      showFeedback(successEl, errorEl, errorText, 'error', 'Please enter a valid email address.');
+      return;
+    }
+
+    // ── Guard: EmailJS must be loaded ─────────────────────────────────
+    if (!initEmailJS()) {
+      showFeedback(successEl, errorEl, errorText, 'error',
+        'Email service unavailable. Please try again later.');
+      return;
+    }
+
+    // ── Send ──────────────────────────────────────────────────────────
+    hideFeedback(successEl, errorEl);
+    setSending(submitBtn, true);
+
+    emailjs.send(_ejServiceId, _ejTemplateId, {
+      from_name:  name,
+      from_email: email,
+      subject:    subject,
+      title:      subject,
+      message:    message,
+      reply_to:   email
+    })
+    .then(function () {
+      setSending(submitBtn, false);
+      showFeedback(successEl, errorEl, errorText, 'success');
+      form.reset();
+      [nameEl, emailEl, subjectEl, messageEl].forEach(function (el) {
+        setFieldError(el, false);
+      });
+      setTimeout(function () {
+        hideFeedback(successEl, errorEl);
+        lucide.createIcons();
+      }, 5000);
+    })
+    .catch(function (err) {
+      setSending(submitBtn, false);
+      // Log full error for debugging — no credentials are exposed here
+      console.error('[EmailJS error]', err);
+      var code   = err && err.status  ? ' (code ' + err.status + ')' : '';
+      var detail = err && err.text    ? ': ' + err.text : '';
+      showFeedback(successEl, errorEl, errorText, 'error',
+        'Failed to send' + code + detail + '. Please email me directly.');
+    });
+  });
+
+  // ── Clear field error on input ────────────────────────────────────────
+  ['cfName', 'cfEmail', 'cfSubject', 'cfMessage'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('input', function () { setFieldError(el, false); });
+  });
+})();
 
 // ── CINEMATIC WORK CARDS ──────────────────────────────────────────────────
 
@@ -233,7 +343,6 @@ document.getElementById('contactForm')?.addEventListener('submit', function(e) {
   // ── State ─────────────────────────────────────────────────────────────
   let activeIndex   = 0;
   let currentOffset = 0;   // px offset applied to track
-  let isAnimating   = false;
 
   // ── Measure helpers ───────────────────────────────────────────────────
   function cardWidth()  { return cards[0] ? cards[0].offsetWidth  : 300; }
@@ -409,11 +518,10 @@ document.getElementById('contactForm')?.addEventListener('submit', function(e) {
     applyCardTransforms(currentOffset, false);
   });
 
-  window.addEventListener('mouseup', e => {
+  window.addEventListener('mouseup', () => {
     if (dragStart === null) return;
     track.classList.remove('is-dragging');
-    const delta = e.clientX - dragStart;
-    dragStart    = null;
+    dragStart = null;
 
     if (!isDragging) return; // was a click, not a drag
 
@@ -450,7 +558,7 @@ document.getElementById('contactForm')?.addEventListener('submit', function(e) {
     applyCardTransforms(currentOffset, false);
   }, { passive: true });
 
-  track.addEventListener('touchend', e => {
+  track.addEventListener('touchend', () => {
     if (!isTouchDrag) return;
     const cw = cardWidth() + gapWidth();
     const viewCentre = trackWidth() / 2;

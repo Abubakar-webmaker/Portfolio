@@ -24,6 +24,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <!-- Lucide icons — self-hosted, no CDN dependency -->
   <script src="assets/js/lucide.min.js"></script>
 </head>
@@ -563,6 +565,10 @@
                   </div>
                 </div>
                 <div class="cf-field">
+                  <label class="cf-label" for="cfSubject">Subject</label>
+                  <input class="cf-input" type="text" id="cfSubject" placeholder="What's this about?" required autocomplete="off">
+                </div>
+                <div class="cf-field">
                   <label class="cf-label" for="cfMessage">Message</label>
                   <textarea class="cf-input cf-textarea" id="cfMessage" placeholder="Tell me about your project..." required rows="4"></textarea>
                 </div>
@@ -575,6 +581,10 @@
                 <div class="cf-success" id="cfSuccess">
                   <i data-lucide="check-circle" class="cf-check-icon"></i>
                   Message sent! I'll get back to you within 24 hours.
+                </div>
+                <div class="cf-error" id="cfError">
+                  <i data-lucide="alert-circle" class="cf-error-icon"></i>
+                  <span id="cfErrorText">Something went wrong. Please try again.</span>
                 </div>
               </form>
             </div>
