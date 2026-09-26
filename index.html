@@ -505,104 +505,108 @@
         <div class="ct-orb ct-orb-2" aria-hidden="true"></div>
         <div class="ct-orb ct-orb-3" aria-hidden="true"></div>
 
-        <div class="panel-inner contact-inner">
+        <!-- Scrollable wrapper — lets content overflow on short screens -->
+        <div class="ct-scroll-wrap">
+          <div class="ct-body">
 
-          <!-- LEFT column -->
-          <div class="ct-left">
-            <div class="section-label reveal"><i data-lucide="mail" class="section-icon"></i> 06 — GET IN TOUCH</div>
+            <!-- LEFT column -->
+            <div class="ct-left">
+              <div class="section-label reveal"><i data-lucide="mail" class="section-icon"></i> 06 — GET IN TOUCH</div>
 
-            <h2 class="display ct-heading reveal">Let's Build<br><span>Something</span><br>Together.</h2>
+              <h2 class="display ct-heading reveal">Let's Build<br><span>Something</span><br>Together.</h2>
 
-            <div class="avail-badge reveal">
-              <span class="avail-dot-green"></span> Open to All Work — Respond within 24h
+              <div class="avail-badge reveal">
+                <span class="avail-dot-green"></span> Open to All Work — Respond within 24h
+              </div>
+
+              <p class="contact-copy reveal">Freelance, remote, or full-time. If you have an idea worth building — let's talk.</p>
+
+              <!-- Contact links -->
+              <div class="ct-links reveal">
+                <a class="ct-link-item" href="mailto:m.abubakar.codes@gmail.com" aria-label="Email">
+                  <div class="ct-link-icon"><i data-lucide="mail"></i></div>
+                  <div class="ct-link-text">
+                    <span class="ct-link-label">Email</span>
+                    <span class="ct-link-val">m.abubakar.codes@gmail.com</span>
+                  </div>
+                  <span class="ct-link-arrow">↗</span>
+                </a>
+                <a class="ct-link-item" href="https://www.linkedin.com/in/abubakar-fullstack-dev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                  <div class="ct-link-icon"><i data-lucide="linkedin"></i></div>
+                  <div class="ct-link-text">
+                    <span class="ct-link-label">LinkedIn</span>
+                    <span class="ct-link-val">abubakar-fullstack-dev</span>
+                  </div>
+                  <span class="ct-link-arrow">↗</span>
+                </a>
+                <a class="ct-link-item" href="https://github.com/Abubakar-webmaker" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                  <div class="ct-link-icon"><i data-lucide="github"></i></div>
+                  <div class="ct-link-text">
+                    <span class="ct-link-label">GitHub</span>
+                    <span class="ct-link-val">Abubakar-webmaker</span>
+                  </div>
+                  <span class="ct-link-arrow">↗</span>
+                </a>
+              </div>
             </div>
 
-            <p class="contact-copy reveal">Freelance, remote, or full-time. If you have an idea worth building — let's talk.</p>
-
-            <!-- Social / contact orbs -->
-            <div class="ct-links reveal">
-              <a class="ct-link-item" href="mailto:m.abubakar.codes@gmail.com" aria-label="Email">
-                <div class="ct-link-icon"><i data-lucide="mail"></i></div>
-                <div class="ct-link-text">
-                  <span class="ct-link-label">Email</span>
-                  <span class="ct-link-val">m.abubakar.codes@gmail.com</span>
-                </div>
-                <span class="ct-link-arrow">↗</span>
-              </a>
-              <a class="ct-link-item" href="https://www.linkedin.com/in/abubakar-fullstack-dev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                <div class="ct-link-icon"><i data-lucide="linkedin"></i></div>
-                <div class="ct-link-text">
-                  <span class="ct-link-label">LinkedIn</span>
-                  <span class="ct-link-val">abubakar-fullstack-dev</span>
-                </div>
-                <span class="ct-link-arrow">↗</span>
-              </a>
-              <a class="ct-link-item" href="https://github.com/Abubakar-webmaker" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                <div class="ct-link-icon"><i data-lucide="github"></i></div>
-                <div class="ct-link-text">
-                  <span class="ct-link-label">GitHub</span>
-                  <span class="ct-link-val">Abubakar-webmaker</span>
-                </div>
-                <span class="ct-link-arrow">↗</span>
-              </a>
-            </div>
-          </div>
-
-          <!-- RIGHT column — form -->
-          <div class="ct-right reveal">
-            <div class="ct-form-wrap">
-              <div class="ct-form-noise" aria-hidden="true"></div>
-              <div class="ct-form-label">Send a Message</div>
-              <form class="contact-form" id="contactForm" novalidate>
-                <div class="cf-row">
-                  <div class="cf-field">
-                    <label class="cf-label" for="cfName">Name</label>
-                    <input class="cf-input" type="text" id="cfName" placeholder="Your name" required autocomplete="name">
+            <!-- RIGHT column — form -->
+            <div class="ct-right reveal">
+              <div class="ct-form-wrap">
+                <div class="ct-form-noise" aria-hidden="true"></div>
+                <div class="ct-form-label">Send a Message</div>
+                <form class="contact-form" id="contactForm" novalidate>
+                  <div class="cf-row">
+                    <div class="cf-field">
+                      <label class="cf-label" for="cfName">Name</label>
+                      <input class="cf-input" type="text" id="cfName" placeholder="Your name" required autocomplete="name">
+                    </div>
+                    <div class="cf-field">
+                      <label class="cf-label" for="cfEmail">Email</label>
+                      <input class="cf-input" type="email" id="cfEmail" placeholder="your@email.com" required autocomplete="email">
+                    </div>
                   </div>
                   <div class="cf-field">
-                    <label class="cf-label" for="cfEmail">Email</label>
-                    <input class="cf-input" type="email" id="cfEmail" placeholder="your@email.com" required autocomplete="email">
+                    <label class="cf-label" for="cfSubject">Subject</label>
+                    <input class="cf-input" type="text" id="cfSubject" placeholder="What's this about?" required autocomplete="off">
                   </div>
-                </div>
-                <div class="cf-field">
-                  <label class="cf-label" for="cfSubject">Subject</label>
-                  <input class="cf-input" type="text" id="cfSubject" placeholder="What's this about?" required autocomplete="off">
-                </div>
-                <div class="cf-field">
-                  <label class="cf-label" for="cfMessage">Message</label>
-                  <textarea class="cf-input cf-textarea" id="cfMessage" placeholder="Tell me about your project..." required rows="4"></textarea>
-                </div>
-                <button class="cf-submit" type="submit">
-                  <span class="cf-submit-text">Send Message</span>
-                  <span class="cf-submit-arrow">
-                    <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </span>
-                </button>
-                <div class="cf-success" id="cfSuccess">
-                  <i data-lucide="check-circle" class="cf-check-icon"></i>
-                  Message sent! I'll get back to you within 24 hours.
-                </div>
-                <div class="cf-error" id="cfError">
-                  <i data-lucide="alert-circle" class="cf-error-icon"></i>
-                  <span id="cfErrorText">Something went wrong. Please try again.</span>
-                </div>
-              </form>
+                  <div class="cf-field">
+                    <label class="cf-label" for="cfMessage">Message</label>
+                    <textarea class="cf-input cf-textarea" id="cfMessage" placeholder="Tell me about your project..." required rows="4"></textarea>
+                  </div>
+                  <button class="cf-submit" type="submit">
+                    <span class="cf-submit-text">Send Message</span>
+                    <span class="cf-submit-arrow">
+                      <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                  </button>
+                  <div class="cf-success" id="cfSuccess">
+                    <i data-lucide="check-circle" class="cf-check-icon"></i>
+                    Message sent! I'll get back to you within 24 hours.
+                  </div>
+                  <div class="cf-error" id="cfError">
+                    <i data-lucide="alert-circle" class="cf-error-icon"></i>
+                    <span id="cfErrorText">Something went wrong. Please try again.</span>
+                  </div>
+                </form>
+              </div>
             </div>
-          </div>
 
-        </div>
+          </div><!-- /ct-body -->
 
-        <!-- Footer -->
-        <div class="footer-row reveal">
-          <span>© 2026 M. ABUBAKAR</span>
-          <span>FULL STACK · AI · REACT NATIVE</span>
-          <div class="footer-socials">
-            <a href="https://github.com/Abubakar-webmaker" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i data-lucide="github"></i></a>
-            <a href="https://www.linkedin.com/in/abubakar-fullstack-dev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
-            <a href="mailto:m.abubakar.codes@gmail.com" aria-label="Email"><i data-lucide="mail"></i></a>
-          </div>
-          <span class="back-top">↑ TOP</span>
-        </div>
+          <!-- Footer — inside scroll so it's never hidden -->
+          <footer class="ct-footer reveal">
+            <span>© 2026 M. ABUBAKAR</span>
+            <span class="ct-footer-mid">FULL STACK · AI · REACT NATIVE</span>
+            <div class="footer-socials">
+              <a href="https://github.com/Abubakar-webmaker" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i data-lucide="github"></i></a>
+              <a href="https://www.linkedin.com/in/abubakar-fullstack-dev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+              <a href="mailto:m.abubakar.codes@gmail.com" aria-label="Email"><i data-lucide="mail"></i></a>
+            </div>
+            <button class="back-top" aria-label="Back to top">↑ TOP</button>
+          </footer>
+
+        </div><!-- /ct-scroll-wrap -->
 
       </section>
 

@@ -147,7 +147,16 @@ window.addEventListener("touchend", (event) => {
   if (isTransitioning) return;
   const dy = touchStartY - event.changedTouches[0].clientY;
   const dx = touchStartX - event.changedTouches[0].clientX;
-  if (Math.abs(dy) < 45 || Math.abs(dy) < Math.abs(dx)) return;
+
+  // Must be a predominantly vertical swipe to trigger page nav
+  if (Math.abs(dy) < 45 || Math.abs(dy) < Math.abs(dx) * 1.3) return;
+
+  // On the work panel, only page-navigate when at an edge
+  if (panels[current]?.id === 'work') {
+    const atEdge = !window._cwHandleWheel || window._cwHandleWheel(dy > 0 ? 1 : -1) === false;
+    if (!atEdge) return;
+  }
+
   if (dy > 0) nextPage(); else previousPage();
 }, { passive: true });
 
