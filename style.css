@@ -12,7 +12,7 @@
 
   --font-display:'Plus Jakarta Sans',sans-serif;
   --font-body-fam:'Inter',sans-serif;
-  --font-mono:'JetBrains Mono',monospace;
+  --font-mono:'JetBrains Mono',monospace; 
 
   /* Fluid type — scales from mobile to desktop */
   --font-hero:   clamp(2.4rem,5vw,4rem);
