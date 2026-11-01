@@ -7,6 +7,7 @@
 Smooth page transitions · GSAP-powered animations · Typewriter journey · Floating skill bubbles · 3D-tilt project cards · Zero-backend contact form
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-6C5CE7?style=for-the-badge&logo=vercel&logoColor=white)](https://your-portfolio.vercel.app)
+
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
@@ -15,7 +16,7 @@ Smooth page transitions · GSAP-powered animations · Typewriter journey · Floa
 ![ESLint](https://img.shields.io/badge/ESLint-9-4B32C3?style=flat-square&logo=eslint&logoColor=white)
 ![License](https://img.shields.io/badge/License-Personal%20Use-blue?style=flat-square)
 
-[Live Demo](https://your-portfolio.vercel.app) · [Report a Bug](https://github.com/YOUR_USERNAME/Portfolio/issues) · [Request a Feature](https://github.com/YOUR_USERNAME/Portfolio/issues)
+[Report a Bug](https://github.com/YOUR_USERNAME/Portfolio/issues) · [Request a Feature](https://github.com/YOUR_USERNAME/Portfolio/issues)
 
 </div>
 
@@ -46,7 +47,7 @@ Smooth page transitions · GSAP-powered animations · Typewriter journey · Floa
 
 ## Overview
 
-This is the personal portfolio of **M. Abubakar**, a Full Stack Developer (MERN) based in Karachi, Pakistan. Instead of a conventional scrolling page, it is designed as a **cinematic, full-screen experience**: each section snaps into view with smooth transitions, and every interaction is animated with GSAP.
+This is the personal portfolio of **M. Abubakar**, a Full Stack Developer (MERN) based in Karachi, Pakistan. Rather than a conventional scrolling page, it's built as a **cinematic, full-screen experience** — each section snaps into view with smooth transitions, and every interaction is animated with GSAP.
 
 The project has **no runtime CDN dependencies** and **no backend**. All libraries are self-hosted, so it loads fast, works offline-friendly, and can be deployed to any static host in seconds.
 
@@ -68,17 +69,17 @@ The project has **no runtime CDN dependencies** and **no backend**. All librarie
 
 ## Features
 
-- **Section-snapping layout**: full-screen sections with cinematic transitions between them
-- **GSAP + ScrollTrigger animations**: smooth, performant motion throughout
-- **Lenis smooth scrolling**: buttery inertia-based scroll feel
-- **Animated skill bubbles**: floating, interactive skill visualisation
-- **3D-tilt project cards**: depth effect that responds to pointer movement
-- **Typewriter-driven journey**: storytelling section with an animated timeline
-- **Zero-backend contact form**: opens a pre-filled `mailto:` link, with no API keys or server
-- **Multiple navigation methods**: wheel, keyboard, touch swipe, header links and side dots
-- **Fully responsive**: fluid typography with `clamp()` and CSS Grid
-- **Self-hosted libraries**: no CDN dependency at runtime
-- **Linted codebase**: ESLint 9 flat config for consistent code quality
+- **Section-snapping layout** — full-screen sections with cinematic transitions between them
+- **GSAP + ScrollTrigger animations** — smooth, performant motion throughout
+- **Lenis smooth scrolling** — buttery, inertia-based scroll feel
+- **Animated skill bubbles** — floating, interactive skill visualisation
+- **3D-tilt project cards** — depth effect that responds to pointer movement
+- **Typewriter-driven journey** — storytelling section with an animated timeline
+- **Zero-backend contact form** — opens a pre-filled `mailto:` link, no API keys or server needed
+- **Multiple navigation methods** — wheel, keyboard, touch swipe, header links and side dots
+- **Fully responsive** — fluid typography with `clamp()` and CSS Grid
+- **Self-hosted libraries** — no CDN dependency at runtime
+- **Linted codebase** — ESLint 9 flat config for consistent code quality
 
 ---
 
@@ -87,7 +88,7 @@ The project has **no runtime CDN dependencies** and **no backend**. All librarie
 | Layer | Technology |
 |---|---|
 | Markup | HTML5 |
-| Styling | CSS3: custom properties, `clamp()`, Grid, fully responsive |
+| Styling | CSS3 — custom properties, `clamp()`, Grid, fully responsive |
 | Scripting | Vanilla JavaScript (ES6+ modules) |
 | Animations | [GSAP](https://gsap.com/) 3.13 + ScrollTrigger |
 | Smooth Scroll | [Lenis](https://lenis.darkroom.engineering/) 1.3.8 |
@@ -148,16 +149,16 @@ No tooling needed. Either open `index.html` directly in a browser, or use the **
 Portfolio/
 ├── index.html              # All sections and content
 ├── style.css               # Design system, layout, animations
-├── script.js               # Navigation, GSAP, typewriter, skill balls
-├── vite.config.js          # Vite build configuration
-├── eslint.config.js        # ESLint flat config for script.js
-├── package.json            # Scripts and dev dependencies
+├── script.js                # Navigation, GSAP, typewriter, skill balls
+├── vite.config.js           # Vite build configuration
+├── eslint.config.js         # ESLint flat config for script.js
+├── package.json             # Scripts and dev dependencies
 ├── .gitignore
 ├── assets/
-│   ├── favicon.svg         # Brand favicon
+│   ├── favicon.svg          # Brand favicon
 │   ├── images/
-│   │   └── abubakar.png    # Profile photo
-│   └── js/                 # Self-hosted libraries
+│   │   └── abubakar.png     # Profile photo
+│   └── js/                  # Self-hosted libraries
 │       ├── gsap.min.js
 │       ├── ScrollTrigger.min.js
 │       ├── lenis.min.js
@@ -276,7 +277,7 @@ The form relies on the `mailto:` protocol, so it needs a default mail client con
 <details>
 <summary><strong>Animations feel laggy</strong></summary>
 
-Check that hardware acceleration is enabled in your browser and that no heavy extensions are running. Using a production build (`npm run build && npm run preview`) is also noticeably smoother than the dev server.
+Check that hardware acceleration is enabled in your browser and that no heavy extensions are running. A production build (`npm run build && npm run preview`) is also noticeably smoother than the dev server.
 </details>
 
 ---
@@ -316,7 +317,7 @@ This project is for **personal portfolio use**. Feel free to fork and adapt it w
 **M. Abubakar** — Full Stack Developer (MERN)
 📍 Karachi, Pakistan
 
-[![Email](https://img.shields.io/badge/Email-m.abubakar.codes@gmail.com-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:m.abubakar.codes@gmail.com)
+[![Email](https://img.shields.io/badge/Email-m.abubakar.codes%40gmail.com-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:m.abubakar.codes@gmail.com)
 [![GitHub](https://img.shields.io/badge/GitHub-YOUR__USERNAME-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/YOUR_USERNAME)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/YOUR_USERNAME)
 
