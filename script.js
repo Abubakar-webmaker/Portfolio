@@ -835,6 +835,214 @@ setTimeout(() => {
   ScrollTrigger.refresh(); // Refresh all triggers after initial setup
 }, 50);
 
+// ── HERO CURSOR GLOW (SPOTLIGHT EFFECT) ─────────────────────────────────
+function initHeroCursorGlow() {
+  const heroPanel = document.getElementById('home');
+  if (!heroPanel) return;
+
+  // Check if prefers-reduced-motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  // Create glow overlay if doesn't exist
+  let glowOverlay = heroPanel.querySelector('.hero-glow-overlay');
+  if (!glowOverlay) {
+    glowOverlay = document.createElement('div');
+    glowOverlay.className = 'hero-glow-overlay';
+    heroPanel.insertBefore(glowOverlay, heroPanel.firstChild);
+  }
+
+  // Throttle function to limit mousemove updates
+  let lastUpdate = 0;
+  const throttleMs = 50; // throttle to 20 updates/sec on mobile
+
+  heroPanel.addEventListener('mousemove', (e) => {
+    const now = Date.now();
+    if (now - lastUpdate < throttleMs) return;
+    lastUpdate = now;
+
+    const rect = heroPanel.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    heroPanel.style.setProperty('--glow-x', x + 'px');
+    heroPanel.style.setProperty('--glow-y', y + 'px');
+  });
+
+  heroPanel.addEventListener('mouseleave', () => {
+    glowOverlay.style.opacity = '0';
+  });
+
+  heroPanel.addEventListener('mouseenter', () => {
+    glowOverlay.style.opacity = '1';
+  });
+}
+
+// ── SKILLS SECTION BENTO GRID ENTRANCE ──────────────────────────────────
+function initSkillCardEntrance() {
+  const skillCards = document.querySelectorAll('.skill-group');
+  if (skillCards.length === 0) return;
+
+  // Check if prefers-reduced-motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    skillCards.forEach(card => gsap.set(card, { opacity: 1, y: 0, scale: 1 }));
+    return;
+  }
+
+  // Stagger entrance animation
+  skillCards.forEach((card, i) => {
+    gsap.fromTo(card,
+      { opacity: 0, y: 20, scale: 0.95 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.6, delay: i * 0.06, ease: 'power3.out' }
+    );
+  });
+}
+
+// ── ANIMATED NOISE CANVAS BACKGROUND ────────────────────────────────────
+class NoiseBackground {
+  constructor() {
+    this.canvas = null;
+    this.ctx = null;
+    this.imageData = null;
+    this.data = null;
+    this.time = 0;
+    this.speed = 0.02;
+    this.scale = 80;
+    this.animationFrameId = null;
+
+    // Check if should disable on mobile/low-end
+    const isMobile = window.innerWidth < 768;
+    const isLowEnd = window.devicePixelRatio > 2;
+    
+    if (!isMobile && !isLowEnd) {
+      this.init();
+    }
+  }
+
+  init() {
+    // Create canvas
+    this.canvas = document.createElement('canvas');
+    this.canvas.className = 'noise-bg-canvas';
+    document.body.insertBefore(this.canvas, document.body.firstChild);
+
+    this.ctx = this.canvas.getContext('2d', { alpha: false });
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+    this.imageData = this.ctx.createImageData(this.canvas.width, this.canvas.height);
+    this.data = this.imageData.data;
+
+    window.addEventListener('resize', () => this.resize());
+
+    // Check if prefers-reduced-motion
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      this.animate();
+    }
+  }
+
+  perlinNoise(x, y, z) {
+    // Simplified hash-based noise
+    const n = Math.sin(x * 12.9898 + y * 78.233 + z * 45.164) * 43758.5453;
+    return n - Math.floor(n);
+  }
+
+  generateNoise(time) {
+    if (!this.canvas || !this.data) return;
+
+    const w = this.canvas.width;
+    const h = this.canvas.height;
+    const scale = this.scale;
+
+    for (let i = 0; i < w * h; i++) {
+      const x = (i % w) / scale;
+      const y = Math.floor(i / w) / scale;
+
+      // Multi-octave noise for natural look
+      let noise = 0;
+      noise += this.perlinNoise(x, y, time) * 0.5;
+      noise += this.perlinNoise(x * 2, y * 2, time * 0.7) * 0.3;
+      noise += this.perlinNoise(x * 4, y * 4, time * 0.4) * 0.2;
+
+      // Dark gray with subtle tint
+      const val = Math.floor(noise * 255);
+      const baseColor = Math.floor(15 + val * 0.08);
+
+      const idx = i * 4;
+      this.data[idx] = baseColor;
+      this.data[idx + 1] = baseColor;
+      this.data[idx + 2] = baseColor;
+      this.data[idx + 3] = 255;
+    }
+
+    this.ctx.putImageData(this.imageData, 0, 0);
+  }
+
+  animate = () => {
+    this.time += this.speed;
+    this.generateNoise(this.time);
+    this.animationFrameId = requestAnimationFrame(this.animate);
+  }
+
+  resize() {
+    if (!this.canvas) return;
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+    this.imageData = this.ctx.createImageData(this.canvas.width, this.canvas.height);
+    this.data = this.imageData.data;
+  }
+
+  destroy() {
+    if (this.animationFrameId) {
+      cancelAnimationFrame(this.animationFrameId);
+    }
+    if (this.canvas) {
+      this.canvas.remove();
+    }
+  }
+}
+
+// Initialize noise background
+const noiseBg = new NoiseBackground();
+
+// ── SCROLLTRIGGER MANAGEMENT & ACCESSIBILITY ────────────────────────────
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isMobileViewport = window.innerWidth < 768;
+
+// Refresh ScrollTriggers on resize
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    // Kill and refresh all ScrollTriggers
+    ScrollTrigger.getAll().forEach(trigger => {
+      if (trigger.vars.trigger !== '#home') { // Keep hero parallax
+        trigger.kill();
+      }
+    });
+    
+    // Reinitialize critical triggers
+    if (window._initWorkPin) window._initWorkPin();
+    ScrollTrigger.refresh();
+  }, 300);
+});
+
+// Listen for orientation change
+window.addEventListener('orientationchange', () => {
+  setTimeout(() => {
+    ScrollTrigger.refresh();
+  }, 200);
+});
+
+// Initialize all features at page load
+window.addEventListener('load', () => {
+  initHeroCursorGlow();
+  initSkillCardEntrance();
+  
+  // Disable heavy animations on mobile
+  if (isMobileViewport) {
+    // Reduce noise animation speed
+    if (noiseBg) noiseBg.speed = 0.01;
+  }
+});
+
 // ── EXPERIENCE EFFECTS ──
 
 // Mouse-follow glow on experience panel
@@ -1063,6 +1271,10 @@ function triggerSkillBalls() {
   // Cancel any leftover loops from a previous visit
   rafIds.forEach(id => cancelAnimationFrame(id));
   rafIds.length = 0;
+  
+  // Add skill card entrance animation (bento grid enhancement)
+  initSkillCardEntrance();
+  
   // Start a fresh tick loop for every card
   skillTickers.forEach(tick => {
     rafIds.push(requestAnimationFrame(tick));
