@@ -150,10 +150,12 @@ function goToPage(target, direction = target > current ? 1 : -1) {
     if (incoming.id === 'work') {
       setTimeout(() => {
         if (window._cwEntrance) window._cwEntrance();
+        if (window._initWorkPin) window._initWorkPin(); // Initialize pin when entering
         window.addEventListener('keydown', window._handleWorkKey);
       }, 200);
     }
     if (outgoing.id === 'work') {
+      if (window._killPinTrigger) window._killPinTrigger(); // Kill pin when leaving
       window.removeEventListener('keydown', window._handleWorkKey);
     }
     if (incoming.id === 'experience') setTimeout(triggerExpTimeline, 400);
@@ -742,20 +744,96 @@ document.querySelector(".back-top")?.addEventListener("click", () => goToPage(0,
 
   // ── Recalculate on resize ──────────────────────────────────────────────
   let resizeTimer;
+  let pinTrigger = null;
+
+  function killPinTrigger() {
+    if (pinTrigger) {
+      pinTrigger.kill();
+      pinTrigger = null;
+    }
+  }
+
+  function initWorkPin() {
+    // Kill any existing pin trigger
+    killPinTrigger();
+
+    // Only pin on desktop (viewport >= 768px)
+    if (window.innerWidth < 768) {
+      return; // mobile: skip pinning
+    }
+
+    // Check if prefers-reduced-motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return; // skip pinning if user prefers reduced motion
+    }
+
+    const cards = Array.from(cwTrack.querySelectorAll('.cw-card'));
+    if (cards.length === 0) return;
+
+    const cardW = cardWidth();
+    const gapW = gapWidth();
+    const totalCards = cards.length;
+
+    // Calculate total scroll distance needed
+    // Total track width: cards + gaps
+    const totalTrackWidth = totalCards * cardW + (totalCards - 1) * gapW;
+    const viewportW = trackWidth();
+
+    // Maximum offset we can scroll: from showing card 0 centered to showing last card centered
+    const maxOffset = totalTrackWidth - viewportW;
+
+    // Create pin trigger
+    // The trigger element is the work panel
+    // We pin it and create a long scroll distance to animate through all cards
+    pinTrigger = ScrollTrigger.create({
+      trigger: '#work',
+      pin: true,
+      start: 'top top',
+      end: `+=${maxOffset + 600}px`, // extra buffer for smooth unpin
+      scrub: 1, // smooth scrub tied to scroll
+      onUpdate: (self) => {
+        // Map scroll progress (0–1) to horizontal offset
+        const progress = self.progress; // 0 to 1
+        const offset = -progress * maxOffset;
+        gsap.set(track, { x: offset, overwrite: 'auto' });
+        applyCardTransformsAndCache(offset, false);
+      },
+      markers: false, // set to true for debugging
+      onEnter: () => {
+        // When entering work section, ensure cards are reset
+        activeIndex = 0;
+        currentOffset = targetOffset(0);
+      }
+    });
+  }
+
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
+      // Reinitialize pin on resize
+      initWorkPin();
+      
+      // Also reset card position
       currentOffset = targetOffset(activeIndex);
       gsap.set(track, { x: currentOffset });
       applyCardTransforms(currentOffset, false);
-    }, 120);
+    }, 200);
   });
 
   // ── Expose to page-level handlers ───────────────────────────────────────
   window._cwEntrance      = cwEntrance;
   window._cwHandleWheel   = cwHandleWheel;
   window._handleWorkKey   = handleWorkKey;
+  window._initWorkPin     = initWorkPin;
+  window._killPinTrigger  = killPinTrigger;
 })();
+
+// ── Initialize work pin after cinematic work setup ────────────────────────
+// Also refresh ScrollTrigger after page load to ensure all measurements are correct
+setTimeout(() => {
+  if (window._initWorkPin) window._initWorkPin();
+  ScrollTrigger.refresh(); // Refresh all triggers after initial setup
+}, 50);
 
 // ── EXPERIENCE EFFECTS ──
 

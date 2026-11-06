@@ -1218,6 +1218,10 @@ body.page-mode #smooth-content{width:100%;height:100%;overflow:hidden}
 /* ── Reduced motion ── */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none !important;transition:none !important}
+  /* Disable parallax transforms on reduced motion */
+  .panel-home::before,
+  .home-copy,
+  .hero-media{transform:none !important}
 }
 
 /* ── Touch: disable heavy 3-D transforms ── */
