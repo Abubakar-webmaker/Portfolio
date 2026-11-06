@@ -32,6 +32,7 @@
 <body>
   <a href="#home" class="skip-link">Skip to content</a>
   <div class="noise"></div>
+  <div class="scroll-progress-bar"></div>
 
   <header class="site-header">
     <a class="brand" href="#home" aria-label="Home">
@@ -75,11 +76,11 @@
     <div id="smooth-content">
 
       <!-- 01 HOME -->
-      <section class="panel panel-home" id="home" data-theme="home">
+      <section class="panel panel-home" id="home" data-theme="home" data-parallax-section="true">
         <div class="panel-inner">
           <div class="eyebrow reveal"><i data-lucide="circle-dot" class="section-icon"></i> AVAILABLE FOR SELECTED PROJECTS &nbsp;&middot;&nbsp; 2026</div>
           <div class="home-grid">
-            <div class="home-copy">
+            <div class="home-copy" data-parallax-layer="foreground">
               <h1 class="display reveal">M. Abubakar</h1>
               <p class="hero-sub reveal">Full Stack Developer — MERN · AI Integrations · React Native</p>
               <p class="intro reveal">I build production-ready web apps and AI-powered features that actually work.<br>Currently at <span>Revolix Technologies, Karachi.</span></p>
@@ -89,7 +90,7 @@
                 <a class="pill-btn outline" href="assets/Abu_Bakar_CV.pdf" download="Abu_Bakar_CV.pdf" aria-label="Download Resume PDF">Resume ↓</a>
               </div>
             </div>
-            <div class="hero-media media reveal-media">
+            <div class="hero-media media reveal-media" data-parallax-layer="foreground">
               <img src="assets/images/abubakar.png" alt="M. Abubakar — Full Stack Developer">
             </div>
           </div>

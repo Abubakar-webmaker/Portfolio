@@ -5,6 +5,7 @@ const panels = gsap.utils.toArray(".panel");
 const navButtons = gsap.utils.toArray(".side-nav button");
 const sweep1 = document.querySelector(".sweep-1");
 const sweep2 = document.querySelector(".sweep-2");
+const progressBar = document.querySelector(".scroll-progress-bar");
 
 let current = 0;
 let isTransitioning = false;
@@ -18,6 +19,65 @@ document.body.classList.add("page-mode");
 
 gsap.set(panels, { position: "absolute", inset: 0, autoAlpha: 0, y: 0 });
 gsap.set(panels[0], { autoAlpha: 1 });
+
+// ── SCROLL PROGRESS BAR ─────────────────────────────────────────────────
+// Update progress bar on scroll
+ScrollTrigger.create({
+  onUpdate: (self) => {
+    if (progressBar) {
+      gsap.to(progressBar, {
+        width: self.getVelocity() === 0 ? self.progress * 100 + "%" : self.progress * 100 + "%",
+        duration: 0.3,
+        ease: "power2.out",
+        overwrite: true
+      });
+    }
+  }
+});
+
+// ── HERO SECTION PARALLAX ───────────────────────────────────────────────
+// Initialize parallax effect for hero section background and foreground layers
+function initHeroParallax() {
+  // Check if prefers-reduced-motion is set
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) return;
+
+  const heroPanel = document.getElementById('home');
+  if (!heroPanel) return;
+
+  // Background shapes: slow parallax (0.4 scrub multiplier)
+  // Creates depth illusion as background lags behind scroll
+  ScrollTrigger.create({
+    trigger: heroPanel,
+    start: 'top top',
+    end: 'bottom top',
+    scrub: 0.4,
+    onUpdate: (self) => {
+      const dist = self.progress * 60; // 60px total parallax travel
+      heroPanel.style.setProperty('--parallax-y', `-${dist}px`);
+    },
+    markers: false
+  });
+
+  // Foreground text & image: faster parallax (0.8 scrub multiplier)
+  // Moves more responsively to create layered depth effect
+  const foregroundLayers = heroPanel.querySelectorAll('[data-parallax-layer="foreground"]');
+  if (foregroundLayers.length > 0) {
+    ScrollTrigger.create({
+      trigger: heroPanel,
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 0.8,
+      onUpdate: (self) => {
+        const dist = self.progress * 35; // 35px total parallax travel
+        foregroundLayers.forEach(layer => {
+          gsap.set(layer, { y: dist, overwrite: 'auto' });
+        });
+      },
+      markers: false
+    });
+  }
+}
 
 function setActive(index) {
   navButtons.forEach((button, i) => {
@@ -1000,4 +1060,5 @@ window.addEventListener("load", () => {
   );
   setActive(0);
   showInitialPage();
+  initHeroParallax();
 });
