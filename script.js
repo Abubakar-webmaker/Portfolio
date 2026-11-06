@@ -789,18 +789,17 @@ document.querySelector(".back-top")?.addEventListener("click", () => goToPage(0,
       trigger: '#work',
       pin: true,
       start: 'top top',
-      end: `+=${maxOffset + 600}px`, // extra buffer for smooth unpin
-      scrub: 1, // smooth scrub tied to scroll
+      end: `+=${maxOffset + 600}px`,
+      scrub: 0.8, // REDUCED from 1 for better responsiveness
+      fastScrollEnd: true,
       onUpdate: (self) => {
-        // Map scroll progress (0–1) to horizontal offset
-        const progress = self.progress; // 0 to 1
+        const progress = self.progress;
         const offset = -progress * maxOffset;
-        gsap.set(track, { x: offset, overwrite: 'auto' });
+        gsap.set(track, { x: offset, overwrite: false }); // false for batch updates
         applyCardTransformsAndCache(offset, false);
       },
-      markers: false, // set to true for debugging
+      markers: false,
       onEnter: () => {
-        // When entering work section, ensure cards are reset
         activeIndex = 0;
         currentOffset = targetOffset(0);
       }
@@ -840,8 +839,8 @@ function initHeroCursorGlow() {
   const heroPanel = document.getElementById('home');
   if (!heroPanel) return;
 
-  // Check if prefers-reduced-motion
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  // Check if prefers-reduced-motion or mobile
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || window.innerWidth < 768) return;
 
   // Create glow overlay if doesn't exist
   let glowOverlay = heroPanel.querySelector('.hero-glow-overlay');
@@ -851,30 +850,40 @@ function initHeroCursorGlow() {
     heroPanel.insertBefore(glowOverlay, heroPanel.firstChild);
   }
 
-  // Throttle function to limit mousemove updates
-  let lastUpdate = 0;
-  const throttleMs = 50; // throttle to 20 updates/sec on mobile
+  // Use requestIdleCallback for glow updates (not blocking interactions)
+  let pendingGlow = null;
+  let lastX = null, lastY = null;
 
   heroPanel.addEventListener('mousemove', (e) => {
-    const now = Date.now();
-    if (now - lastUpdate < throttleMs) return;
-    lastUpdate = now;
-
     const rect = heroPanel.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    heroPanel.style.setProperty('--glow-x', x + 'px');
-    heroPanel.style.setProperty('--glow-y', y + 'px');
-  });
+    // Skip if barely moved (reduce thrashing)
+    if (lastX !== null && Math.abs(x - lastX) < 5 && Math.abs(y - lastY) < 5) return;
+
+    lastX = x;
+    lastY = y;
+
+    // Cancel previous idle callback if pending
+    if (pendingGlow) cancelIdleCallback(pendingGlow);
+
+    // Defer glow update using requestIdleCallback (lower priority)
+    pendingGlow = requestIdleCallback(() => {
+      heroPanel.style.setProperty('--glow-x', x + 'px');
+      heroPanel.style.setProperty('--glow-y', y + 'px');
+      pendingGlow = null;
+    }, { timeout: 100 }); // fallback to 100ms if no idle time
+  }, { passive: true });
 
   heroPanel.addEventListener('mouseleave', () => {
     glowOverlay.style.opacity = '0';
-  });
+    if (pendingGlow) cancelIdleCallback(pendingGlow);
+  }, { passive: true });
 
   heroPanel.addEventListener('mouseenter', () => {
     glowOverlay.style.opacity = '1';
-  });
+  }, { passive: true });
 }
 
 // ── SKILLS SECTION BENTO GRID ENTRANCE ──────────────────────────────────
@@ -905,9 +914,10 @@ class NoiseBackground {
     this.imageData = null;
     this.data = null;
     this.time = 0;
-    this.speed = 0.02;
-    this.scale = 80;
+    this.speed = 0.008; // REDUCED from 0.02 for better performance
+    this.scale = 100; // INCREASED from 80 (less detail = faster)
     this.animationFrameId = null;
+    this.updateCount = 0;
 
     // Check if should disable on mobile/low-end
     const isMobile = window.innerWidth < 768;
@@ -924,7 +934,7 @@ class NoiseBackground {
     this.canvas.className = 'noise-bg-canvas';
     document.body.insertBefore(this.canvas, document.body.firstChild);
 
-    this.ctx = this.canvas.getContext('2d', { alpha: false });
+    this.ctx = this.canvas.getContext('2d', { alpha: false, willReadFrequently: false });
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
     this.imageData = this.ctx.createImageData(this.canvas.width, this.canvas.height);
@@ -939,7 +949,7 @@ class NoiseBackground {
   }
 
   perlinNoise(x, y, z) {
-    // Simplified hash-based noise
+    // Simplified hash-based noise (faster version)
     const n = Math.sin(x * 12.9898 + y * 78.233 + z * 45.164) * 43758.5453;
     return n - Math.floor(n);
   }
@@ -951,15 +961,17 @@ class NoiseBackground {
     const h = this.canvas.height;
     const scale = this.scale;
 
-    for (let i = 0; i < w * h; i++) {
+    // OPTIMIZED: Skip every other pixel on slower devices
+    const step = window.devicePixelRatio > 1.5 ? 2 : 1;
+
+    for (let i = 0; i < w * h; i += step) {
       const x = (i % w) / scale;
       const y = Math.floor(i / w) / scale;
 
-      // Multi-octave noise for natural look
+      // Simplified: use only 2 octaves instead of 3
       let noise = 0;
-      noise += this.perlinNoise(x, y, time) * 0.5;
-      noise += this.perlinNoise(x * 2, y * 2, time * 0.7) * 0.3;
-      noise += this.perlinNoise(x * 4, y * 4, time * 0.4) * 0.2;
+      noise += this.perlinNoise(x, y, time) * 0.6;
+      noise += this.perlinNoise(x * 2, y * 2, time * 0.7) * 0.4;
 
       // Dark gray with subtle tint
       const val = Math.floor(noise * 255);
@@ -976,8 +988,13 @@ class NoiseBackground {
   }
 
   animate = () => {
-    this.time += this.speed;
-    this.generateNoise(this.time);
+    // Skip frames on low-end devices
+    this.updateCount++;
+    if (this.updateCount % 2 === 0) { // Every other frame on low-end
+      this.time += this.speed;
+      this.generateNoise(this.time);
+    }
+    
     this.animationFrameId = requestAnimationFrame(this.animate);
   }
 
@@ -1006,42 +1023,47 @@ const noiseBg = new NoiseBackground();
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isMobileViewport = window.innerWidth < 768;
 
-// Refresh ScrollTriggers on resize
+// Debounce resize to avoid rapid refresh spam
 let resizeTimer;
 window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => {
-    // Kill and refresh all ScrollTriggers
-    ScrollTrigger.getAll().forEach(trigger => {
-      if (trigger.vars.trigger !== '#home') { // Keep hero parallax
-        trigger.kill();
-      }
-    });
-    
-    // Reinitialize critical triggers
-    if (window._initWorkPin) window._initWorkPin();
-    ScrollTrigger.refresh();
-  }, 300);
+    // Only refresh on major breakpoint changes (not every pixel)
+    const currentMobile = window.innerWidth < 768;
+    if (currentMobile !== isMobileViewport) {
+      // Refresh only if breakpoint changed
+      ScrollTrigger.getAll().forEach(trigger => {
+        if (trigger.vars.trigger !== '#home') { 
+          trigger.kill();
+        }
+      });
+      
+      if (window._initWorkPin) window._initWorkPin();
+      ScrollTrigger.refresh();
+    }
+  }, 500); // Wait 500ms after resize stops
 });
 
 // Listen for orientation change
 window.addEventListener('orientationchange', () => {
   setTimeout(() => {
     ScrollTrigger.refresh();
-  }, 200);
-});
+  }, 300);
+}, { passive: true });
 
 // Initialize all features at page load
 window.addEventListener('load', () => {
-  initHeroCursorGlow();
-  initSkillCardEntrance();
-  
-  // Disable heavy animations on mobile
-  if (isMobileViewport) {
-    // Reduce noise animation speed
-    if (noiseBg) noiseBg.speed = 0.01;
-  }
-});
+  // Defer non-critical initialization to next frame
+  requestAnimationFrame(() => {
+    initHeroCursorGlow();
+    initSkillCardEntrance();
+    
+    // Disable heavy animations on mobile
+    if (isMobileViewport) {
+      if (noiseBg) noiseBg.speed = 0.004;
+    }
+  });
+}, { passive: true });
 
 // ── EXPERIENCE EFFECTS ──
 
