@@ -27,7 +27,7 @@ export function Header() {
             </div>
             <div className="hidden md:flex flex-col gap-1">
               <p className="font-mono text-xs tracking-widest text-[#f5f0e8] leading-none">
-                M. ABUBAKAR
+                AHSAN AZIZ
               </p>
               <p className="font-mono text-xs text-white/60 leading-none">
                 FULL STACK DEVELOPER
@@ -48,26 +48,18 @@ export function Header() {
             ))}
           </nav>
 
-          {/* CTA + Mobile Menu Button */}
-          <div className="flex items-center gap-3">
-            <a
-              href="mailto:m.abubakar.codes@gmail.com"
-              className="hidden sm:flex pill-btn pill-btn-primary"
-            >
-              Let's Talk →
-            </a>
-            <button
-              onClick={() => setMobileNavOpen(!mobileNavOpen)}
-              className="md:hidden p-2 hover:bg-white/5 rounded-lg transition-colors"
-              aria-label="Toggle menu"
-            >
-              {mobileNavOpen ? (
-                <X className="w-5 h-5" />
-              ) : (
-                <Menu className="w-5 h-5" />
-              )}
-            </button>
-          </div>
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileNavOpen(!mobileNavOpen)}
+            className="md:hidden p-2 hover:bg-white/5 rounded-lg transition-colors"
+            aria-label="Toggle menu"
+          >
+            {mobileNavOpen ? (
+              <X className="w-5 h-5" />
+            ) : (
+              <Menu className="w-5 h-5" />
+            )}
+          </button>
         </div>
 
         {/* Mobile Navigation */}
@@ -84,12 +76,6 @@ export function Header() {
                   {link.label}
                 </a>
               ))}
-              <a
-                href="mailto:m.abubakar.codes@gmail.com"
-                className="mt-2 pill-btn pill-btn-primary w-full text-center"
-              >
-                Let's Talk →
-              </a>
             </nav>
           </div>
         )}

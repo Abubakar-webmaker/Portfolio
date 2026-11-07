@@ -11,67 +11,53 @@ const projects = [
   {
     id: 1,
     number: '01',
-    title: 'AI Project Manager',
+    title: 'J.M.S Web App - Oracle Cloud Deployment',
     description:
-      'Enterprise-grade project management tool with Kanban board, 16 AI-powered features, client portal, analytics, gamification, and role-based access control.',
-    tech: ['MERN', 'Groq API', 'DnD Kit', 'MongoDB', 'JWT'],
+      'Deployed a full-stack React/Node application on Oracle Cloud using Caddy for HTTPS and two GitHub Actions pipelines. Resolved memory limitations and Prisma migration issues for production stability.',
+    tech: ['Docker', 'React', 'Node.js', 'GitHub Actions', 'Oracle Cloud', 'Caddy', 'Prisma'],
     featured: true,
     accent: '#a78bfa',
-    links: [{ label: 'GitHub', url: 'https://github.com/Abubakar-webmaker/ai-project-manager' }],
+    links: [],
   },
   {
     id: 2,
     number: '02',
-    title: 'Postman AI Agent',
+    title: 'Vursell AI Sales Platform',
     description:
-      'Analyzes backend source code and auto-generates complete Postman Collections. Published to PyPI and VS Code Marketplace.',
-    tech: ['FastAPI', 'LangGraph', 'Groq API', 'Python'],
+      'Hosted a Next.js/FastAPI stack on low-spec Oracle Cloud server with automated CI/CD scans, zero-cost deployment strategy, and hardened security configurations for production use.',
+    tech: ['Next.js', 'FastAPI', 'CI/CD', 'Oracle Cloud', 'Security', 'GitHub Actions'],
     accent: '#ff9e68',
-    links: [
-      { label: 'GitHub', url: 'https://github.com/Abubakar-webmaker/postman-collection-ai-agent' },
-      { label: 'PyPI', url: 'https://pypi.org/project/postman-collection-ai-agent/' },
-      { label: 'VS Code', url: 'https://marketplace.visualstudio.com/items?itemName=Abubakar-webmaker.postman-ai-agent' },
-    ],
+    links: [],
   },
   {
     id: 3,
     number: '03',
-    title: 'AI Chat Platform',
+    title: 'Voice Agent Infrastructure - AWS',
     description:
-      'Claude-style real-time chat application with multi-provider AI, streaming responses, JWT authentication, and persistent conversation history.',
-    tech: ['React', 'Node.js', 'Socket.io', 'Groq', 'OpenAI', 'Gemini'],
+      'Architected scalable infrastructure utilizing AWS ECS Fargate for containerized deployments, ECR for image management, RDS PostgreSQL, Redis caching, Secrets Manager, and Amplify frontend hosting.',
+    tech: ['AWS ECS Fargate', 'ECR', 'RDS', 'Redis', 'Secrets Manager', 'AWS Amplify'],
     accent: '#38bdf8',
-    links: [{ label: 'GitHub', url: 'https://github.com/Abubakar-webmaker/ai-chat-platform' }],
+    links: [],
   },
   {
     id: 4,
     number: '04',
-    title: 'CollabNotes',
+    title: 'BMS Deployment - AWS EC2',
     description:
-      'Real-time collaborative note-taking platform with live multi-user editing, conflict-free auto-sync, and persistent storage.',
-    tech: ['MERN', 'Socket.io', 'Real-time', 'MongoDB'],
+      'Containerized and deployed lightweight Python and Docker workloads on AWS EC2 instances with automated CI/CD pipelines and production-grade security configurations.',
+    tech: ['Docker', 'Python', 'AWS EC2', 'GitHub Actions', 'CI/CD', 'Linux'],
     accent: '#06b6d4',
-    links: [{ label: 'GitHub', url: 'https://github.com/Abubakar-webmaker/collabNotes' }],
+    links: [],
   },
   {
     id: 5,
     number: '05',
-    title: 'AI Resume Builder',
+    title: 'Multi-Cloud Infrastructure Setup',
     description:
-      'Intelligent resume generator with multiple ATS-optimised templates, AI-powered content suggestions, real-time preview, and PDF export.',
-    tech: ['React', 'Groq API', 'PDF Export', 'TypeScript'],
+      'Designed and implemented infrastructure across AWS and Oracle Cloud platforms, managing container orchestration, security groups, firewalls, and automated deployment pipelines.',
+    tech: ['Docker Compose', 'AWS', 'Oracle Cloud', 'Security', 'Linux', 'CI/CD'],
     accent: '#34d399',
-    links: [{ label: 'GitHub', url: 'https://github.com/Abubakar-webmaker/ai-resume-builder' }],
-  },
-  {
-    id: 6,
-    number: '06',
-    title: 'Freelancer Invoices',
-    description:
-      'Full-stack invoice management tool for freelancers with glassmorphism UI, JWT auth, multi-currency support, and PDF generation.',
-    tech: ['MERN', 'TypeScript', 'JWT', 'Multi-currency'],
-    accent: '#fb923c',
-    links: [{ label: 'GitHub', url: 'https://github.com/Abubakar-webmaker/freelancer-invoice-generator' }],
+    links: [],
   },
 ];
 
@@ -105,8 +91,48 @@ export function Work() {
     };
   }, []);
 
+  const handleCardHover = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    // Create wave effect
+    const wave = document.createElement('div');
+    wave.style.position = 'absolute';
+    wave.style.left = x + 'px';
+    wave.style.top = y + 'px';
+    wave.style.width = '30px';
+    wave.style.height = '30px';
+    wave.style.borderRadius = '50%';
+    wave.style.border = '2px solid #ff9e68';
+    wave.style.pointerEvents = 'none';
+    wave.style.zIndex = '10';
+    card.appendChild(wave);
+
+    gsap.to(wave, {
+      width: '200px',
+      height: '200px',
+      left: x - 85 + 'px',
+      top: y - 85 + 'px',
+      borderColor: '#ff9e68 rgba(255, 158, 104, 0)',
+      opacity: 0,
+      duration: 0.8,
+      ease: 'power2.out',
+      onComplete: () => {
+        wave.remove();
+      },
+    });
+  };
+
   return (
     <section id="work" className="relative min-h-screen py-20 px-4 md:px-8 bg-gradient-to-b from-[#0a3a42] to-[#062f35]" ref={containerRef}>
+      <style>{`
+        .project-card {
+          position: relative;
+        }
+      `}</style>
+      
       <div className="max-w-7xl mx-auto">
         <p className="section-label mb-4">04 — PROJECTS</p>
         <h2 className="text-4xl md:text-5xl font-bold mb-16">Projects From The Field</h2>
@@ -117,6 +143,7 @@ export function Work() {
             <div
               key={project.id}
               className="project-card group relative bg-gradient-to-br from-white/10 to-white/5 border border-white/10 rounded-2xl p-6 hover:border-[#ff9e68]/50 transition-all duration-300 overflow-hidden h-full flex flex-col"
+              onMouseMove={handleCardHover}
               style={
                 {
                   '--accent': project.accent,
