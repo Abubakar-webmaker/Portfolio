@@ -184,13 +184,13 @@ export function Contact() {
           <p className="text-white/70 mb-6">Or reach out directly:</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="mailto:m.abubakar.codes@gmail.com"
+              href="mailto:ahsanaziz.dev@gmail.com"
               className="pill-btn pill-btn-outline"
             >
               Email
             </a>
             <a
-              href="https://github.com/Abubakar-webmaker"
+              href="https://github.com/mahsanaziz"
               target="_blank"
               rel="noopener noreferrer"
               className="pill-btn pill-btn-outline"
@@ -198,7 +198,7 @@ export function Contact() {
               GitHub
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/muhammad-ahsan-b912a7284/"
               target="_blank"
               rel="noopener noreferrer"
               className="pill-btn pill-btn-outline"
