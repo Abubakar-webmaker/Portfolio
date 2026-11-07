@@ -2,11 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { ArrowDown } from 'lucide-react';
 
 export function Hero() {
   const [displayedText, setDisplayedText] = useState('');
-  const fullText = 'M. Abubakar';
+  const fullText = 'Ahsan Aziz';
 
   useEffect(() => {
     let index = 0;
@@ -38,23 +37,19 @@ export function Hero() {
           {/* Left Content */}
           <div className="space-y-8">
             <div className="space-y-4 animate-reveal">
-              <p className="section-label text-[#4ade80]">
-                <span className="w-2 h-2 rounded-full bg-[#4ade80]" />
-                AVAILABLE FOR SELECTED PROJECTS · 2026
-              </p>
               <h1 className="text-5xl md:text-6xl font-bold">
                 {displayedText}
                 <span className="animate-pulse">|</span>
               </h1>
               <h2 className="text-2xl md:text-3xl font-display text-white/85">
-                Full Stack Developer — MERN · AI · React Native
+                DevOps Engineer — Docker · CI/CD · Cloud Infrastructure
               </h2>
             </div>
 
             <p className="text-lg text-white/75 max-w-md leading-relaxed animate-reveal animation-delay-100">
-              I build production-ready web apps and AI-powered features that actually work.
+              I build scalable cloud infrastructure and production-ready containerized applications.
               <br />
-              <span className="text-[#ff9e68]">Currently at Revolix Technologies, Karachi.</span>
+              <span className="text-[#ff9e68]">Freelance DevOps Engineer | Karachi, Pakistan.</span>
             </p>
 
             {/* CTA Buttons */}
@@ -62,15 +57,15 @@ export function Hero() {
               <a href="#work" className="pill-btn pill-btn-primary">
                 View My Work
               </a>
-              <a href="mailto:m.abubakar.codes@gmail.com" className="pill-btn pill-btn-outline">
-                Hire Me
+              <a href="mailto:ahsanaziz.dev@gmail.com" className="pill-btn pill-btn-outline">
+                Contact Me
               </a>
               <a
-                href="/assets/Abu_Bakar_CV.pdf"
-                download="Abu_Bakar_CV.pdf"
+                href="/Ahsan_Aziz_DevOps_CV.pdf"
+                download="Ahsan_Aziz_DevOps_Portfolio.pdf"
                 className="pill-btn pill-btn-outline"
               >
-                Resume ↓
+                Download CV ↓
               </a>
             </div>
           </div>
@@ -79,9 +74,10 @@ export function Hero() {
           <div className="relative h-96 md:h-full md:min-h-96 animate-reveal animation-delay-300">
             <div className="absolute inset-0 rounded-2xl overflow-hidden">
               <Image
-                src="/images/abubakar.png"
-                alt="M. Abubakar"
+                src="/images/231317241.png"
+                alt="Ahsan Aziz"
                 fill
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover object-top"
                 priority
               />
@@ -91,12 +87,6 @@ export function Hero() {
             {/* Glow effect */}
             <div className="absolute -inset-4 bg-gradient-to-b from-[#ff9e68]/10 to-transparent rounded-3xl blur-2xl -z-10 animate-pulse" />
           </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
-          <span className="text-xs font-mono text-white/50 tracking-widest">SCROLL</span>
-          <ArrowDown className="w-4 h-4 text-white/50" />
         </div>
       </div>
     </section>
