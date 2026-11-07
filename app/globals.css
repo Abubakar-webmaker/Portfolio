@@ -164,7 +164,7 @@
     width: 0%;
     z-index: 50;
     will-change: width;
-    box-shadow: 0 0 12px rgba(255, 158, 104, 0.3);
+    box-shadow: 0 0 8px rgba(255, 158, 104, 0.15);
   }
 
   @keyframes reveal {
