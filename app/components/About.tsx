@@ -1,20 +1,21 @@
 'use client';
 
-import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Code, Container, Cloud, GitBranch, Database, Shield } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function About() {
   const sectionRef = useRef(null);
+  const orbitRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from('.about-content > *', {
         scrollTrigger: {
-          trigger: '.about-section',
+          trigger: '#about',
           start: 'top center',
           end: 'center center',
           scrub: 1,
@@ -25,13 +26,33 @@ export function About() {
       });
     }, sectionRef);
 
+    // Orbital animation - continuous rotation
+    if (orbitRef.current) {
+      gsap.to('.orbit-item', {
+        rotation: 360,
+        duration: 15,
+        repeat: -1,
+        ease: 'none',
+        transformOrigin: 'center center',
+      });
+    }
+
     return () => ctx.revert();
   }, []);
 
   const stats = [
     { number: 2, label: 'Years Experience' },
-    { number: 7, label: 'Projects Shipped' },
-    { number: 2, label: 'Published Packages' },
+    { number: 5, label: 'Projects Deployed' },
+    { number: 10, label: 'Pipelines Built' },
+  ];
+
+  const coreSkills = [
+    { icon: Container, label: 'Docker & Containers', color: '#3b82f6' },
+    { icon: Code, label: 'CI/CD Pipelines', color: '#ef4444' },
+    { icon: Cloud, label: 'AWS & Cloud', color: '#22c55e' },
+    { icon: Database, label: 'Databases & Caching', color: '#10b981' },
+    { icon: Shield, label: 'Security & Hardening', color: '#8b5cf6' },
+    { icon: GitBranch, label: 'Version Control', color: '#06b6d4' },
   ];
 
   return (
@@ -43,78 +64,78 @@ export function About() {
       <div className="max-w-7xl mx-auto">
         <p className="section-label mb-4">02 — ABOUT</p>
 
-        <div className="grid md:grid-cols-2 gap-12 items-start">
-          {/* Left: Image */}
-          <div className="sticky top-32 h-fit">
-            <div className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden">
-              <Image
-                src="/images/abubakar.png"
-                alt="M. Abubakar"
-                fill
-                className="object-cover object-top"
-              />
-              <div className="absolute inset-0 rounded-2xl ring-2 ring-[#ff9e68]/20" />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#062f35]/40 rounded-2xl" />
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          {/* Left: Orbital Animation */}
+          <div className="flex justify-center items-center h-96 order-first md:order-first">
+            <div ref={orbitRef} className="relative w-80 h-80">
+              {/* Orbital Background Glow */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#ff9e68]/10 to-transparent rounded-full blur-3xl" />
+
+              {/* Outer Orbit Ring */}
+              <div className="absolute inset-0 rounded-full border-2 border-[#ff9e68]/40" />
+              
+              {/* Middle Orbit Ring */}
+              <div className="absolute inset-10 rounded-full border border-[#ff9e68]/20" />
+
+              {/* Center Icon */}
+              <div className="absolute inset-0 flex items-center justify-center z-20">
+                <div className="relative w-24 h-24 rounded-full bg-gradient-to-br from-[#ff9e68] via-[#e87a4f] to-[#c97a4e] flex items-center justify-center shadow-2xl shadow-[#ff9e68]/60 border-2 border-[#ff9e68]/40">
+                  <Code className="w-12 h-12 text-[#062f35]" />
+                </div>
+              </div>
+
+              {/* Orbiting Skills - 6 items */}
+              {coreSkills.map((skill, index) => {
+                const Icon = skill.icon;
+                const angle = (index / coreSkills.length) * 360;
+                const radius = 130;
+                const x = Math.round(radius * Math.cos((angle * Math.PI) / 180) * 100) / 100;
+                const y = Math.round(radius * Math.sin((angle * Math.PI) / 180) * 100) / 100;
+
+                return (
+                  <div
+                    key={skill.label}
+                    className="orbit-item absolute"
+                    style={{
+                      width: '64px',
+                      height: '64px',
+                      left: 'calc(50% + ' + x + 'px)',
+                      top: 'calc(50% + ' + y + 'px)',
+                      transform: 'translate(-50%, -50%)',
+                    }}
+                  >
+                    <div
+                      className="w-full h-full rounded-full flex items-center justify-center shadow-lg hover:scale-110 hover:shadow-xl cursor-pointer transition-all"
+                      style={{
+                        background: `linear-gradient(135deg, ${skill.color}40 0%, ${skill.color}15 100%)`,
+                        border: `2.5px solid ${skill.color}`,
+                      }}
+                      title={skill.label}
+                    >
+                      <Icon className="w-6 h-6" style={{ color: skill.color }} />
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-            <div className="absolute -inset-4 bg-gradient-radial from-[#ff9e68]/10 to-transparent rounded-3xl blur-3xl -z-10" />
           </div>
 
           {/* Right: Content */}
-          <div className="about-content space-y-8">
+          <div className="about-content space-y-6 order-last md:order-last">
             <div className="space-y-3">
-              <h2 className="text-4xl md:text-5xl font-bold">Full Stack Developer</h2>
-              <div className="w-32 h-1 bg-gradient-to-r from-[#ff9e68] to-transparent rounded" />
+              <h2 className="text-4xl md:text-5xl font-bold">DevOps Engineer</h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-[#ff9e68] to-transparent rounded" />
             </div>
 
-            <div className="space-y-4 text-lg text-white/75 leading-relaxed">
+            <div className="space-y-4 text-base md:text-lg text-white/70 leading-relaxed">
               <p>
-                I build production-grade web applications with React, Node.js, and AI integrations.
-                Currently shipping full-stack features at Revolix Technologies in Karachi.
+                Self-taught DevOps engineer specializing in containerization and cloud infrastructure. 
+                I design and deploy production-ready pipelines for developer teams.
               </p>
               <p>
-                My focus is on building scalable, maintainable systems that solve real problems. From
-                MERN applications to AI-powered features, I deliver end-to-end solutions.
+                My expertise spans Docker, GitHub Actions CI/CD, AWS, Oracle Cloud, and Linux administration. 
+                I focus on building secure, scalable, and efficient infrastructure solutions.
               </p>
-            </div>
-
-            {/* Currently Section */}
-            <div className="border-t border-white/10 pt-6">
-              <p className="text-xs font-mono tracking-widest text-white/50 mb-2">CURRENTLY</p>
-              <div>
-                <h3 className="text-xl font-bold">Full Stack Developer (Full-time)</h3>
-                <p className="text-[#ff9e68] font-mono text-sm">Revolix Technologies</p>
-              </div>
-            </div>
-
-            {/* Focus Section */}
-            <div className="border-t border-white/10 pt-6">
-              <p className="text-xs font-mono tracking-widest text-white/50 mb-3">FOCUS</p>
-              <div className="flex flex-wrap gap-2">
-                <span className="skill-tag">MERN Stack</span>
-                <span className="skill-tag">AI Integrations</span>
-                <span className="skill-tag">React Native</span>
-                <span className="skill-tag">Production Deployment</span>
-              </div>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 border-t border-white/10 pt-6">
-              {stats.map((stat) => (
-                <div key={stat.label} className="text-center">
-                  <p className="text-3xl md:text-4xl font-bold text-[#ff9e68]">{stat.number}+</p>
-                  <p className="text-xs font-mono tracking-widest text-white/50 mt-2">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* CTA */}
-            <div className="flex gap-3 pt-6 border-t border-white/10">
-              <a href="#work" className="pill-btn pill-btn-primary">
-                View My Work
-              </a>
-              <a href="mailto:m.abubakar.codes@gmail.com" className="pill-btn pill-btn-outline">
-                Email me →
-              </a>
             </div>
           </div>
         </div>
