@@ -60,7 +60,7 @@ export default function Home() {
         {/* Footer */}
         <footer className="relative py-12 px-4 md:px-8 border-t border-white/10 bg-gradient-to-b from-[#062f35] to-[#0a2a2f] text-center">
           <p className="text-white/50 font-mono text-sm">
-            © 2026 M. Abubakar. All rights reserved.
+            © 2026 Ahsan Aziz. All rights reserved.
           </p>
         </footer>
       </main>
