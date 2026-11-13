@@ -76,10 +76,10 @@ export function About() {
       <div className="max-w-7xl mx-auto">
         <p className="section-label mb-4">02 — ABOUT</p>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left: Orbital Animation */}
           <div className="flex justify-center items-center h-96 order-first md:order-first">
-            <div ref={orbitRef} className="relative w-80 h-80">
+            <div ref={orbitRef} className="relative w-64 md:w-72 lg:w-80 h-64 md:h-72 lg:h-80">
               {/* Orbital Background Glow */}
               <div className="absolute inset-0 bg-gradient-to-br from-[#ff9e68]/10 to-transparent rounded-full blur-3xl" />
 

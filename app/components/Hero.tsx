@@ -53,7 +53,7 @@ export function Hero() {
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-wrap gap-4 animate-reveal animation-delay-200">
+            <div className="flex flex-col md:flex-row gap-4 animate-reveal animation-delay-200">
               <a href="#work" className="pill-btn pill-btn-primary">
                 View My Work
               </a>

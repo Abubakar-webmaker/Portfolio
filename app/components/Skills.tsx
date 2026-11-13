@@ -104,7 +104,7 @@ export function Skills() {
         <h2 className="text-4xl md:text-5xl font-bold mb-16">What I Work With</h2>
 
         {/* Skill Cards Grid - Simple 3 Column Layout */}
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {skillGroups.map((group, idx) => {
             const Icon = group.icon;
 
