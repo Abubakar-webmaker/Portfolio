@@ -19,8 +19,7 @@
     "incremental": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "bundler",
-    "ignoreDeprecations": "6.0",
-        "baseUrl": ".",
+    "baseUrl": ".",
     "paths": {
       "@/*": [
         "./*"
