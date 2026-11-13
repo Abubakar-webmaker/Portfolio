@@ -6,7 +6,7 @@
 
 Smooth page transitions · GSAP-powered animations · Typewriter journey · Floating skill bubbles · 3D-tilt project cards · Zero-backend contact form
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-6C5CE7?style=for-the-badge&logo=vercel&logoColor=white)](https://your-portfolio.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-6C5CE7?style=for-the-badge&logo=vercel&logoColor=white)](https://portfolio-vsi1.vercel.app)
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
@@ -14,9 +14,9 @@ Smooth page transitions · GSAP-powered animations · Typewriter journey · Floa
 ![GSAP](https://img.shields.io/badge/GSAP-3.13-88CE02?style=flat-square&logo=greensock&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-5-646CFF?style=flat-square&logo=vite&logoColor=white)
 ![ESLint](https://img.shields.io/badge/ESLint-9-4B32C3?style=flat-square&logo=eslint&logoColor=white)
-![License](https://img.shields.io/badge/License-Personal%20Use-blue?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
-[Report a Bug](https://github.com/YOUR_USERNAME/Portfolio/issues) · [Request a Feature](https://github.com/YOUR_USERNAME/Portfolio/issues)
+[Report a Bug](https://github.com/Abubakar-webmaker/Portfolio/issues) · [Request a Feature](https://github.com/Abubakar-webmaker/Portfolio/issues)
 
 </div>
 
@@ -54,8 +54,6 @@ The project has **no runtime CDN dependencies** and **no backend**. All librarie
 ---
 
 ## Screenshots
-
-> Add your screenshots to `assets/images/screenshots/` and update the paths below.
 
 | Hero | Skills |
 |---|---|
@@ -112,7 +110,7 @@ The project has **no runtime CDN dependencies** and **no backend**. All librarie
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/YOUR_USERNAME/Portfolio.git
+git clone https://github.com/Abubakar-webmaker/Portfolio.git
 
 # 2. Move into the project directory
 cd Portfolio
@@ -154,10 +152,11 @@ Portfolio/
 ├── eslint.config.js         # ESLint flat config for script.js
 ├── package.json             # Scripts and dev dependencies
 ├── .gitignore
+├── LICENSE                  # MIT License
 ├── assets/
 │   ├── favicon.svg          # Brand favicon
 │   ├── images/
-│   │   └── abubakar.png     # Profile photo
+│   │   └── ahsan.png        # Profile photo
 │   └── js/                  # Self-hosted libraries
 │       ├── gsap.min.js
 │       ├── ScrollTrigger.min.js
@@ -206,7 +205,7 @@ The form collects **Name**, **Email** and **Message**, then opens the visitor's 
 
 | What to change | Where |
 |---|---|
-| Profile photo | `assets/images/abubakar.png` |
+| Profile photo | `assets/images/ahsan.png` |
 | Name, bio, links | `index.html` |
 | Colours / design tokens | `style.css` → `:root` CSS variables |
 | Timeline milestones | `index.html` → `#safar` section |
@@ -308,7 +307,7 @@ Please run `npm run lint` before submitting.
 
 ## License
 
-This project is for **personal portfolio use**. Feel free to fork and adapt it with attribution.
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details. Feel free to fork, adapt, and reuse with attribution.
 
 ---
 
@@ -317,9 +316,11 @@ This project is for **personal portfolio use**. Feel free to fork and adapt it w
 **Ahsan Aziz** — DevOps Engineer
 📍 Karachi, Pakistan
 
+Built by [**Abubakar**](https://github.com/Abubakar-webmaker) — Web Developer
+
 [![Email](https://img.shields.io/badge/Email-ahsanaziz.dev%40gmail.com-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:ahsanaziz.dev@gmail.com)
-[![GitHub](https://img.shields.io/badge/GitHub-YOUR__USERNAME-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/YOUR_USERNAME)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/YOUR_USERNAME)
+[![GitHub](https://img.shields.io/badge/GitHub-Abubakar--webmaker-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/Abubakar-webmaker)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/YOUR_LINKEDIN_HANDLE)
 
 <div align="center">
 
