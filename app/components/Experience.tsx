@@ -52,7 +52,7 @@ export function Experience() {
         .water-border {
           position: relative;
           width: 100%;
-          height: 60px;
+          height: clamp(40px, 5vw, 64px);
           overflow: hidden;
           border-radius: 0 0 16px 16px;
           margin-top: auto;
@@ -110,6 +110,18 @@ export function Experience() {
         .experience-content {
           flex: 1;
           z-index: 1;
+        }
+
+        @media (max-width: 767px) {
+          .wave-layer2,
+          .wave-layer3 {
+            display: none;
+          }
+
+          .wave-layer1 {
+            animation: waterWave 20s linear infinite;
+            opacity: 0.6;
+          }
         }
       `}</style>
 

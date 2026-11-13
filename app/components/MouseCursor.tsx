@@ -6,6 +6,20 @@ export function MouseCursor() {
   const [trails, setTrails] = useState<Array<{ id: number; x: number; y: number }>>([]);
 
   useEffect(() => {
+    // Detect touch device and exit early if touch is supported
+    const isTouchDevice = () => {
+      return (
+        typeof window !== 'undefined' &&
+        ('ontouchstart' in window ||
+          navigator.maxTouchPoints > 0 ||
+          (navigator as any).msMaxTouchPoints > 0)
+      );
+    };
+
+    if (isTouchDevice()) {
+      return;
+    }
+
     const handleMouseMove = (e: MouseEvent) => {
       // Create trail star
       if (Math.random() > 0.7) {
