@@ -1,13 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
-import { About } from './components/About';
-import { Skills } from './components/Skills';
-import { Work } from './components/Work';
-import { Experience } from './components/Experience';
-import { Contact } from './components/Contact';
+
+// Lazy load heavy animated components
+const About = lazy(() => import('./components/About').then(mod => ({ default: mod.About })));
+const Skills = lazy(() => import('./components/Skills').then(mod => ({ default: mod.Skills })));
+const Work = lazy(() => import('./components/Work').then(mod => ({ default: mod.Work })));
+const Experience = lazy(() => import('./components/Experience').then(mod => ({ default: mod.Experience })));
+const Contact = lazy(() => import('./components/Contact').then(mod => ({ default: mod.Contact })));
+
+// Simple loading fallback
+const SectionFallback = () => <div className="min-h-screen bg-gradient-to-b from-[#062f35] to-[#0a3a42]" />;
 
 export default function Home() {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -39,28 +44,34 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="relative">
-        {/* Hero */}
+        {/* Hero - Always load (LCP element) */}
         <Hero />
 
-        {/* About */}
-        <About />
+        {/* Other sections - Lazy load */}
+        <Suspense fallback={<SectionFallback />}>
+          <About />
+        </Suspense>
 
-        {/* Skills */}
-        <Skills />
+        <Suspense fallback={<SectionFallback />}>
+          <Skills />
+        </Suspense>
 
-        {/* Work */}
-        <Work />
+        <Suspense fallback={<SectionFallback />}>
+          <Work />
+        </Suspense>
 
-        {/* Experience */}
-        <Experience />
+        <Suspense fallback={<SectionFallback />}>
+          <Experience />
+        </Suspense>
 
-        {/* Contact */}
-        <Contact />
+        <Suspense fallback={<SectionFallback />}>
+          <Contact />
+        </Suspense>
 
         {/* Footer */}
         <footer className="relative py-12 px-4 md:px-8 border-t border-white/10 bg-gradient-to-b from-[#062f35] to-[#0a2a2f] text-center">
           <p className="text-white/50 font-mono text-sm">
-            © 2026 Ahsan Aziz. All rights reserved.
+            © 2026 Ahsan Aziz — DevOps Engineer. All rights reserved.
           </p>
         </footer>
       </main>
