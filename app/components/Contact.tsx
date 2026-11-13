@@ -86,7 +86,7 @@ export function Contact() {
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Your name"
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-[#ff9e68]/50 focus:ring-1 focus:ring-[#ff9e68]/50 transition-all"
+                className="w-full h-12 md:h-10 bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-[#ff9e68]/50 focus:ring-1 focus:ring-[#ff9e68]/50 transition-all"
                 required
               />
             </div>
@@ -103,7 +103,7 @@ export function Contact() {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="your.email@example.com"
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-[#ff9e68]/50 focus:ring-1 focus:ring-[#ff9e68]/50 transition-all"
+                className="w-full h-12 md:h-10 bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-[#ff9e68]/50 focus:ring-1 focus:ring-[#ff9e68]/50 transition-all"
                 required
               />
             </div>
@@ -120,7 +120,7 @@ export function Contact() {
                 value={formData.subject}
                 onChange={handleChange}
                 placeholder="Project enquiry"
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-[#ff9e68]/50 focus:ring-1 focus:ring-[#ff9e68]/50 transition-all"
+                className="w-full h-12 md:h-10 bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-[#ff9e68]/50 focus:ring-1 focus:ring-[#ff9e68]/50 transition-all"
                 required
               />
             </div>
@@ -182,7 +182,7 @@ export function Contact() {
         {/* Alternative Contact Info */}
         <div className="mt-12 text-center">
           <p className="text-white/70 mb-6">Or reach out directly:</p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4">
             <a
               href="mailto:ahsanaziz.dev@gmail.com"
               className="pill-btn pill-btn-outline"
