@@ -138,7 +138,7 @@ export const animateCounter = (
 
 export const initScrollAnimations = () => {
   // Register ScrollTrigger plugin if not already registered
-  if (!gsap.plugins.ScrollTrigger) {
+  if (!gsap.plugins || !('ScrollTrigger' in gsap.plugins)) {
     console.warn('ScrollTrigger plugin not registered');
   }
 
