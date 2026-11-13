@@ -1,13 +1,40 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import dynamic from 'next/dynamic';
 import { ExternalLink, Github } from 'lucide-react';
 
-gsap.registerPlugin(ScrollTrigger);
+let gsap: any = null;
+let ScrollTrigger: any = null;
 
-const projects = [
+const loadGSAP = async () => {
+  if (!gsap) {
+    const gsapModule = await import('gsap');
+    gsap = gsapModule.default;
+    const { ScrollTrigger: ST } = await import('gsap/ScrollTrigger');
+    ScrollTrigger = ST;
+    gsap.registerPlugin(ScrollTrigger);
+  }
+  return { gsap, ScrollTrigger };
+};
+
+interface ProjectLink {
+  label: string;
+  url: string;
+}
+
+interface Project {
+  id: number;
+  number: string;
+  title: string;
+  description: string;
+  tech: string[];
+  featured?: boolean;
+  accent: string;
+  links: ProjectLink[];
+}
+
+const projects: Project[] = [
   {
     id: 1,
     number: '01',
@@ -62,66 +89,74 @@ const projects = [
 ];
 
 export function Work() {
-  const containerRef = useRef(null);
-  const trackRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    if (!trackRef.current || !containerRef.current) return;
+    loadGSAP().then(({ gsap: gsapLib, ScrollTrigger: ST }) => {
+      if (!trackRef.current || !containerRef.current) return;
 
-    const cards = trackRef.current.querySelectorAll('.project-card');
-    const container = containerRef.current;
+      const cards = trackRef.current.querySelectorAll('.project-card') as NodeListOf<HTMLDivElement>;
+      const container = containerRef.current;
 
-    // Animate cards on scroll
-    cards.forEach((card, i) => {
-      gsap.from(card, {
-        scrollTrigger: {
-          trigger: container,
-          start: 'top center',
-          markers: false,
-        },
-        opacity: 0,
-        y: 50,
-        delay: i * 0.1,
+      // Animate cards on scroll
+      cards.forEach((card: HTMLDivElement, i: number) => {
+        gsapLib.from(card, {
+          scrollTrigger: {
+            trigger: container,
+            start: 'top center',
+            markers: false,
+          },
+          opacity: 0,
+          y: 50,
+          delay: i * 0.1,
+        });
       });
-    });
 
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
+      return () => {
+        ST.getAll().forEach((trigger: any) => trigger.kill());
+      };
+    });
   }, []);
 
   const handleCardHover = (e: React.MouseEvent<HTMLDivElement>) => {
     const card = e.currentTarget;
+    
+    // Validate card exists
+    if (!card) return;
+    
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    // Create wave effect
-    const wave = document.createElement('div');
-    wave.style.position = 'absolute';
-    wave.style.left = x + 'px';
-    wave.style.top = y + 'px';
-    wave.style.width = '30px';
-    wave.style.height = '30px';
-    wave.style.borderRadius = '50%';
-    wave.style.border = '2px solid #ff9e68';
-    wave.style.pointerEvents = 'none';
-    wave.style.zIndex = '10';
-    card.appendChild(wave);
+    loadGSAP().then(({ gsap: gsapLib }) => {
+      // Create wave effect
+      const wave = document.createElement('div');
+      wave.style.position = 'absolute';
+      wave.style.left = x + 'px';
+      wave.style.top = y + 'px';
+      wave.style.width = '30px';
+      wave.style.height = '30px';
+      wave.style.borderRadius = '50%';
+      wave.style.border = '2px solid #ff9e68';
+      wave.style.pointerEvents = 'none';
+      wave.style.zIndex = '10';
+      card.appendChild(wave);
 
-    gsap.to(wave, {
-      width: '200px',
-      height: '200px',
-      left: x - 85 + 'px',
-      top: y - 85 + 'px',
-      borderColor: '#ff9e68 rgba(255, 158, 104, 0)',
-      opacity: 0,
-      duration: 0.8,
-      ease: 'power2.out',
-      onComplete: () => {
-        wave.remove();
-      },
+      gsapLib.to(wave, {
+        width: '200px',
+        height: '200px',
+        left: x - 85 + 'px',
+        top: y - 85 + 'px',
+        borderColor: '#ff9e68 rgba(255, 158, 104, 0)',
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+        onComplete: () => {
+          wave.remove();
+        },
+      });
     });
   };
 
@@ -190,7 +225,7 @@ export function Work() {
 
                 {/* Links */}
                 <div className="flex gap-3 pt-4 border-t border-white/10">
-                  {project.links.map((link) => (
+                  {project.links.map((link: ProjectLink) => (
                     <a
                       key={link.label}
                       href={link.url}
