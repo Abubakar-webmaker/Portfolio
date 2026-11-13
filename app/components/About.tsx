@@ -1,43 +1,55 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
+import dynamic from 'next/dynamic';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Code, Container, Cloud, GitBranch, Database, Shield } from 'lucide-react';
 
-gsap.registerPlugin(ScrollTrigger);
+let gsap: any = null;
+
+// Lazy load GSAP only when needed
+const loadGSAP = async () => {
+  if (!gsap) {
+    const gsapModule = await import('gsap');
+    gsap = gsapModule.default;
+    gsap.registerPlugin(ScrollTrigger);
+  }
+  return gsap;
+};
 
 export function About() {
   const sectionRef = useRef(null);
   const orbitRef = useRef(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from('.about-content > *', {
-        scrollTrigger: {
-          trigger: '#about',
-          start: 'top center',
-          end: 'center center',
-          scrub: 1,
-        },
-        y: 50,
-        opacity: 0,
-        stagger: 0.1,
-      });
-    }, sectionRef);
+    loadGSAP().then((gsapLib) => {
+      const ctx = gsapLib.context(() => {
+        gsapLib.from('.about-content > *', {
+          scrollTrigger: {
+            trigger: '#about',
+            start: 'top center',
+            end: 'center center',
+            scrub: 1,
+          },
+          y: 50,
+          opacity: 0,
+          stagger: 0.1,
+        });
+      }, sectionRef);
 
-    // Orbital animation - continuous rotation
-    if (orbitRef.current) {
-      gsap.to('.orbit-item', {
-        rotation: 360,
-        duration: 15,
-        repeat: -1,
-        ease: 'none',
-        transformOrigin: 'center center',
-      });
-    }
+      // Orbital animation - continuous rotation
+      if (orbitRef.current) {
+        gsapLib.to('.orbit-item', {
+          rotation: 360,
+          duration: 15,
+          repeat: -1,
+          ease: 'none',
+          transformOrigin: 'center center',
+        });
+      }
 
-    return () => ctx.revert();
+      return () => ctx.revert();
+    });
   }, []);
 
   const stats = [
