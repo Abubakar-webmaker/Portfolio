@@ -30,7 +30,7 @@ export function Header() {
                 AHSAN AZIZ
               </p>
               <p className="font-mono text-xs text-white/60 leading-none">
-                FULL STACK DEVELOPER
+                DEVOPS ENGINEER
               </p>
             </div>
           </Link>
