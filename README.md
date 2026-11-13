@@ -1,6 +1,6 @@
 <div align="center">
 
-# M. Abubakar — Cinematic Portfolio
+# Ahsan Aziz — DevOps Portfolio
 
 **A full-screen, section-snapping cinematic portfolio built with vanilla HTML, CSS and JavaScript.**
 
@@ -47,7 +47,7 @@ Smooth page transitions · GSAP-powered animations · Typewriter journey · Floa
 
 ## Overview
 
-This is the personal portfolio of **M. Abubakar**, a Full Stack Developer (MERN) based in Karachi, Pakistan. Rather than a conventional scrolling page, it's built as a **cinematic, full-screen experience** — each section snaps into view with smooth transitions, and every interaction is animated with GSAP.
+This is the personal portfolio of **Ahsan Aziz**, a DevOps Engineer based in Karachi, Pakistan. Rather than a conventional scrolling page, it's built as a **cinematic, full-screen experience** — each section snaps into view with smooth transitions, and every interaction is animated with GSAP.
 
 The project has **no runtime CDN dependencies** and **no backend**. All libraries are self-hosted, so it loads fast, works offline-friendly, and can be deployed to any static host in seconds.
 
@@ -198,7 +198,7 @@ Portfolio/
 
 The form collects **Name**, **Email** and **Message**, then opens the visitor's default mail client with a pre-filled `mailto:` link. No backend or API key is needed. The success message auto-dismisses after 4 seconds.
 
-**Change the recipient:** replace `m.abubakar.codes@gmail.com` in `script.js` (contact form handler).
+**Change the recipient:** replace `ahsanaziz.dev@gmail.com` in the contact form handler.
 
 ---
 
@@ -314,10 +314,10 @@ This project is for **personal portfolio use**. Feel free to fork and adapt it w
 
 ## Author
 
-**M. Abubakar** — Full Stack Developer (MERN)
+**Ahsan Aziz** — DevOps Engineer
 📍 Karachi, Pakistan
 
-[![Email](https://img.shields.io/badge/Email-m.abubakar.codes%40gmail.com-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:m.abubakar.codes@gmail.com)
+[![Email](https://img.shields.io/badge/Email-ahsanaziz.dev%40gmail.com-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:ahsanaziz.dev@gmail.com)
 [![GitHub](https://img.shields.io/badge/GitHub-YOUR__USERNAME-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/YOUR_USERNAME)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/YOUR_USERNAME)
 
