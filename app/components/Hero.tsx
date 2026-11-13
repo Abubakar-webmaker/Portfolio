@@ -28,8 +28,8 @@ export function Hero() {
     >
       {/* Background gradients */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 left-1/4 w-96 h-96 bg-[#ff9e68] rounded-full filter blur-3xl opacity-10" />
-        <div className="absolute bottom-40 right-1/4 w-96 h-96 bg-[#06b4a0] rounded-full filter blur-3xl opacity-5" />
+        <div className="absolute top-20 left-1/4 w-96 h-96 bg-[#ff9e68] rounded-full filter blur-3xl opacity-5" />
+        <div className="absolute bottom-40 right-1/4 w-96 h-96 bg-[#06b4a0] rounded-full filter blur-3xl opacity-3" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto w-full">
@@ -77,7 +77,7 @@ export function Hero() {
                 src="/images/231317241.png"
                 alt="Ahsan Aziz"
                 fill
-                sizes="(max-width: 768px) 100vw, 50vw"
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 50vw"
                 className="object-cover object-top"
                 priority
               />
@@ -85,7 +85,7 @@ export function Hero() {
               <div className="absolute inset-0 rounded-2xl ring-2 ring-[#ff9e68]/20" />
             </div>
             {/* Glow effect */}
-            <div className="absolute -inset-4 bg-gradient-to-b from-[#ff9e68]/10 to-transparent rounded-3xl blur-2xl -z-10 animate-pulse" />
+            <div className="absolute -inset-4 bg-gradient-to-b from-[#ff9e68]/5 to-transparent rounded-3xl blur-xl -z-10 animate-pulse" />
           </div>
         </div>
       </div>

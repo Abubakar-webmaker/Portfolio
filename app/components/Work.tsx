@@ -125,6 +125,11 @@ export function Work() {
     
     // Validate card exists
     if (!card) return;
+
+    // Skip wave effect on touch devices
+    if ((e.nativeEvent as any).pointerType === 'touch') {
+      return;
+    }
     
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -139,7 +144,7 @@ export function Work() {
       wave.style.width = '30px';
       wave.style.height = '30px';
       wave.style.borderRadius = '50%';
-      wave.style.border = '2px solid #ff9e68';
+      wave.style.border = '2.5px solid #ff9e68';
       wave.style.pointerEvents = 'none';
       wave.style.zIndex = '10';
       card.appendChild(wave);
@@ -154,7 +159,9 @@ export function Work() {
         duration: 0.8,
         ease: 'power2.out',
         onComplete: () => {
-          wave.remove();
+          if (wave.parentNode) {
+            wave.remove();
+          }
         },
       });
     });
@@ -165,6 +172,20 @@ export function Work() {
       <style>{`
         .project-card {
           position: relative;
+        }
+
+        @media (hover: none) {
+          .project-card {
+            pointer-events: auto;
+          }
+          
+          .project-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: transparent;
+            pointer-events: none;
+          }
         }
       `}</style>
       

@@ -24,6 +24,7 @@ export function About() {
   useEffect(() => {
     loadGSAP().then((gsapLib) => {
       const ctx = gsapLib.context(() => {
+        // Stagger the about content animations on initial load or scroll
         gsapLib.from('.about-content > *', {
           scrollTrigger: {
             trigger: '#about',
@@ -34,6 +35,7 @@ export function About() {
           y: 50,
           opacity: 0,
           stagger: 0.1,
+          duration: 0.8,
         });
       }, sectionRef);
 
@@ -81,7 +83,7 @@ export function About() {
           <div className="flex justify-center items-center h-96 order-first md:order-first">
             <div ref={orbitRef} className="relative w-64 md:w-72 lg:w-80 h-64 md:h-72 lg:h-80">
               {/* Orbital Background Glow */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#ff9e68]/10 to-transparent rounded-full blur-3xl" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[#ff9e68]/5 to-transparent rounded-full blur-2xl" />
 
               {/* Outer Orbit Ring */}
               <div className="absolute inset-0 rounded-full border-2 border-[#ff9e68]/40" />

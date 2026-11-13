@@ -57,7 +57,7 @@ export function Contact() {
     <section id="contact" className="relative min-h-screen py-20 px-4 md:px-8 bg-gradient-to-br from-[#0a3a42] via-[#062f35] to-[#0a3a42]">
       {/* Background elements */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#ff9e68] rounded-full filter blur-3xl opacity-5" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#ff9e68] rounded-full filter blur-3xl opacity-3" />
       </div>
 
       <div className="relative z-10 max-w-2xl mx-auto">
@@ -70,8 +70,12 @@ export function Contact() {
         </div>
 
         {/* Contact Form */}
-        <div className="relative bg-gradient-to-br from-white/10 to-white/5 border border-white/10 rounded-2xl p-8 md:p-12">
-          <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#ff9e68]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+        <div className="relative group bg-gradient-to-br from-white/10 to-white/5 border border-white/10 rounded-2xl p-8 md:p-12 hover:border-[#ff9e68]/50 transition-all duration-300 overflow-hidden">
+          {/* Hover glow box animation */}
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#ff9e68]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+          
+          {/* Animated box on hover */}
+          <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-[#ff9e68]/20 to-transparent opacity-0 group-hover:opacity-50 blur-xl transition-opacity duration-300 -z-10 pointer-events-none" />
 
           <form onSubmit={handleSubmit} className="relative z-10 space-y-6">
             {/* Name */}
