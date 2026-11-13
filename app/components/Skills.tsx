@@ -37,8 +37,8 @@ const skillGroups = [
 ];
 
 export function Skills() {
-  const sectionRef = useRef(null);
-  const cardsRef = useRef([]);
+  const sectionRef = useRef<HTMLElement>(null);
+  const cardsRef = useRef<HTMLDivElement[]>([]);
 
   useEffect(() => {
     const observerOptions = {
@@ -47,9 +47,9 @@ export function Skills() {
     };
 
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, index) => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          const card = entry.target;
+          const card = entry.target as HTMLDivElement;
           const cardIndex = cardsRef.current.indexOf(card);
           
           // Top 3 cards (0,1,2) come from left
