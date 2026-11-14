@@ -2,17 +2,15 @@
 
 # Ahsan Aziz — DevOps Portfolio
 
-**A full-screen, section-snapping cinematic portfolio built with vanilla HTML, CSS and JavaScript.**
+**A modern, responsive portfolio built with Next.js, React, and Tailwind CSS.**
 
-Smooth page transitions · GSAP-powered animations · Typewriter journey · Floating skill bubbles · 3D-tilt project cards · Zero-backend contact form
+Fast performance · GSAP animations · TypeScript · Component-based architecture · Fully responsive design
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-6C5CE7?style=for-the-badge&logo=vercel&logoColor=white)](https://portfolio-vsi1.vercel.app)
-
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
-![GSAP](https://img.shields.io/badge/GSAP-3.13-88CE02?style=flat-square&logo=greensock&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-5-646CFF?style=flat-square&logo=vite&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
+![GSAP](https://img.shields.io/badge/GSAP-3.12-88CE02?style=flat-square&logo=greensock&logoColor=white)
 ![ESLint](https://img.shields.io/badge/ESLint-9-4B32C3?style=flat-square&logo=eslint&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
@@ -25,18 +23,13 @@ Smooth page transitions · GSAP-powered animations · Typewriter journey · Floa
 ## Table of Contents
 
 - [Overview](#overview)
-- [Screenshots](#screenshots)
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
 - [Available Scripts](#available-scripts)
 - [Project Structure](#project-structure)
-- [Sections](#sections)
-- [Navigation](#navigation)
-- [Contact Form](#contact-form)
 - [Customisation](#customisation)
 - [Deployment](#deployment)
-- [Browser Support](#browser-support)
 - [Troubleshooting](#troubleshooting)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
@@ -47,37 +40,22 @@ Smooth page transitions · GSAP-powered animations · Typewriter journey · Floa
 
 ## Overview
 
-This is the personal portfolio of **Ahsan Aziz**, a DevOps Engineer based in Karachi, Pakistan. Rather than a conventional scrolling page, it's built as a **cinematic, full-screen experience** — each section snaps into view with smooth transitions, and every interaction is animated with GSAP.
+This is the personal portfolio of **Ahsan Aziz**, a DevOps Engineer based in Karachi, Pakistan. Built with **Next.js and React**, it features a modern, responsive design with smooth animations and a component-based architecture.
 
-The project has **no runtime CDN dependencies** and **no backend**. All libraries are self-hosted, so it loads fast, works offline-friendly, and can be deployed to any static host in seconds.
+The project is fully optimized for performance, with TypeScript for type safety, Tailwind CSS for styling, and GSAP for smooth animations. It can be easily deployed to Vercel or any Node.js-compatible hosting platform.
 
----
 
-## Screenshots
-
-| Hero | Skills |
-|---|---|
-| ![Hero](assets/images/screenshots/hero.png.png) | ![Skills](assets/images/screenshots/skills.png.png) |
-
-| Projects | The Journey |
-|---|---|
-| ![Projects](assets/images/screenshots/projects.png.png) | ![Journey](assets/images/screenshots/journey.png.png) |
-
----
 
 ## Features
 
-- **Section-snapping layout** — full-screen sections with cinematic transitions between them
-- **GSAP + ScrollTrigger animations** — smooth, performant motion throughout
-- **Lenis smooth scrolling** — buttery, inertia-based scroll feel
-- **Animated skill bubbles** — floating, interactive skill visualisation
-- **3D-tilt project cards** — depth effect that responds to pointer movement
-- **Typewriter-driven journey** — storytelling section with an animated timeline
-- **Zero-backend contact form** — opens a pre-filled `mailto:` link, no API keys or server needed
-- **Multiple navigation methods** — wheel, keyboard, touch swipe, header links and side dots
-- **Fully responsive** — fluid typography with `clamp()` and CSS Grid
-- **Self-hosted libraries** — no CDN dependency at runtime
-- **Linted codebase** — ESLint 9 flat config for consistent code quality
+- **Next.js 16** — latest React framework with built-in optimization
+- **React 19** — component-based UI architecture
+- **TypeScript** — type-safe development experience
+- **Tailwind CSS** — utility-first CSS framework
+- **GSAP animations** — smooth, performant motion throughout
+- **Responsive design** — mobile-first, works on all devices
+- **Fast performance** — automatic code splitting and optimization
+- **ESLint 9** — code quality and consistency
 
 ---
 
@@ -85,17 +63,17 @@ The project has **no runtime CDN dependencies** and **no backend**. All librarie
 
 | Layer | Technology |
 |---|---|
-| Markup | HTML5 |
-| Styling | CSS3 — custom properties, `clamp()`, Grid, fully responsive |
-| Scripting | Vanilla JavaScript (ES6+ modules) |
-| Animations | [GSAP](https://gsap.com/) 3.13 + ScrollTrigger |
-| Smooth Scroll | [Lenis](https://lenis.darkroom.engineering/) 1.3.8 |
-| Icons | [Lucide](https://lucide.dev/) 0.469.0 |
-| Fonts | Plus Jakarta Sans · Inter · JetBrains Mono |
-| Build Tool | [Vite](https://vitejs.dev/) 5 |
+| Framework | [Next.js](https://nextjs.org/) 16 |
+| UI Library | [React](https://react.dev/) 19 |
+| Language | TypeScript 5 |
+| Styling | [Tailwind CSS](https://tailwindcss.com/) 3.4 |
+| CSS Processing | PostCSS 8 + Autoprefixer |
+| Animations | [GSAP](https://gsap.com/) 3.12 |
+| Icons | [Lucide React](https://lucide.dev/) 0.465 |
+| Utilities | clsx 2.0 |
 | Linter | [ESLint](https://eslint.org/) 9 |
 
-> All runtime libraries are **self-hosted** under `assets/js/`, so there is no CDN dependency at runtime.
+> All dependencies are listed in `package.json`. The project uses Next.js's built-in TypeScript and ESLint configuration.
 
 ---
 
@@ -103,8 +81,8 @@ The project has **no runtime CDN dependencies** and **no backend**. All librarie
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) **v18+** (only required for the dev server and build)
-- A modern browser (see [Browser Support](#browser-support))
+- [Node.js](https://nodejs.org/) **v18+**
+- npm or yarn (comes with Node.js)
 
 ### Installation
 
@@ -122,11 +100,7 @@ npm install
 npm run dev
 ```
 
-Open **http://localhost:5173** in your browser.
-
-### Run without Node
-
-No tooling needed. Either open `index.html` directly in a browser, or use the **Live Server** extension in VS Code for hot reload.
+Open **http://localhost:3000** in your browser.
 
 ---
 
@@ -134,10 +108,10 @@ No tooling needed. Either open `index.html` directly in a browser, or use the **
 
 | Command | Description |
 |---|---|
-| `npm run dev` | Start the Vite dev server with HMR |
-| `npm run build` | Create a production build in `dist/` |
-| `npm run preview` | Preview the production build locally |
-| `npm run lint` | Run ESLint on `script.js` |
+| `npm run dev` | Start the Next.js dev server with hot reload |
+| `npm run build` | Create a production build |
+| `npm run start` | Start the production server |
+| `npm run lint` | Run ESLint to check code quality |
 
 ---
 
@@ -145,149 +119,116 @@ No tooling needed. Either open `index.html` directly in a browser, or use the **
 
 ```
 Portfolio/
-├── index.html              # All sections and content
-├── style.css               # Design system, layout, animations
-├── script.js                # Navigation, GSAP, typewriter, skill balls
-├── vite.config.js           # Vite build configuration
-├── eslint.config.js         # ESLint flat config for script.js
-├── package.json             # Scripts and dev dependencies
-├── .gitignore
-├── LICENSE                  # MIT License
-├── assets/
-│   ├── favicon.svg          # Brand favicon
-│   ├── images/
-│   │   └── ahsan.png        # Profile photo
-│   └── js/                  # Self-hosted libraries
-│       ├── gsap.min.js
-│       ├── ScrollTrigger.min.js
-│       ├── lenis.min.js
-│       └── lucide.min.js
+├── app/                     # Next.js app router directory
+│   ├── components/          # Reusable React components
+│   │   ├── Header.tsx
+│   │   ├── Hero.tsx
+│   │   ├── About.tsx
+│   │   ├── Skills.tsx
+│   │   ├── Work.tsx
+│   │   ├── Experience.tsx
+│   │   ├── Contact.tsx
+│   │   ├── MouseCursor.tsx
+│   │   └── animations.ts
+│   ├── lib/                 # Utility functions
+│   ├── layout.tsx           # Root layout
+│   ├── page.tsx             # Home page
+│   └── globals.css          # Global styles
+├── public/                  # Static assets
+│   ├── images/              # Portfolio images
+│   ├── assets/              # Additional assets
+│   └── favicon.svg
+├── package.json             # Project dependencies
+├── tailwind.config.js       # Tailwind CSS configuration
+├── tsconfig.json            # TypeScript configuration
+├── next.config.js           # Next.js configuration
+├── .eslintrc.json           # ESLint configuration
+├── postcss.config.js        # PostCSS configuration
 └── README.md
 ```
 
----
 
-## Sections
-
-| # | ID | Title | Description |
-|---|---|---|---|
-| 01 | `home` | Hero | Name, intro tagline and call-to-action button |
-| 02 | `about` | About | Bio, stats and years of experience |
-| 03 | `skills` | Skills | Animated floating skill bubbles |
-| 04 | `work` | Projects | Six project cards with a 3D tilt effect |
-| 05 | `experience` | Experience & Certifications | Timeline of roles and certifications |
-| 06 | `contact` | Contact | Info cards and a working `mailto:` form |
-| 07 | `safar` | The Journey | Typewriter lines and an animated timeline |
-
----
-
-## Navigation
-
-| Method | Action |
-|---|---|
-| Mouse wheel | Scroll between sections |
-| `↑` `↓` / `Page Up` / `Page Down` | Keyboard navigation |
-| Touch swipe up/down | Mobile navigation |
-| Header nav links | Jump to any section |
-| Side nav dots | Numbered dots on the right edge |
-
----
-
-## Contact Form
-
-The form collects **Name**, **Email** and **Message**, then opens the visitor's default mail client with a pre-filled `mailto:` link. No backend or API key is needed. The success message auto-dismisses after 4 seconds.
-
-**Change the recipient:** replace `ahsanaziz.dev@gmail.com` in the contact form handler.
-
----
 
 ## Customisation
 
 | What to change | Where |
 |---|---|
-| Profile photo | `assets/images/ahsan.png` |
-| Name, bio, links | `index.html` |
-| Colours / design tokens | `style.css` → `:root` CSS variables |
-| Timeline milestones | `index.html` → `#safar` section |
-| Typewriter lines | `script.js` → `safarLines` array |
-| Recipient email | `script.js` → contact form handler |
-| OG / social meta tags | `index.html` → `<head>` |
-| Canonical URL | `index.html` → `og:url` meta tag |
+| Profile information | `app/components/About.tsx`, `app/components/Hero.tsx` |
+| Skills | `app/components/Skills.tsx` |
+| Projects/Work | `app/components/Work.tsx` |
+| Experience & Certifications | `app/components/Experience.tsx` |
+| Contact information | `app/components/Contact.tsx` |
+| Colours / design tokens | `app/globals.css` or `tailwind.config.js` |
+| Animations | `app/components/animations.ts` |
+| Site metadata | `app/layout.tsx` |
+| Images | `public/images/` folder |
 
 ---
 
 ## Deployment
 
-The site is fully static, so it can be hosted anywhere.
+The site is a full Next.js application and requires a Node.js server to run, though it can also be statically exported.
 
 ### Vercel (recommended)
 
 1. Push the repository to GitHub.
 2. Import the repo at [vercel.com/new](https://vercel.com/new).
-3. Use these settings:
+3. Vercel automatically detects Next.js and configures it with the correct settings.
+4. Deploy in seconds.
 
-| Setting | Value |
-|---|---|
-| Framework Preset | Vite |
-| Build Command | `npm run build` |
-| Output Directory | `dist` |
+### Other platforms
 
-Alternatively, drag and drop the project folder into Vercel for a no-build static deploy.
+For Node.js hosting (Heroku, Railway, etc.):
 
-### Netlify / GitHub Pages / Cloudflare Pages
+```bash
+npm run build
+npm start
+```
 
-Run `npm run build` and publish the generated `dist/` folder.
+For static hosting, you can configure Next.js for static export in `next.config.js`:
 
-> After deploying, update the `og:url` and canonical URL in `index.html` to your live domain.
+```bash
+npm run build
+# Deploy the `.next/static` folder and `public` folder
+```
 
----
 
-## Browser Support
-
-| Browser | Minimum Version |
-|---|---|
-| Chrome | 90+ |
-| Firefox | 88+ |
-| Safari | 14+ |
-| Edge | 90+ |
-
----
 
 ## Troubleshooting
 
 <details>
-<summary><strong>Blank page when opening <code>index.html</code> directly</strong></summary>
+<summary><strong>Port 3000 is already in use</strong></summary>
 
-If the project uses ES modules, some browsers block them over the `file://` protocol. Use `npm run dev` or the VS Code Live Server extension instead.
+Run `npm run dev -- -p 3001` to use a different port.
 </details>
 
 <details>
-<summary><strong>Port 5173 is already in use</strong></summary>
+<summary><strong>TypeScript errors when running</strong></summary>
 
-Vite will automatically pick the next free port, or you can run `npm run dev -- --port 3000`.
+Run `npm run build` to check for type errors. If there are issues, they'll be reported with file locations and line numbers.
 </details>
 
 <details>
-<summary><strong>Contact form does not open my mail app</strong></summary>
+<summary><strong>Animations not running smoothly</strong></summary>
 
-The form relies on the `mailto:` protocol, so it needs a default mail client configured on the device. If none is set, the browser will do nothing.
+Check that hardware acceleration is enabled in your browser. A production build is also smoother than the dev server.
 </details>
 
 <details>
-<summary><strong>Animations feel laggy</strong></summary>
+<summary><strong>Changes not reflecting in browser</strong></summary>
 
-Check that hardware acceleration is enabled in your browser and that no heavy extensions are running. A production build (`npm run build && npm run preview`) is also noticeably smoother than the dev server.
+Next.js has hot reload enabled by default. If changes don't appear, try refreshing the page. If issues persist, restart the dev server with `npm run dev`.
 </details>
 
 ---
 
 ## Roadmap
 
-- [ ] Add a `prefers-reduced-motion` fallback for animations
 - [ ] Add a dark/light theme toggle
 - [ ] Add a downloadable résumé button
 - [ ] Add a Lighthouse performance report badge
-- [ ] Optional backend-powered contact form (e.g. serverless function)
+- [ ] Add SEO optimization
+- [ ] Add analytics integration
 
 ---
 
@@ -307,23 +248,20 @@ Please run `npm run lint` before submitting.
 
 ## License
 
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details. Feel free to fork, adapt, and reuse with attribution.
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
 
 ---
 
 ## Author
 
-**Ahsan Aziz** — DevOps Engineer
+**Ahsan Aziz** — DevOps Engineer  
 📍 Karachi, Pakistan
 
-Built by [**Abubakar**](https://github.com/Abubakar-webmaker) — Web Developer
+Built with Next.js and React
 
 [![Email](https://img.shields.io/badge/Email-ahsanaziz.dev%40gmail.com-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:ahsanaziz.dev@gmail.com)
 [![GitHub](https://img.shields.io/badge/GitHub-Abubakar--webmaker-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/Abubakar-webmaker)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/YOUR_LINKEDIN_HANDLE)
 
-<div align="center">
+---
 
-⭐ If you like this project, consider giving it a star!
-
-</div>
+⭐ If you like this project, please give it a star!
