@@ -252,15 +252,13 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 ---
 
-## Author
+## Portfolio Owner & Credits
 
-**Ahsan Aziz** — DevOps Engineer  
+**Portfolio For**: Ahsan Aziz — DevOps Engineer  
 📍 Karachi, Pakistan
 
-Built with Next.js and React
-
-[![Email](https://img.shields.io/badge/Email-ahsanaziz.dev%40gmail.com-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:ahsanaziz.dev@gmail.com)
-[![GitHub](https://img.shields.io/badge/GitHub-Abubakar--webmaker-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/Abubakar-webmaker)
+**Designed & Built by**: Abubakar — Web Developer  
+[GitHub](https://github.com/Abubakar-webmaker) · [Email](mailto:m.abubakar.codes@gmail.com)
 
 ---
 
