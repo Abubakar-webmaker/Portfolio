@@ -23,6 +23,7 @@ Fast performance · GSAP animations · TypeScript · Component-based architectur
 ## Table of Contents
 
 - [Overview](#overview)
+- [Screenshots](#screenshots)
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
@@ -44,7 +45,19 @@ This is the personal portfolio of **Ahsan Aziz**, a DevOps Engineer based in Kar
 
 The project is fully optimized for performance, with TypeScript for type safety, Tailwind CSS for styling, and GSAP for smooth animations. It can be easily deployed to Vercel or any Node.js-compatible hosting platform.
 
+---
 
+## Screenshots
+
+| Hero | Skills |
+|---|---|
+| ![Hero](/public/images/screenshotshero.png.png) | ![Skills](/public/images/screenshotsskills.png.png) |
+
+| Projects | Journey |
+|---|---|
+| ![Projects](/public/images/screenshotsprojects.png.png) | ![Journey](/public/images/screenshotsjourney.png.png) |
+
+---
 
 ## Features
 
