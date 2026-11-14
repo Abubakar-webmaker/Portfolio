@@ -57,7 +57,7 @@ The project has **no runtime CDN dependencies** and **no backend**. All librarie
 
 | Hero | Skills |
 |---|---|
-| ![Hero](assets/images/screenshots/hero.png.png) | ![Skills](assets/images/screenshots/skills.png.png) |
+| ![Hero](Portfolio/public/images//screenshots/hero.png.png) | ![Skills](assets/images/screenshots/skills.png.png) |
 
 | Projects | The Journey |
 |---|---|
